@@ -1,0 +1,12 @@
+dronchenko@dronchenko-Lenovo-B590:~/Programming/UP$ git log
+commit 8f3ac57162d989e9cf721a6e8f3182815bc0acdf (HEAD -> master)
+Author: dronchenko <dima.dronchenko@gmail.com>
+Date:   Tue Feb 12 10:35:02 2019 +0300
+
+    Modified status.txt
+
+commit c5366b45ac6f22ea5306f521e79ecce349f169df
+Author: dronchenko <dima.dronchenko@gmail.com>
+Date:   Tue Feb 12 10:30:35 2019 +0300
+
+    add .gitignore.
