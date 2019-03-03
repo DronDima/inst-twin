@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link href="styles/datepicker.css" rel="stylesheet" type="text/css">
+	<link href="styles/styles.css" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:700|Lobster|Noto+Sans+TC|Frank+Ruhl+Libre|Roboto+Slab|Alegreya:400" rel="stylesheet" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="scripts/script.js"></script>
+	<script src="scripts/jquery-3.3.1.min.js"></script>
+	<script src="scripts/datepicker.js"></script>
+	<title>Document</title>
+</head>
+<body>
+	<div class="wrapper">
+		<header>
+			<div class="header">
+				<div class="header__logo">
+					<h1><a href="#">PhotoPortal</a></h1>
+				</div>
+				<div class="header__logInfo">
+					<p>You signed in as dronchenko</p>
+				</div>
+				<div class="header__buttons">
+					<form class="header__form" action="addEditPost.html"><button class="header__button" type="submit">Add post</button></form>
+					<form class="header__form" action="#signin-modal"><button onclick="setBlur()" class="header__button" type="submit">Sign out</button></form>
+				</div>
+			</div>
+		</header>
+		<div class="filter-container">
+			<div class="filter">
+				<div class="filter__title">
+					<p class="filter__text">Filter</p>
+					<div class="filter__symbol"><img src="img/angle-up-solid.svg" alt="angle-down"></div>
+				</div>
+				<form class="filter__form" action="#">
+					<p class="filter__text">Filtrate by:</p>
+					<div class="filter__inputs">
+						<p class="filter__text-date text">Date</p>
+						<input type="text" class="filter__input datepicker-here" data-multiple-dates="2" data-timepicker="true" id="date" />
+						<p class="filter__text-author text">Author</p>
+						<input type="search" class="filter__input" id="author" />
+						<p class="filter__text-hashtag text">Hashtags</p>
+						<input type="text" class="filter__input" id="hashtag" />
+						<button class="filter__button" type="submit">Apply</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<main>
+			<div class="main">
+				<div class="el" onclick="openDiv(this)">
+					<img src="img/cat1.jpg" class="el__photo" alt="catImage">
+					<p class="el__name">01.02.2019 11.56, drodcdccccccccc</p>
+					<img src="img/heart.svg" alt="likeImage" class="el__like">
+					<p class="el__hashtag">#cat#neyyear</p>
+					<p class="el__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
+					<div class="el__links">
+						<a href="#delete-modal" onclick="setBlur()" class="el__link">delete</a>
+						<a href="#" class="el__link">edit</a>
+					</div>
+				</div>
+				<div class="el" onclick="openDiv(this)">
+					<img src="img/cat2.jpg" class="el__photo" alt="catImage">
+					<p class="el__name">01.02.2019 11.56, drodcdccccccccc</p>
+					<img src="img/heart.svg" alt="likeImage" class="el__like">
+					<p class="el__hashtag">#cat#neyyear</p>
+					<p class="el__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
+					<div class="el__links">
+						<a href="#delete-modal" onclick="setBlur()" class="el__link">delete</a>
+						<a href="#" class="el__link">edit</a>
+					</div>
+				</div>
+				<div class="el" onclick="openDiv(this)">
+					<img src="img/cat3.jpg" class="el__photo" alt="catImage">
+					<p class="el__name">01.02.2019 11.56, drodcdccccccccc</p>
+					<img src="img/heart.svg" alt="likeImage" class="el__like">
+					<p class="el__hashtag">#cat#neyyear</p>
+					<p class="el__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
+					<div class="el__links">
+						<a href="#delete-modal" onclick="setBlur()" class="el__link">delete</a>
+						<a href="#" class="el__link">edit</a>
+					</div>
+				</div>
+				<div class="el" onclick="openDiv(this)">
+					<img src="img/cat4.jpg" class="el__photo" alt="catImage">
+					<p class="el__name">01.02.2019 11.56, drodcdccccccccc</p>
+					<img src="img/heart.svg" alt="likeImage" class="el__like">
+					<p class="el__hashtag">#cat#neyyear</p>
+					<p class="el__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
+					<div class="el__links">
+						<a href="#delete-modal" onclick="setBlur()" class="el__link">delete</a>
+						<a href="#" class="el__link">edit</a>
+					</div>
+				</div>
+				<div class="el" onclick="openDiv(this)">
+					<img src="img/cat5.jpg" class="el__photo" alt="catImage">
+					<p class="el__name">01.02.2019 11.56, drodcdccccccccc</p>
+					<img src="img/heart.svg" alt="likeImage" class="el__like">
+					<p class="el__hashtag">#cat#neyyear</p>
+					<p class="el__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
+					<div class="el__links">
+						<a href="#delete-modal" onclick="setBlur()" class="el__link">delete</a>
+						<a href="#" class="el__link">edit</a>
+					</div>
+				</div>
+				<div class="el" onclick="openDiv(this)">
+					<img src="img/cat6.jpg" class="el__photo" alt="catImage">
+					<p class="el__name">01.02.2019 11.56, drodcdccccccccc</p>
+					<img src="img/heart.svg" alt="likeImage" class="el__like">
+					<p class="el__hashtag">#cat#neyyear</p>
+					<p class="el__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
+					<div class="el__links">
+						<a href="#delete-modal" onclick="setBlur()" class="el__link">delete</a>
+						<a href="#" class="el__link">edit</a>
+					</div>
+				</div>
+				<div class="el" onclick="openDiv(this)">
+					<img src="img/cat7.jpg" class="el__photo" alt="catImage">
+					<p class="el__name">01.02.2019 11.56, drodcdccccccccc</p>
+					<img src="img/heart.svg" alt="likeImage" class="el__like">
+					<p class="el__hashtag">#cat#neyyear</p>
+					<p class="el__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
+					<div class="el__links">
+						<a href="#delete-modal" onclick="setBlur()" class="el__link">delete</a>
+						<a href="#" class="el__link">edit</a>
+					</div>
+				</div>
+				<div class="el" onclick="openDiv(this)">
+					<img src="img/cat8.jpg" class="el__photo" alt="catImage">
+					<p class="el__name">01.02.2019 11.56, drodcdccccccccc</p>
+					<img src="img/heart.svg" alt="likeImage" class="el__like">
+					<p class="el__hashtag">#cat#neyyear</p>
+					<p class="el__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
+					<div class="el__links">
+						<a href="#delete-modal" onclick="setBlur()" class="el__link">delete</a>
+						<a href="#" class="el__link">edit</a>
+					</div>
+				</div>
+				<div class="el" onclick="openDiv(this)">
+					<img src="img/cat9.jpg" class="el__photo" alt="catImage">
+					<p class="el__name">01.02.2019 11.56, drodcdccccccccc</p>
+					<img src="img/heart.svg" alt="likeImage" class="el__like">
+					<p class="el__hashtag">#cat#neyyear</p>
+					<p class="el__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
+					<div class="el__links">
+						<a href="#delete-modal" onclick="setBlur()" class="el__link">delete</a>
+						<a href="#" class="el__link">edit</a>
+					</div>
+				</div>
+				<div class="el" onclick="openDiv(this)">
+					<img src="img/cat10.jpg" class="el__photo" alt="catImage">
+					<p class="el__name">01.02.2019 11.56, drodcdccccccccc</p>
+					<img src="img/heart.svg" alt="likeImage" class="el__like">
+					<p class="el__hashtag">#cat#neyyear</p>
+					<p class="el__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
+					<div class="el__links">
+						<a href="#delete-modal" onclick="setBlur()" class="el__link">delete</a>
+						<a href="#" class="el__link">edit</a>
+					</div>
+				</div>
+				<button class="main__button" type="button">Load more...</button>
+			</div>
+		</main>
+		<footer>
+			<div class="footer">
+				<a class="footer__link" href="#">PhotoPortal.by</a>
+				<p class="footer__text">by Dmitry Dronchenko, 7 group 2 course.</p>
+				<p class="footer__text">dima.dronchenko@gmail.com</p>
+				<p class="footer__text">last change:</p>
+			</div>
+		</footer>
+	</div>
+	<div id="delete-modal" class="modal-window">
+		<div class="modal-dialog delete-dialog">
+			<p class="delete-dialog__text">Are you sure you want to delete post?</p>
+			<form class="delete-dialog__form1" action="#"><button class="delete-dialog__button" onclick="unsetBlur()" type="submit">Delete</button></form>
+			<form class="delete-dialog__form2" action="#"><input class="delete-dialog__button" onclick="unsetBlur()" type="submit" value="Cancel" /></form>
+		</div>
+	</div>
+	<div id="signin-modal" class="modal-window">
+		<div class="modal-dialog signin-dialog">
+			<p class="signin-dialog__title">Sign in</p>
+			<form action="#" class="signin-dialog__form">
+				<p class="signin-dialog__text">Login:</p>
+				<input class="signin-dialog__input" type="text" placeholder="Enter your login here" />
+				<p class="signin-dialog__text">Password:</p>
+				<input class="signin-dialog__input" type="password" placeholder="And password here" />
+				<input class="signin-dialog__button" onclick="unsetBlur()" type="submit" value="Sign In" />
+			</form>
+			<form action="#" class="signin-dialog__form"><input class="signin-dialog__button" onclick="unsetBlur()" type="submit" value="Cancel" /></form>
+		</div>
+	</div>
+</body>
+</html>

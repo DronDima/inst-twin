@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link href="styles/styles.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:700|Lobster|Noto+Sans+TC|Frank+Ruhl+Libre|Roboto+Slab|Alegreya:400" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="scripts/script.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <header>
+    <div class="header">
+      <div class="header__logo">
+        <h1><a href="#">PhotoPortal</a></h1>
+      </div>
+      <div class="header__logInfo">
+        <p>You signed in as dronchenko</p>
+      </div>
+      <div class="header__buttons">
+        <form class="header__form" action="addEditPost.html"><button class="header__button" type="submit">Add post</button></form>
+        <form class="header__form" action="addEditPost.html"><button onclick="setBlur()" class="header__button" type="submit">Sign out</button></form>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="add-post">
+      <p class="add-post__title">New Post</p>
+      <form class="add-post__form" action="#">
+        <div class="add-post__author">
+          <p>Author name:</p>
+          <input class="add-post__input" value="dronchenko" type="text" disabled />
+        </div>
+        <div class="add-post__date">
+          <p>Date and time:</p>
+          <input class="add-post__input" value="01.02.2019 11.56" type="text" disabled />
+        </div>
+        <p class="add-post__hashtagsText">Hashtags:</p>
+        <input class="add-post__hashtagsInput" type="text" />
+        <p class="add-post__descText">Short description:</p>
+        <textarea class="add-post__descInput"></textarea>
+        <label for="uploadBtn" class="add-post__uploadButton">Upload file</label>
+        <input style="opacity: 0; z-index: -1; height: 0px" type="file" name="upload" id="uploadBtn" />
+        <input type="submit" value="Add post" class="add-post__addButton" />
+      </form>
+    </div>
+  </main>
+  <footer>
+    <div class="footer">
+      <a class="footer__link" href="#">PhotoPortal.by</a>
+      <p class="footer__text">by Dmitry Dronchenko, 7 group 2 course.</p>
+      <p class="footer__text">dima.dronchenko@gmail.com</p>
+      <p class="footer__text">last change:</p>
+    </div>
+  </footer>
+</body>
+</html>
+
+
+
