@@ -29,6 +29,13 @@
 	border: 1px solid @lightpink;
 	border-radius: 3px;
 	height: 30px;
+	background: @lightgray;
+	text-indent: 10px;
+	.text2();
+	font-size: 16px;
+	&:focus, &:hover {
+		box-shadow: 0 0 10px #240D394B;
+	}
 }
 .text1 {
 	font-size: 12px;
@@ -166,6 +173,9 @@ header {
 		}
 		.filter__inputs {
 			.filter__input {
+				&:focus, &:hover {
+					box-shadow: 0 0 10px #240D394B;
+				}
 				background-color: @lightgray;
 				border: 1px solid @lightpink;
 				border-radius: 3px;
@@ -194,7 +204,6 @@ header {
 				'but but';
 		}
 	}
-	display: grid;
 	grid-template-columns: repeat(4, auto);
 	grid-template-rows: 10% auto;
 }
@@ -218,7 +227,9 @@ main {
 		grid-template-columns: 1fr 1fr 20px;
 		grid-gap: 10px;
 		.el__like {
-			background: url(img/heart.svg);
+			&:hover {
+				color: @pink;
+			}
 			grid-row: ~'2 / 3';
 			grid-column: ~'3 / 4';
 			justify-self: end;
@@ -462,7 +473,9 @@ footer {
 		}
 		.add-post__descInput {
 			.input();
+			padding-top: 10px;
 			resize: none;
+			height: 120px;
 			grid-area: ~'5 / 1 / span 1 / span 2';
 		}
 		.add-post__uploadButton {

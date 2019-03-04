@@ -2,6 +2,8 @@ $(document).ready(function() {
   $("#date").datepicker();
 
 })
+
+
 function openDiv(el) {
   if(document.documentElement.clientWidth > 610) {
     if(el.style.gridColumn == "1 / 3") {

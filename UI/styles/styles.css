@@ -21,6 +21,15 @@
   border: 1px solid #C8A6B5;
   border-radius: 3px;
   height: 30px;
+  background: #E4DDE4;
+  text-indent: 10px;
+  color: #13061E;
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: 16px;
+}
+.input:focus,
+.input:hover {
+  box-shadow: 0 0 10px #240D394B;
 }
 .text1 {
   font-size: 12px;
@@ -133,12 +142,12 @@ header {
   background: #E4DDE4;
 }
 .filter {
+  display: grid;
   grid-gap: 10px;
   max-width: 700px;
   margin: auto;
   color: #13061E;
   font-family: 'Frank Ruhl Libre', serif;
-  display: grid;
   grid-template-columns: repeat(4, auto);
   grid-template-rows: 10% auto;
 }
@@ -183,6 +192,10 @@ header {
   background-color: #E4DDE4;
   border: 1px solid #C8A6B5;
   border-radius: 3px;
+}
+.filter .filter__form .filter__inputs .filter__input:focus,
+.filter .filter__form .filter__inputs .filter__input:hover {
+  box-shadow: 0 0 10px #240D394B;
 }
 .filter .filter__form .filter__inputs .filter__button {
   justify-self: end;
@@ -242,12 +255,14 @@ main {
   grid-gap: 10px;
 }
 .main .el .el__like {
-  background: url(img/heart.svg);
   grid-row: 2 / 3;
   grid-column: 3 / 4;
   justify-self: end;
   height: 20px;
   width: 20px;
+}
+.main .el .el__like:hover {
+  color: #A83859;
 }
 .main .el .el__name {
   grid-row: 2 / 3;
@@ -436,6 +451,15 @@ main {
   border: 1px solid #C8A6B5;
   border-radius: 3px;
   height: 30px;
+  background: #E4DDE4;
+  text-indent: 10px;
+  color: #13061E;
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: 16px;
+}
+.signin-dialog .signin-dialog__form .signin-dialog__input:focus,
+.signin-dialog .signin-dialog__form .signin-dialog__input:hover {
+  box-shadow: 0 0 10px #240D394B;
 }
 .signin-dialog .signin-dialog__button {
   width: 100px;
@@ -537,7 +561,16 @@ footer {
   border: 1px solid #C8A6B5;
   border-radius: 3px;
   height: 30px;
+  background: #E4DDE4;
+  text-indent: 10px;
+  color: #13061E;
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: 16px;
   grid-area: 3 / 1 / span 1 / span 2;
+}
+.add-post .add-post__form .add-post__hashtagsInput:focus,
+.add-post .add-post__form .add-post__hashtagsInput:hover {
+  box-shadow: 0 0 10px #240D394B;
 }
 .add-post .add-post__form .add-post__descText {
   grid-area: 4 / 1 / span 1 / span 2;
@@ -546,8 +579,19 @@ footer {
   border: 1px solid #C8A6B5;
   border-radius: 3px;
   height: 30px;
+  background: #E4DDE4;
+  text-indent: 10px;
+  color: #13061E;
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: 16px;
+  padding-top: 10px;
   resize: none;
+  height: 120px;
   grid-area: 5 / 1 / span 1 / span 2;
+}
+.add-post .add-post__form .add-post__descInput:focus,
+.add-post .add-post__form .add-post__descInput:hover {
+  box-shadow: 0 0 10px #240D394B;
 }
 .add-post .add-post__form .add-post__uploadButton {
   font-family: 'Montserrat', sans-serif;
