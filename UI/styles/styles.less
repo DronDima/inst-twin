@@ -7,6 +7,7 @@
 @white: #FFFFFF;
 
 * {
+    outline: none;
 	margin: 0;
 	padding: 0;
 	text-decoration: none;
@@ -36,6 +37,15 @@
 	&:focus, &:hover {
 		box-shadow: 0 0 10px #240D394B;
 	}
+}
+.hashtag {
+    padding: 0 5px;
+    border: none;
+    border-radius: 3px;
+    background: @pink;
+    font-size: 14px;
+    font-family: 'Noto Sans TC', sans-serif;
+    color: @white;
 }
 .text1 {
 	font-size: 12px;
@@ -137,75 +147,129 @@ header {
 
 .filter {
 	display: grid;
-	grid-gap: 10px;
-	max-width: 700px;
+    grid-template-columns: repeat(2, auto);
+    grid-template-rows: 10% auto;
+    grid-gap: 10px;
+    max-width: 600px;
 	margin: auto;
-	.text2();
-	* {
-		margin-top: 5px;
-	}
+    padding: 0 40px;
+    .text2();
 	.filter__title {
-		margin: 0 40px;
 		display: grid;
-		grid-column: ~'1/4';
+		grid-column: ~'1/3';
 		grid-row: ~'1/2';
-	}
-	.filter__text {
-		grid-column: ~'1/2';
-		font-size: 20px;
-	}
-	.filter__symbol {
-		grid-column: ~'2/3';
-		img {
-			width: 20px;
-			height: 20px;
-		}
-		align-self: center;
-		justify-self: end;
+        .filter__text {
+            grid-column: ~'1/2';
+            font-size: 20px;
+        }
+        .filter__symbol {
+            grid-column: ~'2/3';
+            img {
+                width: 20px;
+                height: 20px;
+            }
+            align-self: center;
+            justify-self: end;
+        }
 	}
 	.filter__form {
-		margin: 0 40px 0 40px;
 		grid-row: ~'2/3';
-		grid-column: ~'1/4';
+		grid-column: ~'1/3';
 		.filter__text {
 			font-size: 16px;
 			margin-left: 0;
 		}
 		.filter__inputs {
 			.filter__input {
-				&:focus, &:hover {
-					box-shadow: 0 0 10px #240D394B;
-				}
-				background-color: @lightgray;
-				border: 1px solid @lightpink;
-				border-radius: 3px;
+				min-width: 115px;
+				.input();
 			}
 			.filter__button {
 				justify-self: end;
 				grid-area: but;
 				.button();
+                @media (max-width: 465px) {
+                    justify-self: center;
+                    width: 100%;
+                }
 			}
 			.filter__text-date {grid-area: text-date;}
 			#date {grid-area: date;}
 			.filter__text-author {grid-area: text-author;}
 			#author {grid-area: author;}
 			.filter__text-hashtag {grid-area: text-hashtag;}
-			#hashtag {grid-area: hashtag;}
+			.filter__tags {
+                &:hover {
+                    cursor: text;
+                }
+                .input();
+                text-indent: 0;
+                height: auto;
+                grid-area: hashtag;
+                grid-auto-flow: dense;
+                .filter__tags-input {
+                    .text2();
+                    font-size: 16px;
+                    height: 20px;
+                    display: inline-grid;
+                    padding: 5px 0;
+                    background: @lightgray;
+                    border: none;
+                    margin-left: 10px;
+                }
+                .filter__tag {
+                    margin: 5px 0 5px 10px;
+                    display: inline-grid;
+                    .hashtag();
+                }
+            }
+            .filter__variants {
+                display: none;
+                grid-area: vars;
+                cursor: default;
+                .filter__variant {
+                    &:hover {
+                        background: @darkblue;
+                        cursor: pointer;
+                    }
+                    margin: 3px;
+                    .hashtag();
+                    display: inline-grid;
+                    grid-auto-flow: dense;
+                    grid-gap: 5px;
+                }
+                .filter__variant_hide {
+                    display: none;
+                }
+            }
 			.text {
 				font-size: 14px;
 			}
 			display: grid;
+            grid-gap: 10px;
 			margin-left: 20px;
 			grid-template-columns: 100px auto;
 			grid-template-areas: 
-				'text-date date'
-				'text-author author'
-				'text-hashtag hashtag'
-				'but but';
-		}
+				'text-date date date'
+				'text-author author author'
+				'text-hashtag hashtag hashtag'
+                'vars vars vars'
+				'but but but';
+            @media (max-width: 465px) {
+                grid-template-columns: auto;
+                grid-template-areas:
+                        'text-date'
+                        'date'
+                        'date'
+                        'text-author'
+                        'author'
+                        'text-hashtag'
+                        'hashtag'
+                        'vars'
+                        'but';
+            }
+        }
 	}
-	grid-template-columns: repeat(4, auto);
-	grid-template-rows: 10% auto;
 }
 
 main {
@@ -278,13 +342,29 @@ main {
 			grid-column: ~'1/3';
 			width: 80%;
 			justify-self: center;
-			.el__desc {
-				display: block;
-			}
-			.el__hashtag {
+            grid-template-rows: auto 20px 20px auto auto;
+            grid-template-columns: 1fr 1fr 20px;
+            grid-gap: 10px;
+            .el__photo {
+                grid-area: ~'1 / 1 / span 1 / span 3';
+            }
+            .el__name {
+                grid-area: ~'2 / 1 / span 1 / span 3';
+            }
+            .el__like {
+                grid-area: ~'2 / 3 / span 1 / span 1';
+            }
+            .el__hashtag {
+                justify-self: start;
+                grid-area: ~'3 / 1 / span 1 / span 3';
+                display: block;
+            }
+            .el__desc {
+                grid-area: ~'4 / 1 / span 1 / span 3';
 				display: block;
 			}
 			.el__link {
+                grid-area: ~'5 / 1 / span 1 / span 3';
 				display: inline-grid;
 			}
 		}
@@ -315,8 +395,8 @@ main {
 	}
 	.modal-dialog {
 		z-index: 100;
-		box-shadow: 0 0 50px #240D39CC, inset 0 0 34px #240D394D;
-		position: relative;
+        box-shadow: 0 0 50px #240D39CC, inset 0 0 34px #240D394D;
+        position: relative;
 		margin: 10% auto;
 		background: @lightgray;
 	}

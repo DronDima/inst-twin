@@ -38,11 +38,40 @@
 					<p class="filter__text">Filtrate by:</p>
 					<div class="filter__inputs">
 						<p class="filter__text-date text">Date</p>
-						<input type="text" class="filter__input datepicker-here" data-multiple-dates="2" data-timepicker="true" id="date" />
+						<input type="text" class="filter__input datepicker-here" placeholder="From" data-timepicker="true" id="date-from" />
+						<input type="text" class="filter__input datepicker-here" placeholder="To" data-timepicker="true" id="date-to" />
 						<p class="filter__text-author text">Author</p>
-						<input type="search" class="filter__input" id="author" />
+						<input type="search" class="filter__input" placeholder="Enter author name" id="author" />
 						<p class="filter__text-hashtag text">Hashtags</p>
-						<input type="text" class="filter__input" id="hashtag" />
+						<span></span>
+						<div class="filter__tags" onclick="document.getElementsByClassName('filter__tags-input')[0].focus()">
+							<input class="filter__tags-input" onfocus="setTimeout(showVars,100)" onblur="setTimeout(hideVars,100)" onkeydown="keyDown(this, event)"
+										 type="text" placeholder="Choose hashtags">
+						</div>
+						<div class="filter__variants">
+							<p class="filter__variant" onclick="addHashtag(this)">#cat</p>
+							<p class="filter__variant" onclick="addHashtag(this)">#wwwwwwwwwwwwwwwwwwww</p>
+							<p class="filter__variant" onclick="addHashtag(this)">#newyear</p>
+							<p class="filter__variant" onclick="addHashtag(this)">#newyear</p>
+							<p class="filter__variant" onclick="addHashtag(this)">#newyear</p>
+							<p class="filter__variant" onclick="addHashtag(this)">#newyear</p>
+							<p class="filter__variant" onclick="addHashtag(this)">#cat</p>
+							<p class="filter__variant" onclick="addHashtag(this)">#newyear</p>
+							<p class="filter__variant" onclick="addHashtag(this)">#newyear</p>
+							<p class="filter__variant" onclick="addHashtag(this)">#newyear</p>
+							<p class="filter__variant" onclick="addHashtag(this)">#newyear</p>
+							<p class="filter__variant" onclick="addHashtag(this)">#newyear</p>
+							<p class="filter__variant" onclick="addHashtag(this)">#newyear</p>
+							<p class="filter__variant" onclick="addHashtag(this)">#cat</p>
+							<p class="filter__variant" onclick="addHashtag(this)">#cat</p>
+							<p class="filter__variant" onclick="addHashtag(this)">#cat</p>
+							<p class="filter__variant" onclick="addHashtag(this)">#newyear</p>
+							<p class="filter__variant" onclick="addHashtag(this)">#cat</p>
+							<p class="filter__variant" onclick="addHashtag(this)">#cat</p>
+							<p class="filter__variant" onclick="addHashtag(this)">#cat</p>
+							<p class="filter__variant" onclick="addHashtag(this)">#cat</p>
+							<p class="filter__variant" onclick="addHashtag(this)">#cat</p>
+						</div>
 						<button class="filter__button" type="submit">Apply</button>
 					</div>
 				</form>
@@ -184,10 +213,10 @@
 			<p class="signin-dialog__title">Sign in</p>
 			<form action="#" class="signin-dialog__form">
 				<p class="signin-dialog__text">Login:</p>
-				<input class="signin-dialog__input" type="text" placeholder="Enter your login here" />
+				<input class="signin-dialog__input" type="text" placeholder="Enter your login here" required="" />
 				<p class="signin-dialog__text">Password:</p>
-				<input class="signin-dialog__input" type="password" placeholder="And password here" />
-				<input class="signin-dialog__button" onclick="unsetBlur()" type="submit" value="Sign In" />
+				<input class="signin-dialog__input" type="password" placeholder="And password here" required="" />
+				<input class="signin-dialog__button" type="submit" value="Sign In" />
 			</form>
 			<form action="#" class="signin-dialog__form"><input class="signin-dialog__button" onclick="unsetBlur()" type="submit" value="Cancel" /></form>
 		</div>

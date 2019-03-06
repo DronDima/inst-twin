@@ -1,7 +1,38 @@
 $(document).ready(function() {
-  $("#date").datepicker();
-
+  $("#date-from").datepicker();
+  $("#date-to").datepicker();
 })
+
+function hideVars() {
+  document.getElementsByClassName("filter__variants")[0].style.display = "none";
+}
+
+function showVars() {
+  document.getElementsByClassName("filter__variants")[0].style.display = "block";
+}
+
+function keyDown(input, event) {
+  if(event.keyCode == 13 && input.value != "") {
+    var span = document.createElement('span');
+    span.classList.add("filter__tag");
+    span.innerHTML = input.value;
+    input.parentNode.insertBefore(span, input);
+    input.value = "";
+  }
+  else if(event.keyCode == 8 && input.value == "") {
+    input.previousSibling.remove();
+  }
+}
+
+function addHashtag(element) {
+  element.classList.toggle("filter__variant_hide");
+  var span = document.createElement('span');
+  span.classList.add("filter__tag");
+  span.innerHTML = element.innerHTML;
+  var input = document.getElementsByClassName("filter__tags-input")[0];
+  input.parentNode.insertBefore(span, input);
+  document.getElementsByClassName("filter__tags-input")[0].focus();
+}
 
 
 function openDiv(el) {
