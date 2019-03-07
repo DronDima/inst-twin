@@ -14,34 +14,34 @@
       <div class="header__logo">
         <h1><a href="#">PhotoPortal</a></h1>
       </div>
-      <div class="header__logInfo">
+      <div class="header__logInfo text1">
         <p>You signed in as dronchenko</p>
       </div>
       <div class="header__buttons">
-        <form class="header__form" action="addEditPost.html"><button class="header__button" type="submit">Add post</button></form>
-        <form class="header__form" action="addEditPost.html"><button onclick="setBlur()" class="header__button" type="submit">Sign out</button></form>
+        <form class="header__button-form" action="addEditPost.html"><button class="header__button button" type="submit">Add post</button></form>
+        <form class="header__button-form" action="addEditPost.html"><button onclick="setBlur()" class="header__button button" type="submit">Sign out</button></form>
       </div>
     </div>
   </header>
   <main>
     <div class="add-post">
-      <p class="add-post__title">New Post</p>
-      <form class="add-post__form" action="#">
+      <p class="add-post__title text2">New Post</p>
+      <form class="add-post__form text2" action="#">
         <div class="add-post__author">
           <p>Author name:</p>
-          <input class="add-post__input" value="dronchenko" type="text" disabled />
+          <input class="add-post__input text2" value="dronchenko" type="text" disabled />
         </div>
         <div class="add-post__date">
           <p>Date and time:</p>
-          <input class="add-post__input" value="01.02.2019 11.56" type="text" disabled />
+          <input class="add-post__input text2" value="01.02.2019 11.56" type="text" disabled />
         </div>
-        <p class="add-post__hashtagsText">Hashtags:</p>
-        <input class="add-post__hashtagsInput" placeholder="Enter hashtags here" type="text" />
-        <p class="add-post__descText">Short description:</p>
-        <textarea class="add-post__descInput" placeholder="And post description here" required></textarea>
-        <label for="uploadBtn" class="add-post__uploadButton">Upload file</label>
+        <p class="add-post__hashtags-text">Hashtags:</p>
+        <input class="add-post__hashtags-input input" placeholder="Enter hashtags here" type="text" />
+        <p class="add-post__desc-text">Short description:</p>
+        <textarea class="add-post__desc-input input" placeholder="And post description here" maxlength="200" required></textarea>
+        <label for="uploadBtn" class="add-post__upload-button">Upload file</label>
         <input style="opacity: 0; z-index: -1; height: 0px" type="file" name="upload" id="uploadBtn" />
-        <input type="submit" value="Add post" class="add-post__addButton" />
+        <input type="submit" value="Add post" class="add-post__add-button button" />
       </form>
     </div>
   </main>

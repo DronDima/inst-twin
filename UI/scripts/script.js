@@ -4,17 +4,18 @@ $(document).ready(function() {
 })
 
 function hideVars() {
-  document.getElementsByClassName("filter__variants")[0].style.display = "none";
+  document.getElementsByClassName("filter__variants")[0].classList.toggle("filter__variants_hidden");
 }
 
 function showVars() {
-  document.getElementsByClassName("filter__variants")[0].style.display = "block";
+  document.getElementsByClassName("filter__variants")[0].classList.toggle("filter__variants_hidden");
 }
 
 function keyDown(input, event) {
   if(event.keyCode == 13 && input.value != "") {
     var span = document.createElement('span');
     span.classList.add("filter__tag");
+    span.classList.add("hashtag");
     span.innerHTML = input.value;
     input.parentNode.insertBefore(span, input);
     input.value = "";
@@ -28,12 +29,18 @@ function addHashtag(element) {
   element.classList.toggle("filter__variant_hide");
   var span = document.createElement('span');
   span.classList.add("filter__tag");
+  span.classList.add("hashtag");
   span.innerHTML = element.innerHTML;
   var input = document.getElementsByClassName("filter__tags-input")[0];
   input.parentNode.insertBefore(span, input);
   document.getElementsByClassName("filter__tags-input")[0].focus();
 }
 
+function showFilter() {
+  document.getElementsByClassName("filter__form")[0].classList.toggle("filter__form_hidden");
+  document.getElementsByClassName("filter__symbol")[0].firstElementChild.classList.toggle("fa-angle-down");
+  document.getElementsByClassName("filter__symbol")[0].firstElementChild.classList.toggle("fa-angle-up");
+}
 
 function openDiv(el) {
   if(document.documentElement.clientWidth > 610) {
