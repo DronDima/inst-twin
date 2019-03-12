@@ -235,7 +235,7 @@ var posts = (function () {
     };
     function isUnique(post) {
         for(var i = 0 ; i < photoPosts.length; i++) {
-            if (photoPosts[i].id == post.id) {
+            if (photoPosts[i].id === post.id) {
                 return false;
             }
         }
@@ -244,7 +244,7 @@ var posts = (function () {
     function isIntersect(postTags, configTags) {
         for (var i = 0; i < postTags.length; i++) {
             for (var j = 0; j < configTags.length; j++) {
-                if (postTags[i] == configTags[j]) {
+                if (postTags[i] === configTags[j]) {
                     return true;
                 }
             }
@@ -254,12 +254,12 @@ var posts = (function () {
 
     module.getPhotoPosts = function (skip = 0, count = 10, filterConfig = defaultFilterConfig) {
         var filtratedPosts = photoPosts.filter(post =>
-            post.createdAt.valueOf() >= filterConfig.dateFrom.valueOf() &&
-            post.createdAt.valueOf() <= filterConfig.dateTo.valueOf() &&
-            (post.author == filterConfig.authorName || filterConfig.authorName == "") &&
-            (isIntersect(post.hashtags, filterConfig.hashtags) || filterConfig.hashtags.length == 0)
+            post.createdAt.getTime() >= filterConfig.dateFrom.getTime() &&
+            post.createdAt.getTime() <= filterConfig.dateTo.getTime() &&
+            (post.author === filterConfig.authorName || filterConfig.authorName === "") &&
+            (isIntersect(post.hashtags, filterConfig.hashtags) || filterConfig.hashtags.length === 0)
             ).sort(function (a, b) {
-            return b.createdAt.valueOf()- a.createdAt.valueOf();
+            return b.createdAt.getTime()- a.createdAt.getTime();
         });
         var result = [];
         var number = 0;
@@ -276,13 +276,13 @@ var posts = (function () {
     module.getPhotoPost = function (id) {
         var result;
         photoPosts.forEach(function (item) {
-            if(item.id == id){
+            if(item.id === id){
                 console.log("Post with id " + id + " was found:");
                 console.log(item);
                 result = item;
             }
         });
-        if (result != undefined) {
+        if (result !== undefined) {
             return result;
         }
         console.log("Post with id " + id + " not found.");
@@ -291,8 +291,8 @@ var posts = (function () {
         if (!post.hasOwnProperty("id") || typeof post.id != "string" || !isUnique(post) ||
             !post.hasOwnProperty("description") || post.description.length >= 200 || typeof post.description != "string" ||
             !post.hasOwnProperty("createdAt") ||
-            !post.hasOwnProperty("author") || typeof post.author != "string" || post.author == "" ||
-            !post.hasOwnProperty("photoLink") || typeof post.photoLink != "string" || post.author == "" ||
+            !post.hasOwnProperty("author") || typeof post.author != "string" || post.author === "" ||
+            !post.hasOwnProperty("photoLink") || typeof post.photoLink != "string" || post.photoLink === "" ||
             !post.hasOwnProperty("hashtags") ||
             !post.hasOwnProperty("likes")) {
             console.log("Post with id " + post.id + " not valid.");
@@ -305,7 +305,7 @@ var posts = (function () {
     };
 
     module.addPhotoPost = function (post) {
-        if (module.validatePhotoPost(post) == true) {
+        if (module.validatePhotoPost(post) === true) {
             photoPosts.push(post);
             console.log("Post with id " + post.id + " added.");
             return true;
@@ -319,11 +319,11 @@ var posts = (function () {
     module.removePhotoPost = function (id) {
         var index = -1;
         photoPosts.forEach(function (item, i) {
-            if (item.id == id) {
+            if (item.id === id) {
                 index = i;
             }
         });
-        if (index != -1) {
+        if (index !== -1) {
             photoPosts.splice(index, 1);
             console.log("Post with id " + id + " deleted.");
             return true;
@@ -338,12 +338,15 @@ var posts = (function () {
         var post = module.getPhotoPost(id);
         var savePost = Object.assign({}, post);
         for (var field in edits) {
-            if (field != "id" && field != "author" && field != "createdAt" && field != "likes") {
+            if (field !== "id" && field !== "author" && field !== "createdAt" && field !== "likes") {
                 post[field] = edits[field];
             }
         }
         module.removePhotoPost(post.id);
-        if (module.validatePhotoPost(post) == true) {
+        if (module.validatePhotoPost(post) === true) {
+
+
+
             module.addPhotoPost(post);
             console.log("Post successfully changed.");
             return true;

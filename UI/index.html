@@ -2,13 +2,10 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<link href="styles/datepicker.css" rel="stylesheet" type="text/css">
 	<link href="styles/styles.css" rel="stylesheet" />
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:700|Lobster|Noto+Sans+TC|Frank+Ruhl+Libre|Roboto+Slab|Alegreya:400" rel="stylesheet" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="scripts/script.js"></script>
-	<script src="scripts/jquery-3.3.1.min.js"></script>
-	<script src="scripts/datepicker.js"></script>
 	<script src="scripts/posts.js"></script>
 	<script src="scripts/testscript.js"></script>
 	<script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
@@ -20,176 +17,179 @@
 		<header>
 			<div class="header">
 				<div class="header__logo">
-					<h1><a href="#">PhotoPortal</a></h1>
+					<a href="#"><h1>PhotoPortal</h1></a>
 				</div>
-				<div class="header__logInfo text1">
+				<div class="header__logInfo text-type-1">
 					<p>You signed in as dronchenko</p>
 				</div>
 				<div class="header__buttons">
-					<form class="header__button-form" action="addEditPost.html"><button class="header__button button" type="submit">Add post</button></form>
-					<form class="header__button-form" action="#signin-modal"><button onclick="setBlur()" class="header__button button" type="submit">Sign out</button></form>
+					<button class="header__button button" type="submit" onclick="location.href='addEditPost.html'">Add post</button>
+					<button onclick="setBlur()" class="header__button button" type="submit">Sign out</button>
 				</div>
 			</div>
 		</header>
-		<div class="filter-container">
-			<div class="filter text2">
-				<div class="filter__title" onclick="showFilter()">
-					<p class="filter__text">Filter</p>
-					<div class="filter__symbol"><i class="fas fa-angle-down"></i></div>
-				</div>
+		<aside class="filter-container">
+			<div class="filter text-type-2">
+				<button class="filter__title" onclick="showFilter()">
+					<span class="filter__text text-type-2">Filter</span>
+					<span class="filter__symbol"><i class="fas fa-angle-down"></i></span>
+				</button>
 				<form class="filter__form filter__form_hidden" action="#">
 					<p class="filter__text">Filtrate by:</p>
 					<div class="filter__inputs">
-						<p class="filter__text-date text">Date</p>
-						<input type="text" class="filter__input datepicker-here input" placeholder="From" data-timepicker="true" id="date-from" />
-						<input type="text" class="filter__input datepicker-here input" placeholder="To" data-timepicker="true" id="date-to" />
-						<p class="filter__text-author text">Author</p>
+						<label class="filter__text-date-from text" for="date-from">Date From</label>
+						<input type="date" class="filter__input input" id="date-from" />
+						<input type="time" class="filter__input input" id="time-from" />
+						<label class="filter__text-date-to text" for="date-to">Date To</label>
+						<input type="date" class="filter__input input" id="date-to" />
+						<input type="time" class="filter__input input" id="time-to" />
+						<label class="filter__text-author text" for="author">Author</label>
 						<input type="search" class="filter__input input" placeholder="Enter author name" id="author" />
-						<p class="filter__text-hashtag text">Hashtags</p>
+						<label class="filter__text-hashtag text" for="tags">Hashtags</label>
 						<span></span>
 						<div class="filter__tags input" onclick="document.getElementsByClassName('filter__tags-input')[0].focus()">
-							<input class="filter__tags-input text2" onfocus="setTimeout(showVars,100)" onblur="setTimeout(hideVars,100)" onkeydown="keyDown(this, event)"
-										 type="text" placeholder="Choose hashtags">
+							<input class="filter__tags-input text-type-2" onfocus="setTimeout(showVars,100)" onblur="setTimeout(hideVars,100)" onkeydown="keyDown(this, event)"
+										 type="text" placeholder="Choose hashtags" id="tags">
 						</div>
-						<div class="filter__variants filter__variants_hidden">
-							<p class="filter__variant hashtag" onclick="addHashtag(this)">#cat</p>
-							<p class="filter__variant hashtag" onclick="addHashtag(this)">#wwwwwwwwwwwwwwwwwwww</p>
-							<p class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</p>
-							<p class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</p>
-							<p class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</p>
-							<p class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</p>
-							<p class="filter__variant hashtag" onclick="addHashtag(this)">#cat</p>
-							<p class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</p>
-							<p class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</p>
-							<p class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</p>
-							<p class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</p>
-							<p class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</p>
-							<p class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</p>
-							<p class="filter__variant hashtag" onclick="addHashtag(this)">#cat</p>
-							<p class="filter__variant hashtag" onclick="addHashtag(this)">#cat</p>
-							<p class="filter__variant hashtag" onclick="addHashtag(this)">#cat</p>
-							<p class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</p>
-							<p class="filter__variant hashtag" onclick="addHashtag(this)">#cat</p>
-							<p class="filter__variant hashtag" onclick="addHashtag(this)">#cat</p>
-							<p class="filter__variant hashtag" onclick="addHashtag(this)">#cat</p>
-							<p class="filter__variant hashtag" onclick="addHashtag(this)">#cat</p>
-							<p class="filter__variant hashtag" onclick="addHashtag(this)">#cat</p>
-						</div>
+						<ul class="filter__variants filter__variants_hidden">
+							<li class="filter__variant hashtag" onclick="addHashtag(this)">#cat</li>
+							<li class="filter__variant hashtag" onclick="addHashtag(this)">#wwwwwwwwwwwwwwwwwwww</li>
+							<li class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</li>
+							<li class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</li>
+							<li class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</li>
+							<li class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</li>
+							<li class="filter__variant hashtag" onclick="addHashtag(this)">#cat</li>
+							<li class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</li>
+							<li class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</li>
+							<li class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</li>
+							<li class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</li>
+							<li class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</li>
+							<li class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</li>
+							<li class="filter__variant hashtag" onclick="addHashtag(this)">#cat</li>
+							<li class="filter__variant hashtag" onclick="addHashtag(this)">#cat</li>
+							<li class="filter__variant hashtag" onclick="addHashtag(this)">#cat</li>
+							<li class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</li>
+							<li class="filter__variant hashtag" onclick="addHashtag(this)">#cat</li>
+							<li class="filter__variant hashtag" onclick="addHashtag(this)">#cat</li>
+							<li class="filter__variant hashtag" onclick="addHashtag(this)">#cat</li>
+							<li class="filter__variant hashtag" onclick="addHashtag(this)">#cat</li>
+							<li class="filter__variant hashtag" onclick="addHashtag(this)">#cat</li>
+						</ul>
 						<button class="filter__button button" type="submit">Apply</button>
 					</div>
 				</form>
 			</div>
-		</div>
+		</aside>
 		<main>
 			<div class="main">
-				<div class="el" onclick="openDiv(this)">
-					<img src="img/cat1.jpg" class="el__photo" alt="catImage">
-					<p class="el__name text1">01.02.2019 11.56, drodcdccccccccc</p>
-					<i class="el__like far fa-heart"></i>
-					<p class="el__hashtag">#cat#neyyear</p>
-					<p class="el__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
-					<div class="el__links">
-						<a href="#delete-modal" onclick="setBlur()" class="el__link text1">delete</a>
-						<a href="#" class="el__link text1">edit</a>
+				<div class="post" onclick="openDiv(this)">
+					<img src="img/cat1.jpg" class="post__photo" alt="catImage">
+					<p class="post__name text-type-1">01.02.2019 11.56, drodcdccccccccc</p>
+					<i class="post__like far fa-heart"></i>
+					<p class="post__hashtag text-type-1">#cat#neyyear</p>
+					<p class="post__desc text-type-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
+					<div class="post__links">
+						<a href="#delete-modal" onclick="setBlur()" class="post__link text-type-1">delete</a>
+						<a href="#" class="post__link text-type-1">edit</a>
 					</div>
 				</div>
-				<div class="el" onclick="openDiv(this)">
-					<img src="img/cat2.jpg" class="el__photo" alt="catImage">
-					<p class="el__name text1">01.02.2019 11.56, drodcdccccccccc</p>
-					<i class="el__like far fa-heart"></i>
-					<p class="el__hashtag">#cat#neyyear</p>
-					<p class="el__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
-					<div class="el__links">
-						<a href="#delete-modal" onclick="setBlur()" class="el__link text1">delete</a>
-						<a href="#" class="el__link text1">edit</a>
+				<div class="post" onclick="openDiv(this)">
+					<img src="img/cat2.jpg" class="post__photo" alt="catImage">
+					<p class="post__name text-type-1">01.02.2019 11.56, drodcdccccccccc</p>
+					<i class="post__like far fa-heart"></i>
+					<p class="post__hashtag text-type-1">#cat#neyyear</p>
+					<p class="post__desc text-type-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
+					<div class="post__links">
+						<a href="#delete-modal" onclick="setBlur()" class="post__link text-type-1">delete</a>
+						<a href="#" class="post__link text-type-1">edit</a>
 					</div>
 				</div>
-				<div class="el" onclick="openDiv(this)">
-					<img src="img/cat3.jpg" class="el__photo" alt="catImage">
-					<p class="el__name text1">01.02.2019 11.56, drodcdccccccccc</p>
-					<i class="el__like far fa-heart"></i>
-					<p class="el__hashtag">#cat#neyyear</p>
-					<p class="el__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
-					<div class="el__links">
-						<a href="#delete-modal" onclick="setBlur()" class="el__link text1">delete</a>
-						<a href="#" class="el__link text1">edit</a>
+				<div class="post" onclick="openDiv(this)">
+					<img src="img/cat3.jpg" class="post__photo" alt="catImage">
+					<p class="post__name text-type-1">01.02.2019 11.56, drodcdccccccccc</p>
+					<i class="post__like far fa-heart"></i>
+					<p class="post__hashtag text-type-1">#cat#neyyear</p>
+					<p class="post__desc text-type-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
+					<div class="post__links">
+						<a href="#delete-modal" onclick="setBlur()" class="post__link text-type-1">delete</a>
+						<a href="#" class="post__link text-type-1">edit</a>
 					</div>
 				</div>
-				<div class="el" onclick="openDiv(this)">
-					<img src="img/cat4.jpg" class="el__photo" alt="catImage">
-					<p class="el__name text1">01.02.2019 11.56, drodcdccccccccc</p>
-					<i class="el__like far fa-heart"></i>
-					<p class="el__hashtag">#cat#neyyear</p>
-					<p class="el__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
-					<div class="el__links">
-						<a href="#delete-modal" onclick="setBlur()" class="el__link text1">delete</a>
-						<a href="#" class="el__link text1">edit</a>
+				<div class="post" onclick="openDiv(this)">
+					<img src="img/cat4.jpg" class="post__photo" alt="catImage">
+					<p class="post__name text-type-1">01.02.2019 11.56, drodcdccccccccc</p>
+					<i class="post__like far fa-heart"></i>
+					<p class="post__hashtag text-type-1">#cat#neyyear</p>
+					<p class="post__desc text-type-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
+					<div class="post__links">
+						<a href="#delete-modal" onclick="setBlur()" class="post__link text-type-1">delete</a>
+						<a href="#" class="post__link text-type-1">edit</a>
 					</div>
 				</div>
-				<div class="el" onclick="openDiv(this)">
-					<img src="img/cat5.jpg" class="el__photo" alt="catImage">
-					<p class="el__name text1">01.02.2019 11.56, drodcdccccccccc</p>
-					<i class="el__like far fa-heart"></i>
-					<p class="el__hashtag">#cat#neyyear</p>
-					<p class="el__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
-					<div class="el__links">
-						<a href="#delete-modal" onclick="setBlur()" class="el__link text1">delete</a>
-						<a href="#" class="el__link text1">edit</a>
+				<div class="post" onclick="openDiv(this)">
+					<img src="img/cat5.jpg" class="post__photo" alt="catImage">
+					<p class="post__name text-type-1">01.02.2019 11.56, drodcdccccccccc</p>
+					<i class="post__like far fa-heart"></i>
+					<p class="post__hashtag text-type-1">#cat#neyyear</p>
+					<p class="post__desc text-type-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
+					<div class="post__links">
+						<a href="#delete-modal" onclick="setBlur()" class="post__link text-type-1">delete</a>
+						<a href="#" class="post__link text-type-1">edit</a>
 					</div>
 				</div>
-				<div class="el" onclick="openDiv(this)">
-					<img src="img/cat6.jpg" class="el__photo" alt="catImage">
-					<p class="el__name text1">01.02.2019 11.56, drodcdccccccccc</p>
-					<i class="el__like far fa-heart"></i>
-					<p class="el__hashtag">#cat#neyyear</p>
-					<p class="el__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
-					<div class="el__links">
-						<a href="#delete-modal" onclick="setBlur()" class="el__link text1">delete</a>
-						<a href="#" class="el__link text1">edit</a>
+				<div class="post" onclick="openDiv(this)">
+					<img src="img/cat6.jpg" class="post__photo" alt="catImage">
+					<p class="post__name text-type-1">01.02.2019 11.56, drodcdccccccccc</p>
+					<i class="post__like far fa-heart"></i>
+					<p class="post__hashtag text-type-1">#cat#neyyear</p>
+					<p class="post__desc text-type-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
+					<div class="post__links">
+						<a href="#delete-modal" onclick="setBlur()" class="post__link text-type-1">delete</a>
+						<a href="#" class="post__link text-type-1">edit</a>
 					</div>
 				</div>
-				<div class="el" onclick="openDiv(this)">
-					<img src="img/cat7.jpg" class="el__photo" alt="catImage">
-					<p class="el__name text1">01.02.2019 11.56, drodcdccccccccc</p>
-					<i class="el__like far fa-heart"></i>
-					<p class="el__hashtag">#cat#neyyear</p>
-					<p class="el__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
-					<div class="el__links">
-						<a href="#delete-modal" onclick="setBlur()" class="el__link text1">delete</a>
-						<a href="#" class="el__link text1">edit</a>
+				<div class="post" onclick="openDiv(this)">
+					<img src="img/cat7.jpg" class="post__photo" alt="catImage">
+					<p class="post__name text-type-1">01.02.2019 11.56, drodcdccccccccc</p>
+					<i class="post__like far fa-heart"></i>
+					<p class="post__hashtag text-type-1">#cat#neyyear</p>
+					<p class="post__desc text-type-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
+					<div class="post__links">
+						<a href="#delete-modal" onclick="setBlur()" class="post__link text-type-1">delete</a>
+						<a href="#" class="post__link text-type-1">edit</a>
 					</div>
 				</div>
-				<div class="el" onclick="openDiv(this)">
-					<img src="img/cat8.jpg" class="el__photo" alt="catImage">
-					<p class="el__name text1">01.02.2019 11.56, drodcdccccccccc</p>
-					<i class="el__like far fa-heart"></i>
-					<p class="el__hashtag">#cat#neyyear</p>
-					<p class="el__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
-					<div class="el__links">
-						<a href="#delete-modal" onclick="setBlur()" class="el__link text1">delete</a>
-						<a href="#" class="el__link text1">edit</a>
+				<div class="post" onclick="openDiv(this)">
+					<img src="img/cat8.jpg" class="post__photo" alt="catImage">
+					<p class="post__name text-type-1">01.02.2019 11.56, drodcdccccccccc</p>
+					<i class="post__like far fa-heart"></i>
+					<p class="post__hashtag text-type-1">#cat#neyyear</p>
+					<p class="post__desc text-type-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
+					<div class="post__links">
+						<a href="#delete-modal" onclick="setBlur()" class="post__link text-type-1">delete</a>
+						<a href="#" class="post__link text-type-1">edit</a>
 					</div>
 				</div>
-				<div class="el" onclick="openDiv(this)">
-					<img src="img/cat9.jpg" class="el__photo" alt="catImage">
-					<p class="el__name text1">01.02.2019 11.56, drodcdccccccccc</p>
-					<i class="el__like far fa-heart"></i>
-					<p class="el__hashtag">#cat#neyyear</p>
-					<p class="el__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
-					<div class="el__links">
-						<a href="#delete-modal" onclick="setBlur()" class="el__link text1">delete</a>
-						<a href="#" class="el__link text1">edit</a>
+				<div class="post" onclick="openDiv(this)">
+					<img src="img/cat9.jpg" class="post__photo" alt="catImage">
+					<p class="post__name text-type-1">01.02.2019 11.56, drodcdccccccccc</p>
+					<i class="post__like far fa-heart"></i>
+					<p class="post__hashtag text-type-1">#cat#neyyear</p>
+					<p class="post__desc text-type-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
+					<div class="post__links">
+						<a href="#delete-modal" onclick="setBlur()" class="post__link text-type-1">delete</a>
+						<a href="#" class="post__link text-type-1">edit</a>
 					</div>
 				</div>
-				<div class="el" onclick="openDiv(this)">
-					<img src="img/cat10.jpg" class="el__photo" alt="catImage">
-					<p class="el__name text1">01.02.2019 11.56, drodcdccccccccc</p>
-					<i class="el__like far fa-heart"></i>
-					<p class="el__hashtag">#cat#neyyear</p>
-					<p class="el__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
-					<div class="el__links">
-						<a href="#delete-modal" onclick="setBlur()" class="el__link text1">delete</a>
-						<a href="#" class="el__link text1">edit</a>
+				<div class="post" onclick="openDiv(this)">
+					<img src="img/cat10.jpg" class="post__photo" alt="catImage">
+					<p class="post__name text-type-1">01.02.2019 11.56, drodcdccccccccc</p>
+					<i class="post__like far fa-heart"></i>
+					<p class="post__hashtag text-type-1">#cat#neyyear</p>
+					<p class="post__desc text-type-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
+					<div class="post__links">
+						<a href="#delete-modal" onclick="setBlur()" class="post__link text-type-1">delete</a>
+						<a href="#" class="post__link text-type-1">edit</a>
 					</div>
 				</div>
 				<button class="main__button button button_width_250px" type="button">Load more...</button>
@@ -197,31 +197,33 @@
 		</main>
 		<footer>
 			<div class="footer">
-				<a class="footer__link text3" href="#">PhotoPortal.by</a>
-				<p class="footer__text text1">by Dmitry Dronchenko, 7 group 2 course.</p>
-				<p class="footer__text text1">dima.dronchenko@gmail.com</p>
-				<p class="footer__text text1">last change:</p>
+				<a class="footer__link text-type-3" href="#">PhotoPortal.by</a>
+				<p class="footer__text text-type-1">by Dmitry Dronchenko, 7 group 2 course.</p>
+				<p class="footer__text text-type-1">dima.dronchenko@gmail.com</p>
+				<p class="footer__text text-type-1">last change:</p>
 			</div>
 		</footer>
 	</div>
 	<div id="delete-modal" class="modal-window">
 		<div class="modal-dialog delete-dialog">
-			<p class="delete-dialog__text text2">Are you sure you want to delete post?</p>
-			<form class="delete-dialog__button-form1" action="#"><button class="delete-dialog__button button" onclick="unsetBlur()" type="submit">Delete</button></form>
-			<form class="delete-dialog__button-form2" action="#"><input class="delete-dialog__button button" onclick="unsetBlur()" type="submit" value="Cancel" /></form>
+			<p class="delete-dialog__text text-type-2">Are you sure you want to delete post?</p>
+			<div class="delete-dialog__buttons">
+				<button class="delete-dialog__button button" onclick="unsetBlur()" type="submit">Delete</button>
+				<button class="delete-dialog__button button" onclick="unsetBlur()" type="submit">Cancel</button>
+			</div>
 		</div>
 	</div>
 	<div id="signin-modal" class="modal-window">
 		<div class="modal-dialog signin-dialog">
-			<p class="signin-dialog__title text2">Sign in</p>
-			<form action="#" class="signin-dialog__form text2">
+			<p class="signin-dialog__title text-type-2">Sign in</p>
+			<form action="#" class="signin-dialog__form text-type-2">
 				<p class="signin-dialog__text">Login:</p>
 				<input class="signin-dialog__input input" type="text" placeholder="ivanov_ivan" required="" />
 				<p class="signin-dialog__text">Password:</p>
 				<input class="signin-dialog__input input" type="password" placeholder="Password" required="" />
-				<input class="signin-dialog__button button" type="submit" value="Sign In" />
+				<button class="signin-dialog__button button" type="submit">Sign In</button>
+				<button class="signin-dialog__button button" onclick="unsetBlur()" type="submit">Cancel</button>
 			</form>
-			<form action="#" class="signin-dialog__button-form"><input class="signin-dialog__button button" onclick="unsetBlur()" type="submit" value="Cancel" /></form>
 		</div>
 	</div>
 </body>

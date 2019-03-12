@@ -12,28 +12,28 @@
   <header>
     <div class="header">
       <div class="header__logo">
-        <h1><a href="#">PhotoPortal</a></h1>
+        <a href="#"><h1>PhotoPortal</h1></a>
       </div>
-      <div class="header__logInfo text1">
+      <div class="header__logInfo text-type-1">
         <p>You signed in as dronchenko</p>
       </div>
       <div class="header__buttons">
-        <form class="header__button-form" action="addEditPost.html"><button class="header__button button" type="submit">Add post</button></form>
-        <form class="header__button-form" action="addEditPost.html"><button onclick="setBlur()" class="header__button button" type="submit">Sign out</button></form>
+        <button class="header__button button" type="submit" onclick="location.href='addEditPost.html'">Add post</button>
+        <button onclick="setBlur()" class="header__button button" type="submit">Sign out</button>
       </div>
     </div>
   </header>
   <main>
     <div class="add-post">
-      <p class="add-post__title text2">New Post</p>
-      <form class="add-post__form text2" action="#">
+      <p class="add-post__title text-type-2">New Post</p>
+      <form class="add-post__form text-type-2" action="#">
         <div class="add-post__author">
           <p>Author name:</p>
-          <input class="add-post__input text2" value="dronchenko" type="text" disabled />
+          <input class="add-post__input text-type-2" value="dronchenko" type="text" disabled />
         </div>
         <div class="add-post__date">
           <p>Date and time:</p>
-          <input class="add-post__input text2" value="01.02.2019 11.56" type="text" disabled />
+          <input class="add-post__input text-type-2" value="01.02.2019 11.56" type="text" disabled />
         </div>
         <p class="add-post__hashtags-text">Hashtags:</p>
         <input class="add-post__hashtags-input input" placeholder="Enter hashtags here" type="text" />
@@ -47,10 +47,10 @@
   </main>
   <footer>
     <div class="footer">
-      <a class="footer__link" href="#">PhotoPortal.by</a>
-      <p class="footer__text">by Dmitry Dronchenko, 7 group 2 course.</p>
-      <p class="footer__text">dima.dronchenko@gmail.com</p>
-      <p class="footer__text">last change:</p>
+      <a class="footer__link text-type-3" href="#">PhotoPortal.by</a>
+      <p class="footer__text text-type-1">by Dmitry Dronchenko, 7 group 2 course.</p>
+      <p class="footer__text text-type-1">dima.dronchenko@gmail.com</p>
+      <p class="footer__text text-type-1">last change:</p>
     </div>
   </footer>
 </body>
