@@ -1,8 +1,3 @@
-$(document).ready(function() {
-  $("#date-from").datepicker();
-  $("#date-to").datepicker();
-})
-
 function hideVars() {
   document.getElementsByClassName("filter__variants")[0].classList.toggle("filter__variants_hidden");
 }
