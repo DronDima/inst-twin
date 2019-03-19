@@ -82,18 +82,34 @@ class PostModel {
     return result;
   }
 
-  _validatePhotoPost(post) {
-    if (!Object.prototype.hasOwnProperty.call(post, 'id') || typeof post.id !== 'string' || !this._isUnique(post)
-      || !Object.prototype.hasOwnProperty.call(post, 'description') || post.description.length >= 200 || typeof post.description !== 'string'
-      || !Object.prototype.hasOwnProperty.call(post, 'createdAt')
-      || !Object.prototype.hasOwnProperty.call(post, 'author') || typeof post.author !== 'string' || post.author === ''
+  _validateChangeableFields(post) {
+    if (!Object.prototype.hasOwnProperty.call(post, 'description') || post.description.length >= 200 || typeof post.description !== 'string'
       || !Object.prototype.hasOwnProperty.call(post, 'photoLink') || typeof post.photoLink !== 'string' || post.photoLink === ''
-      || !Object.prototype.hasOwnProperty.call(post, 'hashtags')
-      || !Object.prototype.hasOwnProperty.call(post, 'likes')) {
-      console.log(`Post with id ${post.id} not valid.`);
+      || !Object.prototype.hasOwnProperty.call(post, 'hashtags')) {
+      console.log(`Changeable fields in post with id ${post.id} not valid.`);
       return false;
     }
-    console.log(`Post with id ${post.id} valid.`);
+    console.log(`Changeable fields in post with id ${post.id} valid.`);
+    return true;
+  }
+
+  _validateUnChangeableFields(post) {
+    if (!Object.prototype.hasOwnProperty.call(post, 'id') || typeof post.id !== 'string' || !this._isUnique(post)
+      || !Object.prototype.hasOwnProperty.call(post, 'createdAt')
+      || !Object.prototype.hasOwnProperty.call(post, 'author') || typeof post.author !== 'string' || post.author === ''
+      || !Object.prototype.hasOwnProperty.call(post, 'likes')) {
+      console.log(`Unchangeable fields in post with id ${post.id} not valid.`);
+      return false;
+    }
+    console.log(`Unchangeable fields in post with id ${post.id} valid.`);
+    return true;
+  }
+
+  _validatePhotoPost(post) {
+    if (this._validateUnChangeableFields(post) === false
+      || this._validateChangeableFields(post) === false) {
+      return false;
+    }
     return true;
   }
 
@@ -133,13 +149,12 @@ class PostModel {
           postCopy[fields[i]] = edits[fields[i]];
         }
       }
-      this.removePhotoPost(id);
-      if (this._validatePhotoPost(postCopy) === true) {
+      if (this._validateChangeableFields(postCopy) === true) {
+        this.removePhotoPost(id);
         this.addPhotoPost(postCopy);
         console.log('Post successfully changed.');
         return true;
       }
-      this.addPhotoPost(post);
       console.log('Post not changed.');
       return false;
     }
