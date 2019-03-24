@@ -1,141 +1,98 @@
 class PostModel {
   constructor(posts) {
-    this._defaultFilterConfig = {
-      dateFrom: new Date(-8640000000000000),
-      dateTo: new Date(8640000000000000),
-      authorName: '',
-      hashtags: [],
-    };
     this._photoPosts = posts;
   }
 
-  _isUnique(post) {
-    for (let i = 0; i < this._photoPosts.length; i += 1) {
-      if (this._photoPosts[i].id === post.id) {
-        return false;
+  static _isIntersect(postTags, configTags) {
+    let result = false;
+    postTags.forEach(tag1 => configTags.forEach((tag2) => {
+      if (tag1 === tag2) {
+        result = true;
       }
-    }
-    return true;
-  }
-
-  _isIntersect(postTags, configTags) {
-    for (let i = 0; i < postTags.length; i += 1) {
-      for (let j = 0; j < configTags.length; j += 1) {
-        if (postTags[i] === configTags[j]) {
-          return true;
-        }
-      }
-    }
-    return false;
+    }));
+    return result;
   }
 
   addAll(posts) {
     const notValid = [];
-    for (let i = 0; i < posts.length; i += 1) {
-      if (this._validatePhotoPost(posts[i]) === true) {
-        this._photoPosts.push(posts[i]);
-        console.log(`Post with id ${posts[i].id} added.`);
-      } else {
-        notValid.push(posts[i]);
+    posts.forEach((post) => {
+      if (this.addPhotoPost(post) === false) {
+        notValid.push(post);
       }
-    }
-    console.log('Not valid posts:');
-    console.log(notValid);
+    });
     return notValid;
   }
 
-  getPhotoPosts(skip = 0, count = 10, filterConfig = this._defaultFilterConfig) {
-    const filtratedPosts = this._photoPosts.filter(
-      post => post.createdAt.getTime() >= filterConfig.dateFrom.getTime()
-        && post.createdAt.getTime() <= filterConfig.dateTo.getTime()
-        && (post.author === filterConfig.authorName
-          || filterConfig.authorName === '')
-        && (this._isIntersect(post.hashtags, filterConfig.hashtags)
-          || filterConfig.hashtags.length === 0),
-    ).sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  getPhotoPosts(skip = 0, count = 10, config = PostModel._DEFAULT_FILTER_CONFIG) {
+    function filtrate(posts) {
+      return posts
+        .filter(post => post.createdAt.getTime() >= config.dateFrom.getTime()
+          && post.createdAt.getTime() <= config.dateTo.getTime()
+          && (post.author === config.authorName || config.authorName === '')
+          && (PostModel._isIntersect(post.hashtags, config.hashtags)
+            || config.hashtags.length === 0));
+    }
+    function sort(posts) {
+      return posts.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+    }
+    const filtratedPosts = sort(filtrate(this._photoPosts));
     const result = [];
     let number = 0;
     for (let i = skip; number < count && i < filtratedPosts.length; i += 1) {
       result.push(filtratedPosts[i]);
       number += 1;
     }
-    console.log(`skip: ${skip}; count: ${count}; filterConfig:`);
-    console.log(filterConfig);
-    console.log('Result:');
-    console.log(result);
     return result;
   }
 
   getPhotoPost(id) {
-    let result;
-    this._photoPosts.forEach((item) => {
-      if (item.id === id) {
-        result = item;
-      }
-    });
+    const result = this._photoPosts.find(post => post.id === id);
     if (result !== undefined) {
-      console.log(`Post with id ${id} was found:`);
-      console.log(result);
       return result;
     }
-    console.log(`Post with id ${id} not found.`);
     return result;
   }
 
-  _validateChangeableFields(post) {
-    if (!Object.prototype.hasOwnProperty.call(post, 'description') || post.description.length >= 200 || typeof post.description !== 'string'
-      || !Object.prototype.hasOwnProperty.call(post, 'photoLink') || typeof post.photoLink !== 'string' || post.photoLink === ''
-      || !Object.prototype.hasOwnProperty.call(post, 'hashtags')) {
-      console.log(`Changeable fields in post with id ${post.id} not valid.`);
-      return false;
-    }
-    console.log(`Changeable fields in post with id ${post.id} valid.`);
-    return true;
+  static _validateChangeableFields(post) {
+    return !(!Object.prototype.hasOwnProperty.call(post, 'description')
+      || post.description.length >= 200
+      || typeof post.description !== 'string'
+      || !Object.prototype.hasOwnProperty.call(post, 'photoLink')
+      || typeof post.photoLink !== 'string'
+      || post.photoLink === ''
+      || !Object.prototype.hasOwnProperty.call(post, 'hashtags'));
   }
 
   _validateUnChangeableFields(post) {
-    if (!Object.prototype.hasOwnProperty.call(post, 'id') || typeof post.id !== 'string' || !this._isUnique(post)
+    return !(!Object.prototype.hasOwnProperty.call(post, 'id')
+      || typeof post.id !== 'string'
+      || this.getPhotoPost(post.id)
       || !Object.prototype.hasOwnProperty.call(post, 'createdAt')
-      || !Object.prototype.hasOwnProperty.call(post, 'author') || typeof post.author !== 'string' || post.author === ''
-      || !Object.prototype.hasOwnProperty.call(post, 'likes')) {
-      console.log(`Unchangeable fields in post with id ${post.id} not valid.`);
-      return false;
-    }
-    console.log(`Unchangeable fields in post with id ${post.id} valid.`);
-    return true;
+      || !Object.prototype.hasOwnProperty.call(post, 'author')
+      || typeof post.author !== 'string'
+      || post.author === ''
+      || !Object.prototype.hasOwnProperty.call(post, 'likes'));
   }
 
   _validatePhotoPost(post) {
-    if (this._validateUnChangeableFields(post) === false
-      || this._validateChangeableFields(post) === false) {
-      return false;
-    }
-    return true;
+    return !(this._validateUnChangeableFields(post) === false
+      || PostModel._validateChangeableFields(post) === false);
   }
 
   addPhotoPost(post) {
     if (this._validatePhotoPost(post) === true) {
       this._photoPosts.push(post);
-      console.log(`Post with id ${post.id} added.`);
       return true;
     }
-    console.log(`Post with id ${post.id} not added.`);
     return false;
   }
 
   removePhotoPost(id) {
-    let index = -1;
-    this._photoPosts.forEach((item, i) => {
-      if (item.id === id) {
-        index = i;
-      }
-    });
+    const index = this._photoPosts.findIndex(post => post.id === id);
     if (index !== -1) {
       this._photoPosts.splice(index, 1);
-      console.log(`Post with id ${id} deleted.`);
       return true;
     }
-    console.log(`Post with id ${id} not found.`);
     return false;
   }
 
@@ -144,24 +101,27 @@ class PostModel {
     if (post !== undefined) {
       const postCopy = Object.assign(post);
       const fields = Object.keys(edits);
-      for (let i = 0; i < fields.length; i += 1) {
-        if (fields[i] !== 'id' && fields[i] !== 'author' && fields[i] !== 'createdAt' && fields[i] !== 'likes') {
-          postCopy[fields[i]] = edits[fields[i]];
+      fields.forEach((field) => {
+        if (field !== 'id' && field !== 'author' && field !== 'createdAt' && field !== 'likes') {
+          postCopy[field] = edits[field];
         }
-      }
-      if (this._validateChangeableFields(postCopy) === true) {
+      });
+      if (PostModel._validateChangeableFields(postCopy) === true) {
         this.removePhotoPost(id);
         this.addPhotoPost(postCopy);
-        console.log('Post successfully changed.');
         return true;
       }
-      console.log('Post not changed.');
       return false;
     }
-    console.log('Post not changed.');
     return false;
   }
 }
+PostModel._DEFAULT_FILTER_CONFIG = {
+  dateFrom: new Date(-8640000000000000),
+  dateTo: new Date(8640000000000000),
+  authorName: '',
+  hashtags: [],
+};
 
 const validPost = {
   id: '29',
@@ -469,26 +429,20 @@ const posts = [
 
 function test() {
   const model = new PostModel(posts);
-  console.log('////////Add and validation////////');
   model.addPhotoPost(validPost);
   model.addPhotoPost(notValidPost);
-  console.log('////////Removing////////');
   model.removePhotoPost('29');
   model.removePhotoPost('30');
-  console.log('////////Get post////////');
   model.getPhotoPost('2');
   model.getPhotoPost('30');
-  console.log('////////Get posts////////');
   model.getPhotoPosts();
   model.getPhotoPosts(0, 5);
   model.getPhotoPosts(4, 5);
   model.getPhotoPosts(1, 7, configDate);
   model.getPhotoPosts(1, 7, configAuthor);
   model.getPhotoPosts(1, 7, configAuthorHashtags);
-  console.log('////////Edit post////////');
   model.editPhotoPost('2', validPostEdit);
   model.editPhotoPost('2', notValidEditDesc);
-  console.log('////////Add all////////');
   model.addAll(allAdd);
 }
 
