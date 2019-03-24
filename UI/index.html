@@ -15,11 +15,10 @@
 					<a href="#"><h1>PhotoPortal</h1></a>
 				</div>
 				<div class="header__logInfo text-type-1">
-					<p>You signed in as dronchenko</p>
+					<p>You not signed in</p>
 				</div>
 				<div class="header__buttons">
-					<button class="header__button button" type="submit" onclick="location.href='addEditPost.html'">Add post</button>
-					<button onclick="setBlur()" class="header__button button" type="submit">Sign out</button>
+					<button onclick="setBlur()" class="header__button button" type="submit">Sign in</button>
 				</div>
 			</div>
 		</header>
@@ -47,7 +46,7 @@
 										 type="text" placeholder="Choose hashtags" id="tags">
 						</div>
 						<ul class="filter__variants filter__variants_hidden">
-							<template class="filter-template">
+							<template class="hashtag-template">
 								<li class="filter__variant hashtag" onclick="addHashtag(this)"></li>
 							</template>
 						</ul>
@@ -66,8 +65,10 @@
 						<p class="post-container__hashtag text-type-1"></p>
 						<p class="post-container__desc text-type-4"></p>
 						<div class="post-container__links">
-							<a href="#delete-modal" onclick="setBlur()" class="post-container__link text-type-1">delete</a>
-							<a href="#" class="post-container__link text-type-1">edit</a>
+							<template class="del-edit-template">
+								<a href="#delete-modal" onclick="setBlur()" class="post-container__link text-type-1">delete</a>
+								<a href="#" class="post-container__link text-type-1">edit</a>
+							</template>
 						</div>
 					</article>
 				</template>

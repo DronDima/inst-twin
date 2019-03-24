@@ -1,11 +1,5 @@
 class PostModel {
   constructor(posts) {
-    this._defaultFilterConfig = {
-      dateFrom: new Date(-8640000000000000),
-      dateTo: new Date(8640000000000000),
-      authorName: '',
-      hashtags: [],
-    };
     this._photoPosts = posts;
   }
 
@@ -44,7 +38,7 @@ class PostModel {
     return notValid;
   }
 
-  getPhotoPosts(skip = 0, count = 10, filterConfig = this._defaultFilterConfig) {
+  getPhotoPosts(skip = 0, count = 10, filterConfig = PostModel._DEFAULT_FILTER_CONFIG) {
     const filtratedPosts = this._photoPosts.filter(
       post => post.createdAt.getTime() >= filterConfig.dateFrom.getTime()
         && post.createdAt.getTime() <= filterConfig.dateTo.getTime()
@@ -162,38 +156,44 @@ class PostModel {
     return false;
   }
 }
+PostModel._DEFAULT_FILTER_CONFIG = {
+  dateFrom: new Date(-8640000000000000),
+  dateTo: new Date(8640000000000000),
+  authorName: '',
+  hashtags: [],
+};
 
 class View {
-  constructor(posts, hashtags) {
-    this._posts = new PostModel(posts);
+  constructor(hashtags) {
     this._hashtags = hashtags;
+    this._hashtagTemplate = document.querySelector('.hashtag-template');
+    this._postTemplate = document.querySelector('.post-template');
+    this._main = document.querySelector('.main');
   }
 
   showHashtags() {
     this._variants = document.querySelector('.filter__variants');
-    this._hashtags.map(this.buildHashtag).forEach(post => this._variants.appendChild(post));
+    this._hashtags
+      .map(this.buildHashtag.bind(this))
+      .forEach(post => this._variants.appendChild(post));
   }
 
-  buildHashtag(hashtag) {
-    const template = document.querySelector('.filter-template');
-    const fragment = document.importNode(template.content, true);
+  _buildHashtag(hashtag) {
+    const fragment = document.importNode(this._hashtagTemplate.content, true);
     fragment.querySelector('.filter__variant').textContent = `#${hashtag}`;
     return fragment;
   }
 
-  showPosts() {
-    const template = document.querySelector('.post-template');
-    this._main = document.querySelector('.main');
+  showPosts(posts) {
     while (this._main.hasChildNodes() === true) {
       this._main.removeChild(this._main.firstChild);
     }
-    this._main.appendChild(template);
-    this._posts.getPhotoPosts().map(this.buildPost).forEach(post => this._main.appendChild(post));
+    this._main.appendChild(this._postTemplate);
+    posts.map(this._buildPost.bind(this)).forEach(post => this._main.appendChild(post));
   }
 
-  buildPost(post) {
-    const template = document.querySelector('.post-template');
-    const fragment = document.importNode(template.content, true);
+  _buildPost(post) {
+    const fragment = document.importNode(this._postTemplate.content, true);
     fragment.querySelector('.post-container__photo').setAttribute('src', post.photoLink);
     fragment.querySelector('.post-container__name').textContent = `${post.createdAt.toLocaleString()}, ${post.author}`;
     fragment.querySelector('.post-container__hashtag').textContent = post.hashtags.join(', ');
@@ -201,15 +201,62 @@ class View {
     return fragment;
   }
 
+  addPost(post) {
+    this._posts.addPhotoPost(post);
+    this.showPosts();
+  }
+
   removePost(id) {
     this._posts.removePhotoPost(id);
     this.showPosts();
   }
 
+  editPost(id, edits) {
+    this._posts.editPhotoPost(id, edits);
+    this.showPosts();
+  }
 
+  showElementsIfAuthorized(isAuthorized) {
+    const delEditTemplate = document.querySelector('.del-edit-template');
+    const targets = document.querySelectorAll('.post-container__links');
+    if (isAuthorized === true) {
+      /* Header buttons and name. */
+      document.querySelector('.header__logInfo').innerHTML = 'You signed in as dronchenko.';
+      const buttons = document.querySelector('.header__buttons');
+      const button2 = buttons.querySelector('.header__button');
+      const button1 = document.createElement('button');
+      button1.classList.add('header__button', 'button');
+      button1.setAttribute('type', 'submit');
+      button1.innerHTML = 'Add post';
+      button1.onclick = 'location.href="addEditPost.html"';
+      buttons.insertBefore(button1, button2);
+      button2.innerHTML = 'Sign out';
+      /* Delete and edit links. */
+      targets.forEach((target) => {
+        const links = document.importNode(delEditTemplate.content, true);
+        target.appendChild(links);
+      });
+    } else {
+      /* Header buttons and name. */
+      document.querySelector('.header__logInfo').innerHTML = 'You not signed in.';
+      const buttons = document.querySelector('.header__buttons');
+      if (buttons.children.length > 1) {
+        buttons.removeChild(buttons.querySelector('.header__button'));
+        buttons.querySelector('.header__button').innerHTML = 'Sign in';
+      }
+      /* Delete and edit links. */
+      targets.forEach((target) => {
+        while (target.hasChildNodes() === true) {
+          target.removeChild(target.firstChild);
+        }
+        target.appendChild(delEditTemplate);
+      });
+    }
+  }
 }
 
-const posts = [
+const postsAPI = (function () {
+  const posts = [
     {
       id: '1',
       description: 'Lorem1 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
@@ -222,7 +269,7 @@ const posts = [
     {
       id: '2',
       description: 'Lorem2 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-      createdAt: new Date('2018-02-23T23:00:00'),
+      createdAt: new Date('2019-02-23T23:00:00'),
       author: 'Иванов Иван',
       photoLink: 'img/cat2.jpg',
       likes: ['dronchenko', 'katya'],
@@ -436,3 +483,32 @@ const posts = [
       hashtags: ['annimal', 'newyear'],
     },
   ];
+  const module = [];
+  const model = new PostModel(posts);
+  const view = new View();
+  module.addPhotoPost = function (post) {
+    if (model.addPhotoPost(post) === true) {
+      view.showPosts(model.getPhotoPosts());
+    }
+  };
+  module.removePhotoPost = function (id) {
+    if (model.removePhotoPost(id) === true) {
+      view.showPosts(model.getPhotoPosts());
+    }
+  };
+  module.editPhotoPost = function (id, edits) {
+    if (model.editPhotoPost(id, edits) === true) {
+      view.showPosts(model.getPhotoPosts());
+    }
+  };
+  module.showPhotoPosts = function () {
+    view.showPosts(model.getPhotoPosts());
+  };
+  module.showElementsIfAuthorized = function (isAuthorized) {
+    view.showElementsIfAuthorized(isAuthorized);
+  };
+  return module;
+}());
+
+postsAPI.showPhotoPosts();
+postsAPI.showElementsIfAuthorized(false);
