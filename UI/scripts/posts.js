@@ -124,18 +124,16 @@ PostModel._DEFAULT_FILTER_CONFIG = {
 };
 
 class View {
-  constructor(hashtags) {
-    this._hashtags = hashtags;
+  constructor() {
     this._hashtagTemplate = document.querySelector('.hashtag-template');
     this._postTemplate = document.querySelector('.post-template');
     this._main = document.querySelector('.main');
   }
 
-  showHashtags() {
+  showHashtags(hashtags) {
     this._variants = document.querySelector('.filter__variants');
-    this._hashtags
-      .map(this.buildHashtag.bind(this))
-      .forEach(post => this._variants.appendChild(post));
+    hashtags.map(this._buildHashtag.bind(this))
+      .forEach(hashtag => this._variants.appendChild(hashtag));
   }
 
   _buildHashtag(hashtag) {
@@ -149,7 +147,8 @@ class View {
       this._main.removeChild(this._main.firstChild);
     }
     this._main.appendChild(this._postTemplate);
-    posts.map(this._buildPost.bind(this)).forEach(post => this._main.appendChild(post));
+    posts.map(this._buildPost.bind(this))
+      .forEach(post => this._main.appendChild(post));
   }
 
   _buildPost(post) {
@@ -161,22 +160,7 @@ class View {
     return fragment;
   }
 
-  addPost(post) {
-    this._posts.addPhotoPost(post);
-    this.showPosts();
-  }
-
-  removePost(id) {
-    this._posts.removePhotoPost(id);
-    this.showPosts();
-  }
-
-  editPost(id, edits) {
-    this._posts.editPhotoPost(id, edits);
-    this.showPosts();
-  }
-
-  showElementsIfAuthorized(isAuthorized) {
+  static showElementsIfAuthorized(isAuthorized) {
     const delEditTemplate = document.querySelector('.del-edit-template');
     const targets = document.querySelectorAll('.post-container__links');
     if (isAuthorized === true) {
@@ -188,9 +172,9 @@ class View {
       button1.classList.add('header__button', 'button');
       button1.setAttribute('type', 'submit');
       button1.innerHTML = 'Add post';
-      button1.onclick = 'location.href="addEditPost.html"';
       buttons.insertBefore(button1, button2);
       button2.innerHTML = 'Sign out';
+      button2.onclick = '';
       /* Delete and edit links. */
       targets.forEach((target) => {
         const links = document.importNode(delEditTemplate.content, true);
@@ -215,7 +199,7 @@ class View {
   }
 }
 
-const postsAPI = (function () {
+const postsAPI = (function postsAPI() {
   const posts = [
     {
       id: '1',
@@ -446,26 +430,29 @@ const postsAPI = (function () {
   const module = [];
   const model = new PostModel(posts);
   const view = new View();
-  module.addPhotoPost = function (post) {
+  module.addPhotoPost = (post) => {
     if (model.addPhotoPost(post) === true) {
       view.showPosts(model.getPhotoPosts());
     }
   };
-  module.removePhotoPost = function (id) {
+  module.removePhotoPost = (id) => {
     if (model.removePhotoPost(id) === true) {
       view.showPosts(model.getPhotoPosts());
     }
   };
-  module.editPhotoPost = function (id, edits) {
+  module.editPhotoPost = (id, edits) => {
     if (model.editPhotoPost(id, edits) === true) {
       view.showPosts(model.getPhotoPosts());
     }
   };
-  module.showPhotoPosts = function () {
+  module.showHashtags = (hashtags) => {
+    view.showHashtags(hashtags);
+  };
+  module.showPhotoPosts = () => {
     view.showPosts(model.getPhotoPosts());
   };
-  module.showElementsIfAuthorized = function (isAuthorized) {
-    view.showElementsIfAuthorized(isAuthorized);
+  module.showElementsIfAuthorized = (isAuthorized) => {
+    View.showElementsIfAuthorized(isAuthorized);
   };
   return module;
 }());
