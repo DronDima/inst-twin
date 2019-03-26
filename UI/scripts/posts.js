@@ -46,11 +46,16 @@ class PostModel {
   }
 
   getPhotoPost(id) {
-    const result = this._photoPosts.find(post => post.id === id);
-    if (result !== undefined) {
+    const result = {
+      post: undefined,
+      index: undefined,
+    };
+    result.post = this.getPhotoPosts().find(post => post.id === id);
+    result.index = this.getPhotoPosts().findIndex(post => post.id === id);
+    if (result.post !== undefined) {
       return result;
     }
-    return result;
+    return undefined;
   }
 
   static _validateChangeableFields(post) {
@@ -88,16 +93,17 @@ class PostModel {
   }
 
   removePhotoPost(id) {
-    const index = this._photoPosts.findIndex(post => post.id === id);
-    if (index !== -1) {
-      this._photoPosts.splice(index, 1);
-      return true;
+    const modelIndex = this._photoPosts.findIndex(post => post.id === id);
+    const viewIndex = this.getPhotoPosts().findIndex(post => post.id === id);
+    if (modelIndex !== -1) {
+      this._photoPosts.splice(modelIndex, 1);
+      return viewIndex;
     }
-    return false;
+    return viewIndex;
   }
 
   editPhotoPost(id, edits) {
-    const post = this.getPhotoPost(id);
+    const { post } = this.getPhotoPost(id);
     if (post !== undefined) {
       const postCopy = Object.assign(post);
       const fields = Object.keys(edits);
@@ -149,6 +155,21 @@ class View {
     this._main.appendChild(this._postTemplate);
     posts.map(this._buildPost.bind(this))
       .forEach(post => this._main.appendChild(post));
+  }
+
+  removePost(index) {
+    const posts = this._main.querySelectorAll('.post-container');
+    this._main.removeChild(posts[index]);
+  }
+
+  editPost(editedPost) {
+    const posts = this._main.querySelectorAll('.post-container');
+    this._main.replaceChild(this._buildPost(editedPost.post), posts[editedPost.index]);
+  }
+
+  addPost(post, index) {
+    const posts = this._main.querySelectorAll('.post-container');
+    this._main.insertBefore(this._buildPost(post), posts[index]);
   }
 
   _buildPost(post) {
@@ -430,28 +451,29 @@ const postsAPI = (function postsAPI() {
   const module = [];
   const model = new PostModel(posts);
   const view = new View();
-  module.addPhotoPost = (post) => {
+  module.addPhotoPost = function addPhotoPost(post) {
     if (model.addPhotoPost(post) === true) {
-      view.showPosts(model.getPhotoPosts());
+      view.addPost(post, model.getPhotoPost(post.id).index);
     }
   };
-  module.removePhotoPost = (id) => {
-    if (model.removePhotoPost(id) === true) {
-      view.showPosts(model.getPhotoPosts());
+  module.removePhotoPost = function removePhotoPost(id) {
+    const index = model.removePhotoPost(id);
+    if (index !== -1) {
+      view.removePost(index);
     }
   };
-  module.editPhotoPost = (id, edits) => {
+  module.editPhotoPost = function editPhotoPost(id, edits) {
     if (model.editPhotoPost(id, edits) === true) {
-      view.showPosts(model.getPhotoPosts());
+      view.editPost(model.getPhotoPost(id));
     }
   };
-  module.showHashtags = (hashtags) => {
+  module.showHashtags = function showHashtags(hashtags) {
     view.showHashtags(hashtags);
   };
-  module.showPhotoPosts = () => {
+  module.showPhotoPosts = function showPhotoPosts() {
     view.showPosts(model.getPhotoPosts());
   };
-  module.showElementsIfAuthorized = (isAuthorized) => {
+  module.showElementsIfAuthorized = function showElementsIfAuthorized(isAuthorized) {
     View.showElementsIfAuthorized(isAuthorized);
   };
   return module;
