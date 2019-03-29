@@ -18,13 +18,13 @@
 					<p>You not signed in</p>
 				</div>
 				<div class="header__buttons">
-					<button onclick="setBlur()" class="header__button button" type="submit">Sign in</button>
+					<button class="header__button button" type="submit">Sign in</button>
 				</div>
 			</div>
 		</header>
 		<aside class="filter-container">
 			<div class="filter text-type-2">
-				<button class="filter__title" onclick="showFilter()">
+				<button class="filter__title">
 					<span class="filter__text text-type-2">Filter</span>
 					<span class="filter__symbol"><i class="fas fa-angle-down"></i></span>
 				</button>
@@ -41,16 +41,15 @@
 						<input type="search" class="filter__input input" placeholder="Enter author name" id="author" />
 						<label class="filter__text-hashtag text" for="tags">Hashtags</label>
 						<span></span>
-						<div class="filter__tags input" onclick="document.getElementsByClassName('filter__tags-input')[0].focus()">
-							<input class="filter__tags-input text-type-2" onfocus="setTimeout(showVars,100)" onblur="setTimeout(hideVars,100)" onkeydown="keyDown(this, event)"
-										 type="text" placeholder="Choose hashtags" id="tags">
+						<div class="filter__tags input">
+							<input class="filter__tags-input text-type-2" type="text" placeholder="Choose hashtags" id="tags">
 						</div>
 						<ul class="filter__variants filter__variants_hidden">
 							<template class="hashtag-template">
-								<li class="filter__variant hashtag" onclick="addHashtag(this)"></li>
+								<li class="filter__variant hashtag"></li>
 							</template>
 						</ul>
-						<button class="filter__button button" type="submit">Apply</button>
+						<button class="filter__apply-button button" type="submit">Apply</button>
 					</div>
 				</form>
 			</div>
@@ -58,7 +57,7 @@
 		<main>
 			<div class="main">
 				<template class="post-template">
-					<article class="post-container" onclick="openDiv(this)">
+					<article class="post-container">
 						<img class="post-container__photo" alt="animalImage" />
 						<p class="post-container__name text-type-1"></p>
 						<i class="post-container__like far fa-heart"></i>
@@ -66,7 +65,7 @@
 						<p class="post-container__desc text-type-4"></p>
 						<div class="post-container__links">
 							<template class="del-edit-template">
-								<a href="#delete-modal" onclick="setBlur()" class="post-container__link text-type-1">delete</a>
+								<a href="#delete-modal" class="post-container__link text-type-1">delete</a>
 								<a href="#" class="post-container__link text-type-1">edit</a>
 							</template>
 						</div>
@@ -88,8 +87,8 @@
 		<div class="modal-dialog delete-dialog">
 			<p class="delete-dialog__text text-type-2">Are you sure you want to delete post?</p>
 			<div class="delete-dialog__buttons">
-				<button class="delete-dialog__button button" onclick="unsetBlur()" type="submit">Delete</button>
-				<button class="delete-dialog__button button" onclick="unsetBlur()" type="submit">Cancel</button>
+				<button class="delete-dialog__button button" type="submit">Delete</button>
+				<button class="delete-dialog__button button" type="submit">Cancel</button>
 			</div>
 		</div>
 	</div>
@@ -102,12 +101,12 @@
 				<p class="signin-dialog__text">Password:</p>
 				<input class="signin-dialog__input input" type="password" placeholder="Password" required="" />
 				<button class="signin-dialog__button button" type="submit">Sign In</button>
-				<button class="signin-dialog__button button" onclick="unsetBlur()" type="submit">Cancel</button>
+				<button class="signin-dialog__button button" type="submit">Cancel</button>
 			</form>
 		</div>
 	</div>
-	<script src="scripts/script.js"></script>
 	<script src="scripts/posts.js"></script>
+	<script src="scripts/script.js"></script>
 	<script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -62,6 +62,9 @@
   color: #13061E;
   font-size: 36px;
 }
+.wrapper_blured {
+  filter: blur(2px);
+}
 header {
   background: #C5C9C3;
 }
@@ -189,12 +192,12 @@ header {
 .filter__input {
   min-width: 115px;
 }
-.filter__button {
+.filter__apply-button {
   justify-self: end;
   grid-area: but;
 }
 @media (max-width: 465px) {
-  .filter__button {
+  .filter__apply-button {
     justify-self: center;
     width: 100%;
   }
@@ -293,6 +296,11 @@ main .button {
   grid-template-columns: 1fr 1fr 20px;
   grid-gap: 10px;
 }
+.post-container_big {
+  grid-column: 1/3;
+  width: 80%;
+  justify-self: center;
+}
 .post-container__like {
   grid-row: 2 / 3;
   grid-column: 3 / 4;
@@ -320,12 +328,18 @@ main .button {
   display: none;
   font-size: 14px;
 }
+.post-container__desc_big {
+  display: block;
+}
 .post-container__hashtag {
   grid-row: 2 / 3;
   grid-column: 2 / 3;
   justify-self: end;
   display: none;
   font-size: 14px;
+}
+.post-container__hashtag_big {
+  display: block;
 }
 .post-container__links {
   grid-column: 1/4;
@@ -338,6 +352,9 @@ main .button {
 }
 .post-container__link:hover {
   text-decoration: underline;
+}
+.post-container__link_big {
+  display: inline-block;
 }
 @media (max-width: 610px) {
   .post-container {

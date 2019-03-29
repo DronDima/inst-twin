@@ -142,9 +142,22 @@ class View {
       .forEach(hashtag => this._variants.appendChild(hashtag));
   }
 
+  _hashtagListener() {
+    this.classList.toggle('filter__variant_hide');
+    const span = document.createElement('span');
+    span.classList.add('filter__tag');
+    span.classList.add('hashtag');
+    span.innerHTML = this.innerHTML;
+    const input = document.querySelector('.filter__tags-input');
+    input.parentNode.insertBefore(span, input);
+    input.focus();
+  }
+
   _buildHashtag(hashtag) {
     const fragment = document.importNode(this._hashtagTemplate.content, true);
-    fragment.querySelector('.filter__variant').textContent = `#${hashtag}`;
+    const variant = fragment.querySelector('.filter__variant');
+    variant.textContent = `#${hashtag}`;
+    variant.addEventListener('click', this._hashtagListener);
     return fragment;
   }
 
@@ -470,8 +483,8 @@ const postsAPI = (function postsAPI() {
   module.showHashtags = function showHashtags(hashtags) {
     view.showHashtags(hashtags);
   };
-  module.showPhotoPosts = function showPhotoPosts() {
-    view.showPosts(model.getPhotoPosts());
+  module.showPhotoPosts = function showPhotoPosts(skip = 0, count = 10, config) {
+    view.showPosts(model.getPhotoPosts(skip, count, config));
   };
   module.showElementsIfAuthorized = function showElementsIfAuthorized(isAuthorized) {
     View.showElementsIfAuthorized(isAuthorized);
