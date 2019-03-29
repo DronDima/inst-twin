@@ -121,6 +121,10 @@ class PostModel {
     }
     return false;
   }
+
+  getPostsCount() {
+    return this._photoPosts.length;
+  }
 }
 PostModel._DEFAULT_FILTER_CONFIG = {
   dateFrom: new Date(-8640000000000000),
@@ -161,11 +165,16 @@ class View {
     return fragment;
   }
 
+  _buildPost(post) {
+    const fragment = document.importNode(this._postTemplate.content, true);
+    fragment.querySelector('.post-container__photo').setAttribute('src', post.photoLink);
+    fragment.querySelector('.post-container__name').textContent = `${post.createdAt.toLocaleString()}, ${post.author}`;
+    fragment.querySelector('.post-container__hashtag').textContent = post.hashtags.join(', ');
+    fragment.querySelector('.post-container__desc').textContent = post.description;
+    return fragment;
+  }
+
   showPosts(posts) {
-    while (this._main.hasChildNodes() === true) {
-      this._main.removeChild(this._main.firstChild);
-    }
-    this._main.appendChild(this._postTemplate);
     posts.map(this._buildPost.bind(this))
       .forEach(post => this._main.appendChild(post));
   }
@@ -185,13 +194,10 @@ class View {
     this._main.insertBefore(this._buildPost(post), posts[index]);
   }
 
-  _buildPost(post) {
-    const fragment = document.importNode(this._postTemplate.content, true);
-    fragment.querySelector('.post-container__photo').setAttribute('src', post.photoLink);
-    fragment.querySelector('.post-container__name').textContent = `${post.createdAt.toLocaleString()}, ${post.author}`;
-    fragment.querySelector('.post-container__hashtag').textContent = post.hashtags.join(', ');
-    fragment.querySelector('.post-container__desc').textContent = post.description;
-    return fragment;
+  clearPosts() {
+    while (this._main.lastElementChild.classList.contains('post-container')) {
+      this._main.removeChild(this._main.lastElementChild);
+    }
   }
 
   static showElementsIfAuthorized(isAuthorized) {
@@ -219,7 +225,7 @@ class View {
       document.querySelector('.header__logInfo').innerHTML = 'You not signed in.';
       const buttons = document.querySelector('.header__buttons');
       if (buttons.children.length > 1) {
-        buttons.removeChild(buttons.querySelector('.header__button'));
+        buttons.removeChild(buttons.firstElementChild);
         buttons.querySelector('.header__button').innerHTML = 'Sign in';
       }
       /* Delete and edit links. */
@@ -238,7 +244,7 @@ const postsAPI = (function postsAPI() {
     {
       id: '1',
       description: 'Lorem1 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-      createdAt: new Date('2018-02-23T23:00:00'),
+      createdAt: new Date('2018-02-01T23:00:00'),
       author: 'dronchenko',
       photoLink: 'img/cat1.jpg',
       likes: ['dronchenko', 'katya'],
@@ -247,7 +253,7 @@ const postsAPI = (function postsAPI() {
     {
       id: '2',
       description: 'Lorem2 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-      createdAt: new Date('2019-02-23T23:00:00'),
+      createdAt: new Date('2019-02-02T23:00:00'),
       author: 'Иванов Иван',
       photoLink: 'img/cat2.jpg',
       likes: ['dronchenko', 'katya'],
@@ -256,7 +262,7 @@ const postsAPI = (function postsAPI() {
     {
       id: '3',
       description: 'Lorem3 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-      createdAt: new Date('2018-02-20T23:00:00'),
+      createdAt: new Date('2018-02-03T23:00:00'),
       author: 'Иванов Иван',
       photoLink: 'img/cat3.jpg',
       likes: ['dronchenko', 'katya'],
@@ -265,7 +271,7 @@ const postsAPI = (function postsAPI() {
     {
       id: '4',
       description: 'Lorem4 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-      createdAt: new Date('2018-02-23T23:00:00'),
+      createdAt: new Date('2018-02-04T23:00:00'),
       author: 'dronchenko',
       photoLink: 'img/cat4.jpg',
       likes: ['dronchenko', 'katya'],
@@ -274,7 +280,7 @@ const postsAPI = (function postsAPI() {
     {
       id: '5',
       description: 'Lorem5 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-      createdAt: new Date('2018-02-21T23:00:00'),
+      createdAt: new Date('2018-02-05T23:00:00'),
       author: 'dronchenko',
       photoLink: 'img/cat5.jpg',
       likes: ['dronchenko', 'katya'],
@@ -283,7 +289,7 @@ const postsAPI = (function postsAPI() {
     {
       id: '6',
       description: 'Lorem6 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-      createdAt: new Date('2018-02-23T23:00:00'),
+      createdAt: new Date('2018-02-06T23:00:00'),
       author: 'Иванов Иван',
       photoLink: 'img/cat6.jpg',
       likes: ['dronchenko', 'katya'],
@@ -292,7 +298,7 @@ const postsAPI = (function postsAPI() {
     {
       id: '7',
       description: 'Lorem7 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-      createdAt: new Date('2018-02-23T23:00:00'),
+      createdAt: new Date('2018-02-07T23:00:00'),
       author: 'Иванов Иван',
       photoLink: 'img/cat7.jpg',
       likes: ['dronchenko', 'katya'],
@@ -301,7 +307,7 @@ const postsAPI = (function postsAPI() {
     {
       id: '8',
       description: 'Lorem8 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-      createdAt: new Date('2018-02-23T23:00:00'),
+      createdAt: new Date('2018-02-08T23:00:00'),
       author: 'dronchenko',
       photoLink: 'img/cat8.jpg',
       likes: ['dronchenko', 'katya'],
@@ -310,7 +316,7 @@ const postsAPI = (function postsAPI() {
     {
       id: '9',
       description: 'Lorem9 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-      createdAt: new Date('2018-02-23T23:00:00'),
+      createdAt: new Date('2018-02-09T23:00:00'),
       author: 'Иванов Иван',
       photoLink: 'img/cat9.jpg',
       likes: ['dronchenko', 'katya'],
@@ -319,7 +325,7 @@ const postsAPI = (function postsAPI() {
     {
       id: '10',
       description: 'Lorem10 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-      createdAt: new Date('2018-02-23T23:00:00'),
+      createdAt: new Date('2018-02-15T23:00:00'),
       author: 'Иванов Иван',
       photoLink: 'img/cat10.jpg',
       likes: ['dronchenko', 'katya'],
@@ -328,7 +334,7 @@ const postsAPI = (function postsAPI() {
     {
       id: '11',
       description: 'Lorem11 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-      createdAt: new Date('2018-02-23T23:00:00'),
+      createdAt: new Date('2018-02-16T23:00:00'),
       author: 'Иванов Иван',
       photoLink: 'img/swan11.jpg',
       likes: ['dronchenko', 'katya'],
@@ -337,7 +343,7 @@ const postsAPI = (function postsAPI() {
     {
       id: '12',
       description: 'Lorem12 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-      createdAt: new Date('2018-02-23T23:00:00'),
+      createdAt: new Date('2018-02-17T23:00:00'),
       author: 'Иванов Иван',
       photoLink: 'img/snowdrop12.jpg',
       likes: ['dronchenko', 'katya'],
@@ -346,7 +352,7 @@ const postsAPI = (function postsAPI() {
     {
       id: '13',
       description: 'Lorem13 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-      createdAt: new Date('2018-02-23T23:00:00'),
+      createdAt: new Date('2018-02-18T23:00:00'),
       author: 'Иванов Иван',
       photoLink: 'img/cat13.jpg',
       likes: ['dronchenko', 'katya'],
@@ -355,7 +361,7 @@ const postsAPI = (function postsAPI() {
     {
       id: '14',
       description: 'Lorem14 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-      createdAt: new Date('2018-02-23T23:00:00'),
+      createdAt: new Date('2018-02-19T23:00:00'),
       author: 'Иванов Иван',
       photoLink: 'img/seagull14.jpg',
       likes: ['dronchenko', 'katya'],
@@ -364,7 +370,7 @@ const postsAPI = (function postsAPI() {
     {
       id: '15',
       description: 'Lorem15 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-      createdAt: new Date('2018-02-23T23:00:00'),
+      createdAt: new Date('2018-02-20T23:00:00'),
       author: 'Иванов Иван',
       photoLink: 'img/highlander15.jpg',
       likes: ['dronchenko', 'katya'],
@@ -373,7 +379,7 @@ const postsAPI = (function postsAPI() {
     {
       id: '16',
       description: 'Lorem16 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-      createdAt: new Date('2018-02-23T23:00:00'),
+      createdAt: new Date('2018-02-21T23:00:00'),
       author: 'Иванов Иван',
       photoLink: 'img/butterfly16.jpg',
       likes: ['dronchenko', 'katya'],
@@ -382,7 +388,7 @@ const postsAPI = (function postsAPI() {
     {
       id: '17',
       description: 'Lorem17 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-      createdAt: new Date('2018-02-23T23:00:00'),
+      createdAt: new Date('2018-02-22T23:00:00'),
       author: 'Иванов Иван',
       photoLink: 'img/duck17.jpg',
       likes: ['dronchenko', 'katya'],
@@ -400,7 +406,7 @@ const postsAPI = (function postsAPI() {
     {
       id: '19',
       description: 'Lorem19 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-      createdAt: new Date('2018-02-23T23:00:00'),
+      createdAt: new Date('2018-02-24T23:00:00'),
       author: 'Иванов Иван',
       photoLink: 'img/bird19.jpg',
       likes: ['dronchenko', 'katya'],
@@ -409,7 +415,7 @@ const postsAPI = (function postsAPI() {
     {
       id: '20',
       description: 'Lorem20 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-      createdAt: new Date('2018-02-23T23:00:00'),
+      createdAt: new Date('2018-02-25T23:00:00'),
       author: 'Иванов Иван',
       photoLink: 'img/dog20.jpg',
       likes: ['dronchenko', 'katya'],
@@ -418,7 +424,7 @@ const postsAPI = (function postsAPI() {
     {
       id: '21',
       description: 'Lorem21 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-      createdAt: new Date('2018-02-23T23:00:00'),
+      createdAt: new Date('2018-02-10T23:00:00'),
       author: 'Иванов Иван',
       photoLink: 'img/chicken21.jpg',
       likes: ['dronchenko', 'katya'],
@@ -427,7 +433,7 @@ const postsAPI = (function postsAPI() {
     {
       id: '22',
       description: 'Lorem22 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-      createdAt: new Date('2018-02-23T23:00:00'),
+      createdAt: new Date('2018-02-11T23:00:00'),
       author: 'Иванов Иван',
       photoLink: 'img/goat22.jpg',
       likes: ['dronchenko', 'katya'],
@@ -436,7 +442,7 @@ const postsAPI = (function postsAPI() {
     {
       id: '23',
       description: 'Lorem23 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-      createdAt: new Date('2018-02-23T23:00:00'),
+      createdAt: new Date('2018-02-12T23:00:00'),
       author: 'Иванов Иван',
       photoLink: 'img/dog23.jpg',
       likes: ['dronchenko', 'katya'],
@@ -445,7 +451,7 @@ const postsAPI = (function postsAPI() {
     {
       id: '24',
       description: 'Lorem24 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-      createdAt: new Date('2018-02-23T23:00:00'),
+      createdAt: new Date('2018-02-13T23:00:00'),
       author: 'Иванов Иван',
       photoLink: 'img/butterfly24.jpg',
       likes: ['dronchenko', 'katya'],
@@ -454,7 +460,7 @@ const postsAPI = (function postsAPI() {
     {
       id: '25',
       description: 'Lorem25 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-      createdAt: new Date('2018-02-23T23:00:00'),
+      createdAt: new Date('2018-02-14T23:00:00'),
       author: 'Иванов Иван',
       photoLink: 'img/swan25.jpg',
       likes: ['dronchenko', 'katya'],
@@ -468,6 +474,12 @@ const postsAPI = (function postsAPI() {
     if (model.addPhotoPost(post) === true) {
       view.addPost(post, model.getPhotoPost(post.id).index);
     }
+  };
+  module.getPostsCount = function getPostsCount() {
+    return model.getPostsCount();
+  };
+  module.clearPosts = function clearPosts() {
+    view.clearPosts();
   };
   module.removePhotoPost = function removePhotoPost(id) {
     const index = model.removePhotoPost(id);

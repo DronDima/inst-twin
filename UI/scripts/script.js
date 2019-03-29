@@ -87,16 +87,20 @@ function applyFilter() {
   let to = new Date(8640000000000000);
   if (dateFrom !== '') {
     from = new Date(dateFrom);
-    time = timeFrom.split(':');
-    from.setUTCHours(time[0]);
-    from.setUTCMinutes(time[1]);
+    if (timeTo !== '') {
+      time = timeFrom.split(':');
+      from.setUTCHours(time[0]);
+      from.setUTCMinutes(time[1]);
+    }
   }
 
   if (dateTo !== '') {
     to = new Date(dateTo);
-    time = timeTo.split(':');
-    to.setUTCHours(time[0]);
-    to.setUTCMinutes(time[1]);
+    if (timeFrom !== '') {
+      time = timeTo.split(':');
+      to.setUTCHours(time[0]);
+      to.setUTCMinutes(time[1]);
+    }
   }
 
   const nodeTags = inputs.querySelectorAll('.filter__tag');
@@ -106,7 +110,16 @@ function applyFilter() {
   config.dateTo = to;
   config.authorName = inputs.querySelector('#author').value;
   config.hashtags = tags;
+  postsAPI.clearPosts();
   postsAPI.showPhotoPosts(0, 10, config);
+}
+
+function loadMore() {
+  const currentPostCount = document.querySelectorAll('.post-container').length;
+  postsAPI.showPhotoPosts(currentPostCount, 10);
+  if (currentPostCount + 10 >= postsAPI.getPostsCount()) {
+    document.querySelector('.main__button').setAttribute('hidden', 'true');
+  }
 }
 
 const main = document.querySelector('.main');
@@ -119,8 +132,8 @@ headerButtons.lastElementChild.addEventListener('click', signInButton);
 const signInButtons = document.querySelectorAll('.signin-dialog__button');
 signInButtons[1].addEventListener('click', cancelButton);
 
-const filterApplyButton = document.querySelector('.filter__apply-button');
-filterApplyButton.addEventListener('click', applyFilter);
+const filterForm = document.querySelector('.filter__form');
+filterForm.addEventListener('submit', applyFilter);
 
 const filterTitle = document.querySelector('.filter__title');
 filterTitle.addEventListener('click', showFilter);
@@ -134,7 +147,13 @@ filterInput.addEventListener('blur', toggleVariants);
 filterInput.addEventListener('focus', toggleVariants);
 
 const mainButton = document.querySelector('.main__button');
-mainButton.addEventListener('click', applyFilter);
+mainButton.addEventListener('click', loadMore);
 
 const deleteButtons = document.querySelector('.delete-dialog__buttons');
 deleteButtons.lastElementChild.addEventListener('click', cancelButton);
+
+
+/*
+* 1. Пагинация после применения фильтра.
+* 2. Вся структура.
+* */

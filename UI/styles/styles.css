@@ -124,7 +124,7 @@ header {
     grid-column: 1/3;
     grid-row: 3/4;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fill, 1fr);
     width: 100%;
     grid-auto-flow: column;
   }
@@ -181,12 +181,12 @@ header {
   grid-gap: 10px;
   margin-left: 20px;
   grid-template-columns: 20% 40% 40%;
-  grid-template-areas: 'text-date-f date-f time-f' 'text-date-t date-t time-t' 'text-author author author' 'text-hashtag hashtag hashtag' 'vars vars vars' 'but but but';
+  grid-template-areas: 'text-date-f date-f time-f' 'text-date-t date-t time-t' 'text-author author author' 'text-hashtag hashtag hashtag' 'vars vars vars' 'but but-r but-a';
 }
 @media (max-width: 465px) {
   .filter__inputs {
     grid-template-columns: auto;
-    grid-template-areas: 'text-date-f text-date-f' 'date-f date-f' 'time-f time-f' 'text-date-t text-date-t' 'date-t date-t' 'time-t time-t' 'text-author text-author' 'author author' 'text-hashtag text-hashtag' 'hashtag hashtag' 'vars vars' 'but but';
+    grid-template-areas: 'text-date-f text-date-f' 'date-f date-f' 'time-f time-f' 'text-date-t text-date-t' 'date-t date-t' 'time-t time-t' 'text-author text-author' 'author author' 'text-hashtag text-hashtag' 'hashtag hashtag' 'vars vars' 'but-r but-r' 'but-a but-a';
   }
 }
 .filter__input {
@@ -194,10 +194,20 @@ header {
 }
 .filter__apply-button {
   justify-self: end;
-  grid-area: but;
+  grid-area: but-a;
 }
 @media (max-width: 465px) {
   .filter__apply-button {
+    justify-self: center;
+    width: 100%;
+  }
+}
+.filter__reset-button {
+  justify-self: start;
+  grid-area: but-r;
+}
+@media (max-width: 465px) {
+  .filter__reset-button {
     justify-self: center;
     width: 100%;
   }
