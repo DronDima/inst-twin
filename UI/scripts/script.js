@@ -73,55 +73,6 @@ function focusFilterInput() {
   this.firstElementChild.focus();
 }
 
-function applyFilter() {
-  const config = {};
-  const inputs = document.querySelector('.filter__inputs');
-
-  const dateFrom = inputs.querySelector('#date-from').value;
-  const timeFrom = inputs.querySelector('#time-from').value;
-  const dateTo = inputs.querySelector('#date-to').value;
-  const timeTo = inputs.querySelector('#time-to').value;
-
-  let time;
-  let from = new Date(-8640000000000000);
-  let to = new Date(8640000000000000);
-  if (dateFrom !== '') {
-    from = new Date(dateFrom);
-    if (timeTo !== '') {
-      time = timeFrom.split(':');
-      from.setUTCHours(time[0]);
-      from.setUTCMinutes(time[1]);
-    }
-  }
-
-  if (dateTo !== '') {
-    to = new Date(dateTo);
-    if (timeFrom !== '') {
-      time = timeTo.split(':');
-      to.setUTCHours(time[0]);
-      to.setUTCMinutes(time[1]);
-    }
-  }
-
-  const nodeTags = inputs.querySelectorAll('.filter__tag');
-  const tags = [].map.call(nodeTags, item => item.innerHTML);
-
-  config.dateFrom = from;
-  config.dateTo = to;
-  config.authorName = inputs.querySelector('#author').value;
-  config.hashtags = tags;
-  postsAPI.clearPosts();
-  postsAPI.showPhotoPosts(0, 10, config);
-}
-
-function loadMore() {
-  const currentPostCount = document.querySelectorAll('.post-container').length;
-  postsAPI.showPhotoPosts(currentPostCount, 10);
-  if (currentPostCount + 10 >= postsAPI.getPostsCount()) {
-    document.querySelector('.main__button').setAttribute('hidden', 'true');
-  }
-}
-
 const main = document.querySelector('.main');
 main.addEventListener('click', resizePost);
 main.addEventListener('click', openDeleteModal);
@@ -131,9 +82,6 @@ headerButtons.lastElementChild.addEventListener('click', signInButton);
 
 const signInButtons = document.querySelectorAll('.signin-dialog__button');
 signInButtons[1].addEventListener('click', cancelButton);
-
-const filterForm = document.querySelector('.filter__form');
-filterForm.addEventListener('submit', applyFilter);
 
 const filterTitle = document.querySelector('.filter__title');
 filterTitle.addEventListener('click', showFilter);
@@ -146,9 +94,6 @@ filterInput.addEventListener('keydown', keyDown);
 filterInput.addEventListener('blur', toggleVariants);
 filterInput.addEventListener('focus', toggleVariants);
 
-const mainButton = document.querySelector('.main__button');
-mainButton.addEventListener('click', loadMore);
-
 const deleteButtons = document.querySelector('.delete-dialog__buttons');
 deleteButtons.lastElementChild.addEventListener('click', cancelButton);
 
@@ -156,4 +101,5 @@ deleteButtons.lastElementChild.addEventListener('click', cancelButton);
 /*
 * 1. Пагинация после применения фильтра.
 * 2. Вся структура.
+* 3. Вопрос по поводу контроллера и его оформления. Как быть с лисенерами не относящимися к контроллеру.
 * */
