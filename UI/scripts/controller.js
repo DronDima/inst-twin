@@ -255,7 +255,7 @@ const postsAPI = (function postsAPI() {
     view.showHashtags(hashtags);
   };
   module.showPhotoPosts = function showPhotoPosts(skip = 0, count = 10, config) {
-    view.showPosts(model.getPhotoPosts(skip, count, config));
+    view.showPosts(model.getPhotoPosts(skip, count, config), model.getPostsCount(config));
   };
   module.showElementsIfAuthorized = function showElementsIfAuthorized(isAuthorized) {
     View.showElementsIfAuthorized(isAuthorized);
@@ -263,7 +263,7 @@ const postsAPI = (function postsAPI() {
   return module;
 }());
 
-function applyFilter() {
+function createFilter() {
   const config = {};
   const inputs = document.querySelector('.filter__inputs');
 
@@ -300,16 +300,18 @@ function applyFilter() {
   config.dateTo = to;
   config.authorName = inputs.querySelector('#author').value;
   config.hashtags = tags;
+  return config;
+}
+
+function applyFilter() {
+  // TODO: Автообновление постов после ввода полей.
   postsAPI.clearPosts();
-  postsAPI.showPhotoPosts(0, 10, config);
+  postsAPI.showPhotoPosts(0, 10, createFilter());
 }
 
 function loadMore() {
   const currentPostCount = document.querySelectorAll('.post-container').length;
-  postsAPI.showPhotoPosts(currentPostCount, 10);
-  if (currentPostCount + 10 >= postsAPI.getPostsCount()) {
-    document.querySelector('.main__button').setAttribute('hidden', 'true');
-  }
+  postsAPI.showPhotoPosts(currentPostCount, 10, createFilter());
 }
 
 const filterForm = document.querySelector('.filter__form');

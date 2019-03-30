@@ -3,7 +3,7 @@ class PostModel {
     this.restoreFromLocalStorage();
     if (this._photoPosts == null) {
       this._photoPosts = posts;
-      this.saveToLocalStorage();
+      this._savePosts();
     }
   }
 
@@ -25,7 +25,7 @@ class PostModel {
       }
     });
     if (posts.length !== notValid.length) {
-      this._saveToLocalStorage();
+      this._savePosts();
     }
     return notValid;
   }
@@ -33,8 +33,8 @@ class PostModel {
   getPhotoPosts(skip = 0, count = 10, config = PostModel._DEFAULT_FILTER_CONFIG) {
     function filtrate(posts) {
       return posts
-        .filter(post => new Date(post.createdAt).getTime() >= config.dateFrom.getTime()
-          && new Date(post.createdAt).getTime() <= config.dateTo.getTime()
+        .filter(post => new Date(post.createdAt).getTime() >= new Date(config.dateFrom).getTime()
+          && new Date(post.createdAt).getTime() <= new Date(config.dateTo).getTime()
           && (post.author === config.authorName || config.authorName === '')
           && (PostModel._isIntersect(post.hashtags, config.hashtags)
             || config.hashtags.length === 0));
@@ -95,7 +95,7 @@ class PostModel {
   addPhotoPost(post) {
     if (this._validatePhotoPost(post) === true) {
       this._photoPosts.push(post);
-      this._saveToLocalStorage();
+      this._savePosts();
       return true;
     }
     return false;
@@ -106,7 +106,7 @@ class PostModel {
     const viewIndex = this.getPhotoPosts().findIndex(post => post.id === id);
     if (modelIndex !== -1) {
       this._photoPosts.splice(modelIndex, 1);
-      this._saveToLocalStorage();
+      this._savePosts();
       return viewIndex;
     }
     return viewIndex;
@@ -125,7 +125,7 @@ class PostModel {
       if (PostModel._validateChangeableFields(postCopy) === true) {
         this.removePhotoPost(id);
         this.addPhotoPost(postCopy);
-        this._saveToLocalStorage();
+        this._savePosts();
         return true;
       }
       return false;
@@ -133,11 +133,11 @@ class PostModel {
     return false;
   }
 
-  getPostsCount() {
-    return this._photoPosts.length;
+  getPostsCount(config = PostModel._DEFAULT_FILTER_CONFIG) {
+    return this.getPhotoPosts(0, this._photoPosts.length, config).length;
   }
 
-  _saveToLocalStorage() {
+  _savePosts() {
     localStorage.removeItem('posts');
     const jsonPosts = JSON.stringify(this._photoPosts);
     localStorage.setItem('posts', jsonPosts);
@@ -149,8 +149,8 @@ class PostModel {
   }
 }
 PostModel._DEFAULT_FILTER_CONFIG = {
-  dateFrom: new Date(-8640000000000000),
-  dateTo: new Date(8640000000000000),
+  dateFrom: '-271821-04-20T00:00:00.000Z',
+  dateTo: '+275760-09-13T00:00:00.000Z',
   authorName: '',
   hashtags: [],
 };
@@ -196,9 +196,16 @@ class View {
     return fragment;
   }
 
-  showPosts(posts) {
+  showPosts(posts, countSuitablePosts) {
     posts.map(this._buildPost.bind(this))
       .forEach(post => this._main.appendChild(post));
+    const currentPostCount = this._main.querySelectorAll('.post-container').length;
+    const loadMoreButton = document.querySelector('.main__button');
+    if (currentPostCount < 10 || currentPostCount === countSuitablePosts) {
+      loadMoreButton.setAttribute('hidden', 'true');
+    } else if (loadMoreButton.hasAttribute('hidden')) {
+      document.querySelector('.main__button').removeAttribute('hidden');
+    }
   }
 
   removePost(index) {
