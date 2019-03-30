@@ -5,6 +5,10 @@ class PostModel {
       this._photoPosts = posts;
       this._savePosts();
     }
+    if (this._authStatus == null) {
+      this._authStatus = false;
+      this._saveAuthStatus();
+    }
   }
 
   static _isIntersect(postTags, configTags) {
@@ -31,6 +35,7 @@ class PostModel {
   }
 
   getPhotoPosts(skip = 0, count = 10, config = PostModel._DEFAULT_FILTER_CONFIG) {
+    // FIXME: Выводить время в удобном формате.
     function filtrate(posts) {
       return posts
         .filter(post => new Date(post.createdAt).getTime() >= new Date(config.dateFrom).getTime()
@@ -137,6 +142,20 @@ class PostModel {
     return this.getPhotoPosts(0, this._photoPosts.length, config).length;
   }
 
+  _saveAuthStatus() {
+    const jsonAuthStatus = JSON.stringify(this._authStatus);
+    localStorage.setItem('authStatus', jsonAuthStatus);
+  }
+
+  isAuthorized() {
+    return this._authStatus;
+  }
+
+  toggleAuthStatus() {
+    this._authStatus = !this._authStatus;
+    this._saveAuthStatus();
+  }
+
   _savePosts() {
     localStorage.removeItem('posts');
     const jsonPosts = JSON.stringify(this._photoPosts);
@@ -146,6 +165,8 @@ class PostModel {
   restoreFromLocalStorage() {
     const jsonPosts = localStorage.getItem('posts');
     this._photoPosts = JSON.parse(jsonPosts);
+    const jsonAuthStatus = localStorage.getItem('authStatus');
+    this._authStatus = JSON.parse(jsonAuthStatus);
   }
 }
 PostModel._DEFAULT_FILTER_CONFIG = {
@@ -204,7 +225,7 @@ class View {
     if (currentPostCount < 10 || currentPostCount === countSuitablePosts) {
       loadMoreButton.setAttribute('hidden', 'true');
     } else if (loadMoreButton.hasAttribute('hidden')) {
-      document.querySelector('.main__button').removeAttribute('hidden');
+      loadMoreButton.removeAttribute('hidden');
     }
   }
 
@@ -234,16 +255,11 @@ class View {
     const targets = document.querySelectorAll('.post-container__links');
     if (isAuthorized === true) {
       /* Header buttons and name. */
-      document.querySelector('.header__logInfo').innerHTML = 'You signed in as dronchenko.';
-      const buttons = document.querySelector('.header__buttons');
-      const button2 = buttons.querySelector('.header__button');
-      const button1 = document.createElement('button');
-      button1.classList.add('header__button', 'button');
-      button1.setAttribute('type', 'submit');
-      button1.innerHTML = 'Add post';
-      buttons.insertBefore(button1, button2);
-      button2.innerHTML = 'Sign out';
-      button2.onclick = '';
+      document.querySelector('.header__logInfo').innerHTML = 'You signed in as username.';
+      const buttons = document.querySelectorAll('.header__button');
+      buttons[0].removeAttribute('hidden');
+      buttons[1].setAttribute('hidden', 'true');
+      buttons[2].removeAttribute('hidden');
       /* Delete and edit links. */
       targets.forEach((target) => {
         const links = document.importNode(delEditTemplate.content, true);
@@ -252,11 +268,10 @@ class View {
     } else {
       /* Header buttons and name. */
       document.querySelector('.header__logInfo').innerHTML = 'You not signed in.';
-      const buttons = document.querySelector('.header__buttons');
-      if (buttons.children.length > 1) {
-        buttons.removeChild(buttons.firstElementChild);
-        buttons.querySelector('.header__button').innerHTML = 'Sign in';
-      }
+      const buttons = document.querySelectorAll('.header__button');
+      buttons[0].setAttribute('hidden', 'true');
+      buttons[1].removeAttribute('hidden');
+      buttons[2].setAttribute('hidden', 'true');
       /* Delete and edit links. */
       targets.forEach((target) => {
         while (target.hasChildNodes() === true) {

@@ -257,8 +257,11 @@ const postsAPI = (function postsAPI() {
   module.showPhotoPosts = function showPhotoPosts(skip = 0, count = 10, config) {
     view.showPosts(model.getPhotoPosts(skip, count, config), model.getPostsCount(config));
   };
-  module.showElementsIfAuthorized = function showElementsIfAuthorized(isAuthorized) {
-    View.showElementsIfAuthorized(isAuthorized);
+  module.showElementsIfAuthorized = function showElementsIfAuthorized() {
+    View.showElementsIfAuthorized(model.isAuthorized());
+  };
+  module.toggleAuthStatus = function toggleAuthStatus() {
+    model.toggleAuthStatus();
   };
   return module;
 }());
@@ -309,10 +312,31 @@ function applyFilter() {
   postsAPI.showPhotoPosts(0, 10, createFilter());
 }
 
+function signIn() {
+  postsAPI.toggleAuthStatus();
+  postsAPI.showElementsIfAuthorized();
+  toggleBlur();
+}
+
+function signInButton() {
+  window.location.href = '#signin-modal';
+  toggleBlur();
+}
+
+function signOutButton() {
+  postsAPI.toggleAuthStatus();
+  postsAPI.showElementsIfAuthorized();
+}
+
 function loadMore() {
   const currentPostCount = document.querySelectorAll('.post-container').length;
   postsAPI.showPhotoPosts(currentPostCount, 10, createFilter());
 }
+
+const headerButtons = document.querySelectorAll('.header__button');
+// TODO: Мэйби тут не нужно определять отдельные функции?
+headerButtons[1].addEventListener('click', signInButton);
+headerButtons[2].addEventListener('click', signOutButton);
 
 const filterForm = document.querySelector('.filter__form');
 filterForm.addEventListener('submit', applyFilter);
@@ -320,5 +344,8 @@ filterForm.addEventListener('submit', applyFilter);
 const mainButton = document.querySelector('.main__button');
 mainButton.addEventListener('click', loadMore);
 
+const signInForm = document.querySelector('.signin-dialog__form');
+signInForm.addEventListener('submit', signIn);
+
 postsAPI.showPhotoPosts();
-postsAPI.showElementsIfAuthorized(false);
+postsAPI.showElementsIfAuthorized();

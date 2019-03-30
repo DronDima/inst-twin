@@ -59,11 +59,6 @@ function openDeleteModal(event) {
   }
 }
 
-function signInButton() {
-  window.location.href = '#signin-modal';
-  toggleBlur();
-}
-
 function cancelButton() {
   window.location.href = '';
   toggleBlur();
@@ -76,9 +71,6 @@ function focusFilterInput() {
 const main = document.querySelector('.main');
 main.addEventListener('click', resizePost);
 main.addEventListener('click', openDeleteModal);
-
-const headerButtons = document.querySelector('.header__buttons');
-headerButtons.lastElementChild.addEventListener('click', signInButton);
 
 const signInButtons = document.querySelectorAll('.signin-dialog__button');
 signInButtons[1].addEventListener('click', cancelButton);

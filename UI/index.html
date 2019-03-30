@@ -18,7 +18,9 @@
 					<p>You not signed in</p>
 				</div>
 				<div class="header__buttons">
-					<button class="header__button button" type="submit">Sign in</button>
+					<button class="header__button button" type="button">Add post</button>
+					<button class="header__button button" type="button">Sign in</button>
+					<button class="header__button button" type="button">Sign out</button>
 				</div>
 			</div>
 		</header>
@@ -28,6 +30,7 @@
 					<span class="filter__text text-type-2">Filter</span>
 					<span class="filter__symbol"><i class="fas fa-angle-down"></i></span>
 				</button>
+				<!--FIXME: Не работает фильтр в хроме.-->
 				<form class="filter__form filter__form_hidden" action="#">
 					<p class="filter__text">Filtrate by:</p>
 					<div class="filter__inputs">
@@ -102,7 +105,7 @@
 				<p class="signin-dialog__text">Password:</p>
 				<input class="signin-dialog__input input" type="password" placeholder="Password" required="" />
 				<button class="signin-dialog__button button" type="submit">Sign In</button>
-				<button class="signin-dialog__button button" type="submit">Cancel</button>
+				<button class="signin-dialog__button button" type="button">Cancel</button>
 			</form>
 		</div>
 	</div>
