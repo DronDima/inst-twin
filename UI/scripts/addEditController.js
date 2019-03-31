@@ -266,66 +266,9 @@ const postsAPI = (function postsAPI() {
   return module;
 }());
 
-function createFilter() {
-  const config = {};
-  const inputs = document.querySelector('.filter__inputs');
-
-  const dateFrom = inputs.querySelector('#date-from').value;
-  const timeFrom = inputs.querySelector('#time-from').value;
-  const dateTo = inputs.querySelector('#date-to').value;
-  const timeTo = inputs.querySelector('#time-to').value;
-
-  let time;
-  let from = new Date(-8640000000000000);
-  let to = new Date(8640000000000000);
-  if (dateFrom !== '') {
-    from = new Date(dateFrom);
-    if (timeTo !== '') {
-      time = timeFrom.split(':');
-      from.setUTCHours(time[0]);
-      from.setUTCMinutes(time[1]);
-    }
-  }
-
-  if (dateTo !== '') {
-    to = new Date(dateTo);
-    if (timeFrom !== '') {
-      time = timeTo.split(':');
-      to.setUTCHours(time[0]);
-      to.setUTCMinutes(time[1]);
-    }
-  }
-
-  const nodeTags = inputs.querySelectorAll('.filter__tag');
-  const tags = [].map.call(nodeTags, item => item.innerHTML);
-
-  config.dateFrom = from;
-  config.dateTo = to;
-  config.authorName = inputs.querySelector('#author').value;
-  config.hashtags = tags;
-  return config;
-}
-
-function applyFilter() {
-  // TODO: Автообновление постов после ввода полей.
-  postsAPI.clearPosts();
-  postsAPI.showPhotoPosts(0, 10, createFilter());
-}
-
-function signIn() {
-  postsAPI.toggleAuthStatus();
-  postsAPI.showElementsIfAuthorized();
-  toggleBlur();
-}
-
-function signInButton() {
-  window.location.href = '#signin-modal';
-  toggleBlur();
-}
-
 function signOutButton() {
   postsAPI.toggleAuthStatus();
-  postsAPI.showElementsIfAuthorized();
+  window.location.href = 'index.html';
 }
 
 function addPostButton() {
@@ -333,25 +276,26 @@ function addPostButton() {
   postsAPI.showElementsIfAuthorized();
 }
 
-function loadMore() {
-  const currentPostCount = document.querySelectorAll('.post-container').length;
-  postsAPI.showPhotoPosts(currentPostCount, 10, createFilter());
+function addPostToModel() {
+  const post = {};
+  post.author = document.querySelector('#author').value;
+  post.createdAt = new Date(document.querySelector('#dateAndTime').value);
+  const nodeTags = document.querySelectorAll('.add-post__tag');
+  post.hashtags = [].map.call(nodeTags, item => item.innerHTML);
+  post.description = document.querySelector('#desc').value;
+  post.photoLink = document.querySelector('#uploadBtn').value;
+  post.likes = [];
+  post.id = (postsAPI.getPostsCount() + 1).toString();
+
+  postsAPI.addPhotoPost(post);
 }
 
 const headerButtons = document.querySelectorAll('.header__button');
-// TODO: Мэйби тут не нужно определять отдельные функции?
 headerButtons[0].addEventListener('click', addPostButton);
-headerButtons[1].addEventListener('click', signInButton);
 headerButtons[2].addEventListener('click', signOutButton);
 
-const filterForm = document.querySelector('.filter__form');
-filterForm.addEventListener('submit', applyFilter);
+const form = document.querySelector('.add-post__form');
+form.addEventListener('submit', addPostToModel);
 
-const mainButton = document.querySelector('.main__button');
-mainButton.addEventListener('click', loadMore);
 
-const signInForm = document.querySelector('.signin-dialog__form');
-signInForm.addEventListener('submit', signIn);
-
-postsAPI.showPhotoPosts();
 postsAPI.showElementsIfAuthorized();

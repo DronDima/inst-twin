@@ -5,43 +5,48 @@
   <link href="styles/styles.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css?family=Montserrat:700|Lobster|Noto+Sans+TC|Frank+Ruhl+Libre|Roboto+Slab|Alegreya:400" rel="stylesheet" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="scripts/script.js"></script>
   <title>Document</title>
 </head>
 <body>
   <header>
     <div class="header">
       <div class="header__logo">
-        <a href="#"><h1>PhotoPortal</h1></a>
+        <a href="index.html"><h1>PhotoPortal</h1></a>
       </div>
       <div class="header__logInfo text-type-1">
-        <p>You signed in as dronchenko</p>
+        <p>You not signed in</p>
       </div>
       <div class="header__buttons">
-        <button class="header__button button" type="submit" onclick="location.href='addEditPost.html'">Add post</button>
-        <button onclick="setBlur()" class="header__button button" type="submit">Sign out</button>
+        <button class="header__button button" type="button">Add post</button>
+        <button class="header__button button" type="button">Sign in</button>
+        <button class="header__button button" type="button">Sign out</button>
       </div>
     </div>
   </header>
   <main>
     <div class="add-post">
-      <p class="add-post__title text-type-2">New Post</p>
-      <form class="add-post__form text-type-2" action="#">
-        <div class="add-post__author">
-          <p>Author name:</p>
-          <input class="add-post__input text-type-2" value="dronchenko" type="text" disabled />
+      <form class="add-post__form" action="#">
+        <p class="add-post__title text-type-2">New Post</p>
+        <label class="add-post__author-label" for="author">Author name:</label>
+        <input class="add-post__author-input text-type-2" id="author" value="username" type="text" disabled />
+        <label class="add-post__date-label" for="dateAndTime">Date and time:</label>
+        <!--TODO: Сделать динамисеское время.-->
+        <input class="add-post__date-input text-type-2" id="dateAndTime"  value="2019-02-02T20:00:00.000Z" type="text" disabled />
+        <label for="tags" class="add-post__hashtags-label">Hashtags:</label>
+        <div class="add-post__tags input">
+          <input class="add-post__tags-input text-type-2" type="text" placeholder="Choose hashtags" id="tags" />
         </div>
-        <div class="add-post__date">
-          <p>Date and time:</p>
-          <input class="add-post__input text-type-2" value="01.02.2019 11.56" type="text" disabled />
-        </div>
-        <p class="add-post__hashtags-text">Hashtags:</p>
-        <input class="add-post__hashtags-input input" placeholder="Enter hashtags here" type="text" />
-        <p class="add-post__desc-text">Short description:</p>
-        <textarea class="add-post__desc-input input" placeholder="Describe your photopost here" maxlength="200" required></textarea>
+        <ul class="add-post__variants add-post__variants_hidden">
+          <template class="hashtag-template">
+            <li class="add-post__variant hashtag"></li>
+          </template>
+        </ul>
+        <label for="desc" class="add-post__desc-label">Short description:</label>
+        <textarea class="add-post__desc-input input" id="desc" placeholder="Describe your photopost here"
+                  maxlength="200" required></textarea>
         <label for="uploadBtn" class="add-post__upload-button">Upload file</label>
-        <input style="opacity: 0; z-index: -1; height: 0px" type="file" name="upload" id="uploadBtn" />
-        <input type="submit" value="Add post" class="add-post__add-button button" />
+        <input style="opacity: 0; z-index: -1; height: 0" type="file" name="upload" id="uploadBtn" />
+        <button type="submit" class="add-post__add-button button">Add post</button>
       </form>
     </div>
   </main>
@@ -53,6 +58,9 @@
       <p class="footer__text text-type-1">last change:</p>
     </div>
   </footer>
+  <script src="scripts/posts.js"></script>
+  <script src="scripts/addEditScript.js"></script>
+  <script src="scripts/addEditController.js"></script>
 </body>
 </html>
 

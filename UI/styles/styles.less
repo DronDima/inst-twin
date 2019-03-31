@@ -500,63 +500,103 @@ footer {
 }
 
 .add-post {
-	* {
-		width: 100%;
-	}
+	//FIXME: Увеличение контейнера при добавлении большого количества тэгов.
 	max-width: 700px;
 	margin: auto;
 	padding: 100px 40px 100px 40px;
-	display: grid;
-	grid-template-rows: repeat(2, auto);
-	grid-row-gap: 30px;
+	&__form {
+		display: grid;
+		grid-row-gap: 15px;
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-areas:
+			'title title'
+			'author-l date-l'
+			'author-i date-i'
+			'tags-l tags-l'
+			'tags-i tags-i'
+			'vars vars'
+			'desc-l desc-l'
+			'desc-i desc-i'
+			'upload upload'
+			'addBtn addBtn';
+		font-size: 20px;
+		@media (max-width: 465px) {
+			grid-template-areas:
+					'title title'
+					'author-l author-l'
+					'author-i author-i'
+					'date-l date-l'
+					'date-i date-i'
+					'tags-l tags-l'
+					'tags-i tags-i'
+					'vars vars'
+					'desc-l desc-l'
+					'desc-i desc-i'
+					'upload upload'
+					'addBtn addBtn';
+		}
+	}
 	&__title {
+		grid-area: title;
 		text-align: center;
-		grid-area: ~'1 / 1 / span 1 / span 1';
 		justify-self: center;
 		color: @black;
 		font-size: 38px;
 	}
-	&__form {
-		grid-area: ~'2 / 1 / span 1 / span 1';
-		display: grid;
-		grid-template-rows: repeat(7, auto);
-		grid-template-columns: repeat(2, 1fr);
-		grid-row-gap: 15px;
-		font-size: 20px;
+	&__author-label {
+		grid-area: author-l;
 	}
-	&__author {
-		grid-area: ~'1 / 1 / span 1 / span 1';
-		* {
-			display: inline-grid;
-		}
-	}
-	&__input {
+	&__author-input {
+		grid-area: author-i;
 		font-size: 18px;
 		border: none;
 		background: @lightgray;
 	}
-	&__date {
-		grid-area: ~'1 / 2 / span 1 / span 1';
-		* {
-			display: inline-grid;
+	&__date-label {
+		grid-area: date-l;
+	}
+	&__date-input {
+		grid-area: date-i;
+		font-size: 18px;
+		border: none;
+		background: @lightgray;
+	}
+	&__hashtags-label {
+		grid-area: tags-l;
+	}
+	&__tags {
+		grid-area: tags-i;
+		&:hover {
+			cursor: text;
 		}
+		text-indent: 0;
+		height: auto;
+		grid-auto-flow: dense;
 	}
-	&__hashtags-text {
-		grid-area: ~'2 / 1 / span 1 / span 2';
+	&__tags-input {
+		font-size: 16px;
+		height: 20px;
+		display: inline-grid;
+		padding: 5px 0;
+		background: @lightgray;
+		border: none;
+		margin-left: 10px;
 	}
-	&__hashtags-input {
-		grid-area: ~'3 / 1 / span 1 / span 2';
+	&__tag {
+		margin: 5px 0 5px 10px;
+		display: inline-grid;
 	}
-	&__desc-text {
-		grid-area: ~'4 / 1 / span 1 / span 2';
+	&__desc-label {
+		grid-area: desc-l;
 	}
 	&__desc-input {
+		grid-area: desc-i;
 		padding-top: 10px;
 		resize: none;
 		height: 120px;
-		grid-area: ~'5 / 1 / span 1 / span 2';
 	}
 	&__upload-button {
+		grid-area: upload;
 		font-family: 'Montserrat', sans-serif;
 		font-size: 14px;
 		padding: 5px 0 5px 0;
@@ -565,11 +605,30 @@ footer {
 		color: @pink;
 		border: 1px solid @pink;
 		border-radius: 3px;
-		grid-area: ~'6 / 1 / span 1 / span 2';
 	}
 	&__add-button {
+		grid-area: addBtn;
 		width: 100%;
-		grid-area: ~'7 / 1 / span 1 / span 2';
+	}
+	&__variants {
+		grid-area: vars;
+		cursor: default;
+	}
+	&__variants_hidden {
+		display: none;
+	}
+	&__variant {
+		&:hover {
+			background: @darkblue;
+			cursor: pointer;
+		}
+		margin: 3px;
+		display: inline-grid;
+		grid-auto-flow: dense;
+		grid-gap: 5px;
+	}
+	&__variant_hide {
+		display: none;
 	}
 }
 
