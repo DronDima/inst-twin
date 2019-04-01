@@ -53,27 +53,49 @@ function openDeleteModal(event) {
   while (target !== this) {
     if (target.classList.contains('post-container__link')) {
       toggleBlur();
+    } else if (target.tagName === 'ARTICLE') {
+      document.querySelector('.delete-dialog')
+        .setAttribute('data-id', target.getAttribute('data-id'));
       return;
     }
     target = target.parentNode;
   }
 }
 
-function cancelButton() {
-  window.location.href = '';
-  toggleBlur();
-}
-
 function focusFilterInput() {
   this.firstElementChild.focus();
+}
+
+function editPost(event) {
+  let { target } = event;
+  while (target !== this) {
+    // TODO: ЧТо за костыли?
+    if (target.textContent === 'edit') {
+      let post = target;
+      while (post !== this) {
+        if (post.classList.contains('post-container')) {
+          break;
+        }
+        post = post.parentNode;
+      }
+      const postInfo = {};
+      postInfo.id = post.getAttribute('data-id');
+      postInfo.description = post.querySelector('.post-container__desc').textContent;
+      postInfo.photoLink = post.querySelector('.post-container__photo').getAttribute('src');
+      const hashtagsString = post.querySelector('.post-container__hashtag').textContent;
+      postInfo.hashtags = hashtagsString.split(', ');
+      localStorage.setItem('edits', JSON.stringify(postInfo));
+      window.location.href = 'addEditPost.html';
+      return;
+    }
+    target = target.parentNode;
+  }
 }
 
 const main = document.querySelector('.main');
 main.addEventListener('click', resizePost);
 main.addEventListener('click', openDeleteModal);
-
-const signInButtons = document.querySelectorAll('.signin-dialog__button');
-signInButtons[1].addEventListener('click', cancelButton);
+main.addEventListener('click', editPost);
 
 const filterTitle = document.querySelector('.filter__title');
 filterTitle.addEventListener('click', showFilter);
@@ -85,9 +107,6 @@ const filterInput = document.querySelector('.filter__tags-input');
 filterInput.addEventListener('keydown', keyDown);
 filterInput.addEventListener('blur', toggleVariants);
 filterInput.addEventListener('focus', toggleVariants);
-
-const deleteButtons = document.querySelector('.delete-dialog__buttons');
-deleteButtons.lastElementChild.addEventListener('click', cancelButton);
 
 
 /*

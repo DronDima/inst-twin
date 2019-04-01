@@ -229,11 +229,6 @@ const postsAPI = (function postsAPI() {
   const module = [];
   const model = new PostModel(posts);
   const view = new View();
-  module.addPhotoPost = function addPhotoPost(post) {
-    if (model.addPhotoPost(post) === true) {
-      view.addPost(post, model.getPhotoPost(post.id).index);
-    }
-  };
   module.getPostsCount = function getPostsCount() {
     return model.getPostsCount();
   };
@@ -241,10 +236,7 @@ const postsAPI = (function postsAPI() {
     view.clearPosts();
   };
   module.removePhotoPost = function removePhotoPost(id) {
-    const index = model.removePhotoPost(id);
-    if (index !== -1) {
-      view.removePost(index);
-    }
+    model.removePhotoPost(id);
   };
   module.editPhotoPost = function editPhotoPost(id, edits) {
     if (model.editPhotoPost(id, edits) === true) {
@@ -336,6 +328,18 @@ function addPostButton() {
 function loadMore() {
   const currentPostCount = document.querySelectorAll('.post-container').length;
   postsAPI.showPhotoPosts(currentPostCount, 10, createFilter());
+  postsAPI.showElementsIfAuthorized();
+}
+
+function cancelButton() {
+  window.location.href = '';
+  toggleBlur();
+}
+
+function deletePost() {
+  const id = document.querySelector('.delete-dialog').getAttribute('data-id');
+  postsAPI.removePhotoPost(id);
+  window.location.href = '';
 }
 
 const headerButtons = document.querySelectorAll('.header__button');
@@ -347,11 +351,19 @@ headerButtons[2].addEventListener('click', signOutButton);
 const filterForm = document.querySelector('.filter__form');
 filterForm.addEventListener('submit', applyFilter);
 
-const mainButton = document.querySelector('.main__button');
-mainButton.addEventListener('click', loadMore);
+const loadMoreButton = document.querySelector('.main__button');
+loadMoreButton.addEventListener('click', loadMore);
+
+const signInButtons = document.querySelectorAll('.signin-dialog__button');
+signInButtons[1].addEventListener('click', cancelButton);
 
 const signInForm = document.querySelector('.signin-dialog__form');
 signInForm.addEventListener('submit', signIn);
+
+const deleteButtons = document.querySelector('.delete-dialog__buttons');
+deleteButtons.lastElementChild.addEventListener('click', cancelButton);
+deleteButtons.firstElementChild.addEventListener('click', deletePost);
+
 
 postsAPI.showPhotoPosts();
 postsAPI.showElementsIfAuthorized();

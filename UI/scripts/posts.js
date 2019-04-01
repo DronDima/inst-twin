@@ -109,6 +109,7 @@ class PostModel {
     const index = this._photoPosts.findIndex(post => post.id === id);
     if (index !== -1) {
       this._photoPosts.splice(index, 1);
+      this._savePosts();
       return true;
     }
     return false;
@@ -227,11 +228,6 @@ class View {
     this._main.replaceChild(this._buildPost(editedPost), lastPost);
   }
 
-  addPost(post, index) {
-    const posts = this._main.querySelectorAll('.post-container');
-    this._main.insertBefore(this._buildPost(post), posts[index]);
-  }
-
   _buildPost(post) {
     const fragment = document.importNode(this._postTemplate.content, true);
     const key = fragment.querySelector('.post-container').getAttribute('data-id');
@@ -241,6 +237,12 @@ class View {
     fragment.querySelector('.post-container__hashtag').textContent = post.hashtags.join(', ');
     fragment.querySelector('.post-container__desc').textContent = post.description;
     return fragment;
+  }
+
+  clearPosts() {
+    while (this._main.lastElementChild.classList.contains('post-container')) {
+      this._main.removeChild(this._main.lastElementChild);
+    }
   }
 
   static showElementsIfAuthorized(isAuthorized) {
@@ -253,7 +255,7 @@ class View {
       buttons[1].setAttribute('hidden', 'true');
       buttons[2].removeAttribute('hidden');
       /* Delete and edit links. */
-      links.forEach(link => link.classList.toggle('post-container__links_hidden'));
+      links.forEach(link => link.classList.remove('post-container__links_hidden'));
     } else {
       /* Header buttons and name. */
       document.querySelector('.header__logInfo').innerHTML = 'You not signed in.';
@@ -262,7 +264,7 @@ class View {
       buttons[1].removeAttribute('hidden');
       buttons[2].setAttribute('hidden', 'true');
       /* Delete and edit links. */
-      links.forEach(link => link.classList.toggle('post-container__links_hidden'));
+      links.forEach(link => link.classList.add('post-container__links_hidden'));
     }
   }
 }

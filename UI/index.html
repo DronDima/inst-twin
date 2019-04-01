@@ -60,20 +60,20 @@
 		<main>
 			<div class="main">
 				<template class="post-template">
-					<article class="post-container" data-id="id" onclick="openDiv(this)">
+					<article class="post-container" data-id="id">
 						<img class="post-container__photo" alt="animalImage" />
 						<p class="post-container__name text-type-1"></p>
 						<i class="post-container__like far fa-heart"></i>
 						<p class="post-container__hashtag text-type-1"></p>
 						<p class="post-container__desc text-type-4"></p>
 						<div class="post-container__links">
-							<a href="#delete-modal" onclick="setBlur()" class="post-container__link text-type-1">delete</a>
+							<a href="#delete-modal" class="post-container__link text-type-1">delete</a>
 							<a href="#" class="post-container__link text-type-1">edit</a>
 						</div>
 					</article>
 				</template>
-			<button class="main__button button button_width_250px" type="button">Load more...</button>
 			</div>
+			<button class="main__button button button_width_250px" type="button">Load more...</button>
 		</main>
 		<footer>
 			<div class="footer">
@@ -85,7 +85,7 @@
 		</footer>
 	</div>
 	<div id="delete-modal" class="modal-window">
-		<div class="modal-dialog delete-dialog">
+		<div class="modal-dialog delete-dialog" data-id="id">
 			<p class="delete-dialog__text text-type-2">Are you sure you want to delete post?</p>
 			<div class="delete-dialog__buttons">
 				<button class="delete-dialog__button button" type="submit">Delete</button>

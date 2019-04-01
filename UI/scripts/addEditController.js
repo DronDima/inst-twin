@@ -230,9 +230,8 @@ const postsAPI = (function postsAPI() {
   const model = new PostModel(posts);
   const view = new View();
   module.addPhotoPost = function addPhotoPost(post) {
-    if (model.addPhotoPost(post) === true) {
-      view.addPost(post, model.getPhotoPost(post.id).index);
-    }
+    // TODO: Оповещение о том, что пост добавлен или нет.
+    model.addPhotoPost(post);
   };
   module.getPostsCount = function getPostsCount() {
     return model.getPostsCount();
@@ -290,6 +289,37 @@ function addPostToModel() {
   postsAPI.addPhotoPost(post);
 }
 
+function editPostInModel(id) {
+  const edits = {};
+  const nodeTags = document.querySelectorAll('.add-post__tag');
+  edits.hashtags = [].map.call(nodeTags, item => item.innerHTML);
+  edits.description = document.querySelector('#desc').value;
+  const link = document.querySelector('#uploadBtn');
+  if (link.value !== '') {
+    edits.photoLink = link.value;
+  } else {
+    edits.photoLink = link.defaultValue;
+  }
+  postsAPI.editPhotoPost(id, edits);
+}
+
+function fillFields() {
+  const edits = JSON.parse(localStorage.getItem('edits'));
+  localStorage.removeItem('edits');
+  if (edits != null) {
+    document.querySelector('.add-post__title').textContent = 'Edit Post';
+    const tagsField = document.querySelector('.add-post__tags');
+    const tagsInput = document.querySelector('.add-post__tags-input');
+    edits.hashtags.forEach(tag => tagsField.insertBefore(createTag(tag), tagsInput));
+    document.querySelector('#uploadBtn').setAttribute('value', edits.photoLink);
+    document.querySelector('.add-post__desc-input').value = edits.description;
+    document.querySelector('.add-post__add-button').textContent = 'Confirm';
+    const form = document.querySelector('.add-post__form');
+    form.removeEventListener('submit', addPostToModel);
+    form.addEventListener('submit', editPostInModel.bind(null, edits.id));
+  }
+}
+
 const headerButtons = document.querySelectorAll('.header__button');
 headerButtons[0].addEventListener('click', addPostButton);
 headerButtons[2].addEventListener('click', signOutButton);
@@ -299,3 +329,4 @@ form.addEventListener('submit', addPostToModel);
 
 
 postsAPI.showElementsIfAuthorized();
+fillFields();
