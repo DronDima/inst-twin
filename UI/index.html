@@ -60,22 +60,20 @@
 		<main>
 			<div class="main">
 				<template class="post-template">
-					<article class="post-container">
+					<article class="post-container" data-id="id" onclick="openDiv(this)">
 						<img class="post-container__photo" alt="animalImage" />
 						<p class="post-container__name text-type-1"></p>
 						<i class="post-container__like far fa-heart"></i>
 						<p class="post-container__hashtag text-type-1"></p>
 						<p class="post-container__desc text-type-4"></p>
 						<div class="post-container__links">
-							<template class="del-edit-template">
-								<a href="#delete-modal" class="post-container__link text-type-1">delete</a>
-								<a href="#" class="post-container__link text-type-1">edit</a>
-							</template>
+							<a href="#delete-modal" onclick="setBlur()" class="post-container__link text-type-1">delete</a>
+							<a href="#" class="post-container__link text-type-1">edit</a>
 						</div>
 					</article>
 				</template>
-			</div>
 			<button class="main__button button button_width_250px" type="button">Load more...</button>
+			</div>
 		</main>
 		<footer>
 			<div class="footer">
