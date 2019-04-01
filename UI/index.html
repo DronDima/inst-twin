@@ -5,9 +5,6 @@
 	<link href="styles/styles.css" rel="stylesheet" />
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:700|Lobster|Noto+Sans+TC|Frank+Ruhl+Libre|Roboto+Slab|Alegreya:400" rel="stylesheet" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<script src="scripts/script.js"></script>
-	<script src="scripts/posts.js"></script>
-	<script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
 	<title>Document</title>
 </head>
 <body>
@@ -18,11 +15,10 @@
 					<a href="#"><h1>PhotoPortal</h1></a>
 				</div>
 				<div class="header__logInfo text-type-1">
-					<p>You signed in as dronchenko</p>
+					<p>You not signed in</p>
 				</div>
 				<div class="header__buttons">
-					<button class="header__button button" type="submit" onclick="location.href='addEditPost.html'">Add post</button>
-					<button onclick="setBlur()" class="header__button button" type="submit">Sign out</button>
+					<button onclick="setBlur()" class="header__button button" type="submit">Sign in</button>
 				</div>
 			</div>
 		</header>
@@ -50,28 +46,9 @@
 										 type="text" placeholder="Choose hashtags" id="tags">
 						</div>
 						<ul class="filter__variants filter__variants_hidden">
-							<li class="filter__variant hashtag" onclick="addHashtag(this)">#cat</li>
-							<li class="filter__variant hashtag" onclick="addHashtag(this)">#wwwwwwwwwwwwwwwwwwww</li>
-							<li class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</li>
-							<li class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</li>
-							<li class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</li>
-							<li class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</li>
-							<li class="filter__variant hashtag" onclick="addHashtag(this)">#cat</li>
-							<li class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</li>
-							<li class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</li>
-							<li class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</li>
-							<li class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</li>
-							<li class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</li>
-							<li class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</li>
-							<li class="filter__variant hashtag" onclick="addHashtag(this)">#cat</li>
-							<li class="filter__variant hashtag" onclick="addHashtag(this)">#cat</li>
-							<li class="filter__variant hashtag" onclick="addHashtag(this)">#cat</li>
-							<li class="filter__variant hashtag" onclick="addHashtag(this)">#newyear</li>
-							<li class="filter__variant hashtag" onclick="addHashtag(this)">#cat</li>
-							<li class="filter__variant hashtag" onclick="addHashtag(this)">#cat</li>
-							<li class="filter__variant hashtag" onclick="addHashtag(this)">#cat</li>
-							<li class="filter__variant hashtag" onclick="addHashtag(this)">#cat</li>
-							<li class="filter__variant hashtag" onclick="addHashtag(this)">#cat</li>
+							<template class="hashtag-template">
+								<li class="filter__variant hashtag" onclick="addHashtag(this)"></li>
+							</template>
 						</ul>
 						<button class="filter__button button" type="submit">Apply</button>
 					</div>
@@ -80,118 +57,21 @@
 		</aside>
 		<main>
 			<div class="main">
-				<article class="post-container" onclick="openDiv(this)">
-					<img src="img/cat1.jpg" class="post-container__photo" alt="catImage">
-					<p class="post-container__name text-type-1">01.02.2019 11.56, drodcdccccccccc</p>
-					<i class="post-container__like far fa-heart"></i>
-					<p class="post-container__hashtag text-type-1">#cat#neyyear</p>
-					<p class="post-container__desc text-type-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
-					<div class="post-container__links">
-						<a href="#delete-modal" onclick="setBlur()" class="post-container__link text-type-1">delete</a>
-						<a href="#" class="post-container__link text-type-1">edit</a>
-					</div>
-				</article>
-				<article class="post-container" onclick="openDiv(this)">
-					<img src="img/cat2.jpg" class="post-container__photo" alt="catImage">
-					<p class="post-container__name text-type-1">01.02.2019 11.56, drodcdccccccccc</p>
-					<i class="post-container__like far fa-heart"></i>
-					<p class="post-container__hashtag text-type-1">#cat#neyyear</p>
-					<p class="post-container__desc text-type-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
-					<div class="post-container__links">
-						<a href="#delete-modal" onclick="setBlur()" class="post-container__link text-type-1">delete</a>
-						<a href="#" class="post-container__link text-type-1">edit</a>
-					</div>
-				</article>
-				<article class="post-container" onclick="openDiv(this)">
-					<img src="img/cat3.jpg" class="post-container__photo" alt="catImage">
-					<p class="post-container__name text-type-1">01.02.2019 11.56, drodcdccccccccc</p>
-					<i class="post-container__like far fa-heart"></i>
-					<p class="post-container__hashtag text-type-1">#cat#neyyear</p>
-					<p class="post-container__desc text-type-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
-					<div class="post-container__links">
-						<a href="#delete-modal" onclick="setBlur()" class="post-container__link text-type-1">delete</a>
-						<a href="#" class="post-container__link text-type-1">edit</a>
-					</div>
-				</article>
-				<article class="post-container" onclick="openDiv(this)">
-					<img src="img/cat4.jpg" class="post-container__photo" alt="catImage">
-					<p class="post-container__name text-type-1">01.02.2019 11.56, drodcdccccccccc</p>
-					<i class="post-container__like far fa-heart"></i>
-					<p class="post-container__hashtag text-type-1">#cat#neyyear</p>
-					<p class="post-container__desc text-type-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
-					<div class="post-container__links">
-						<a href="#delete-modal" onclick="setBlur()" class="post-container__link text-type-1">delete</a>
-						<a href="#" class="post-container__link text-type-1">edit</a>
-					</div>
-				</article>
-				<article class="post-container" onclick="openDiv(this)">
-					<img src="img/cat5.jpg" class="post-container__photo" alt="catImage">
-					<p class="post-container__name text-type-1">01.02.2019 11.56, drodcdccccccccc</p>
-					<i class="post-container__like far fa-heart"></i>
-					<p class="post-container__hashtag text-type-1">#cat#neyyear</p>
-					<p class="post-container__desc text-type-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
-					<div class="post-container__links">
-						<a href="#delete-modal" onclick="setBlur()" class="post-container__link text-type-1">delete</a>
-						<a href="#" class="post-container__link text-type-1">edit</a>
-					</div>
-				</article>
-				<article class="post-container" onclick="openDiv(this)">
-					<img src="img/cat6.jpg" class="post-container__photo" alt="catImage">
-					<p class="post-container__name text-type-1">01.02.2019 11.56, drodcdccccccccc</p>
-					<i class="post-container__like far fa-heart"></i>
-					<p class="post-container__hashtag text-type-1">#cat#neyyear</p>
-					<p class="post-container__desc text-type-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
-					<div class="post-container__links">
-						<a href="#delete-modal" onclick="setBlur()" class="post-container__link text-type-1">delete</a>
-						<a href="#" class="post-container__link text-type-1">edit</a>
-					</div>
-				</article>
-				<article class="post-container" onclick="openDiv(this)">
-					<img src="img/cat7.jpg" class="post-container__photo" alt="catImage">
-					<p class="post-container__name text-type-1">01.02.2019 11.56, drodcdccccccccc</p>
-					<i class="post-container__like far fa-heart"></i>
-					<p class="post-container__hashtag text-type-1">#cat#neyyear</p>
-					<p class="post-container__desc text-type-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
-					<div class="post-container__links">
-						<a href="#delete-modal" onclick="setBlur()" class="post-container__link text-type-1">delete</a>
-						<a href="#" class="post-container__link text-type-1">edit</a>
-					</div>
-				</article>
-				<article class="post-container" onclick="openDiv(this)">
-					<img src="img/cat8.jpg" class="post-container__photo" alt="catImage">
-					<p class="post-container__name text-type-1">01.02.2019 11.56, drodcdccccccccc</p>
-					<i class="post-container__like far fa-heart"></i>
-					<p class="post-container__hashtag text-type-1">#cat#neyyear</p>
-					<p class="post-container__desc text-type-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
-					<div class="post-container__links">
-						<a href="#delete-modal" onclick="setBlur()" class="post-container__link text-type-1">delete</a>
-						<a href="#" class="post-container__link text-type-1">edit</a>
-					</div>
-				</article>
-				<article class="post-container" onclick="openDiv(this)">
-					<img src="img/cat9.jpg" class="post-container__photo" alt="catImage">
-					<p class="post-container__name text-type-1">01.02.2019 11.56, drodcdccccccccc</p>
-					<i class="post-container__like far fa-heart"></i>
-					<p class="post-container__hashtag text-type-1">#cat#neyyear</p>
-					<p class="post-container__desc text-type-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
-					<div class="post-container__links">
-						<a href="#delete-modal" onclick="setBlur()" class="post-container__link text-type-1">delete</a>
-						<a href="#" class="post-container__link text-type-1">edit</a>
-					</div>
-				</article>
-				<article class="post-container" onclick="openDiv(this)">
-					<img src="img/cat10.jpg" class="post-container__photo" alt="catImage">
-					<p class="post-container__name text-type-1">01.02.2019 11.56, drodcdccccccccc</p>
-					<i class="post-container__like far fa-heart"></i>
-					<p class="post-container__hashtag text-type-1">#cat#neyyear</p>
-					<p class="post-container__desc text-type-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
-					<div class="post-container__links">
-						<a href="#delete-modal" onclick="setBlur()" class="post-container__link text-type-1">delete</a>
-						<a href="#" class="post-container__link text-type-1">edit</a>
-					</div>
-				</article>
-			</div>
+				<template class="post-template">
+					<article class="post-container" data-id="id" onclick="openDiv(this)">
+						<img class="post-container__photo" alt="animalImage" />
+						<p class="post-container__name text-type-1"></p>
+						<i class="post-container__like far fa-heart"></i>
+						<p class="post-container__hashtag text-type-1"></p>
+						<p class="post-container__desc text-type-4"></p>
+						<div class="post-container__links">
+							<a href="#delete-modal" onclick="setBlur()" class="post-container__link text-type-1">delete</a>
+							<a href="#" class="post-container__link text-type-1">edit</a>
+						</div>
+					</article>
+				</template>
 			<button class="main__button button button_width_250px" type="button">Load more...</button>
+			</div>
 		</main>
 		<footer>
 			<div class="footer">
@@ -224,5 +104,8 @@
 			</form>
 		</div>
 	</div>
+	<script src="scripts/script.js"></script>
+	<script src="scripts/posts.js"></script>
+	<script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
 </body>
 </html>

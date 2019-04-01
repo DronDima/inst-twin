@@ -48,8 +48,12 @@ function openDiv(el) {
       hashtag = el.getElementsByClassName("post-container__hashtag")[0];
       hashtag.style.display = "none";
       links = el.getElementsByClassName("post-container__link");
-      links[0].style.display = "none";
-      links[1].style.display = "none";
+      try {
+        links[0].style.display = "none";
+        links[1].style.display = "none";
+      } catch (e) {
+        console.log(e.message);
+      }
       var coordY = el.getBoundingClientRect().top + pageYOffset;
       window.scrollTo(0,coordY);
     }
@@ -62,8 +66,12 @@ function openDiv(el) {
       hashtag = el.getElementsByClassName("post-container__hashtag")[0];
       hashtag.style.display = "block";
       links = el.getElementsByClassName("post-container__link");
-      links[0].style.display = "inline-grid";
-      links[1].style.display = "inline-grid";
+      try {
+        links[0].style.display = "inline-grid";
+        links[1].style.display = "inline-grid";
+      } catch (e) {
+        console.log(e.message);
+      }
       var coordY = el.getBoundingClientRect().top + pageYOffset;
       window.scrollTo(0,coordY);
     }
