@@ -46,16 +46,15 @@ class PostModel {
   }
 
   getPhotoPost(id) {
-    const result = {
-      post: undefined,
-      index: undefined,
-    };
-    result.post = this.getPhotoPosts().find(post => post.id === id);
-    result.index = this.getPhotoPosts().findIndex(post => post.id === id);
-    if (result.post !== undefined) {
+    const result = this._photoPosts.find(post => post.id === id);
+    if (result !== undefined) {
       return result;
     }
-    return undefined;
+    return result;
+  }
+
+  getPostIndex(id) {
+    return this.getPhotoPosts().findIndex(post => post.id === id);
   }
 
   static _validateChangeableFields(post) {
@@ -93,17 +92,16 @@ class PostModel {
   }
 
   removePhotoPost(id) {
-    const modelIndex = this._photoPosts.findIndex(post => post.id === id);
-    const viewIndex = this.getPhotoPosts().findIndex(post => post.id === id);
-    if (modelIndex !== -1) {
-      this._photoPosts.splice(modelIndex, 1);
-      return viewIndex;
+    const index = this._photoPosts.findIndex(post => post.id === id);
+    if (index !== -1) {
+      this._photoPosts.splice(index, 1);
+      return true;
     }
-    return viewIndex;
+    return false;
   }
 
   editPhotoPost(id, edits) {
-    const { post } = this.getPhotoPost(id);
+    const post = this.getPhotoPost(id);
     if (post !== undefined) {
       const postCopy = Object.assign(post);
       const fields = Object.keys(edits);
@@ -157,14 +155,14 @@ class View {
       .forEach(post => this._main.appendChild(post));
   }
 
-  removePost(index) {
-    const posts = this._main.querySelectorAll('.post-container');
-    this._main.removeChild(posts[index]);
+  removePost(id) {
+    const post = this._main.querySelector(`.post-container[data-id="${id}"]`);
+    this._main.removeChild(post);
   }
 
   editPost(editedPost) {
-    const posts = this._main.querySelectorAll('.post-container');
-    this._main.replaceChild(this._buildPost(editedPost.post), posts[editedPost.index]);
+    const lastPost = this._main.querySelector(`.post-container[data-id="${editedPost.id}"]`);
+    this._main.replaceChild(this._buildPost(editedPost), lastPost);
   }
 
   addPost(post, index) {
@@ -174,6 +172,8 @@ class View {
 
   _buildPost(post) {
     const fragment = document.importNode(this._postTemplate.content, true);
+    const key = fragment.querySelector('.post-container').getAttribute('data-id');
+    fragment.querySelector('.post-container').setAttribute('data-id', post[key]);
     fragment.querySelector('.post-container__photo').setAttribute('src', post.photoLink);
     fragment.querySelector('.post-container__name').textContent = `${post.createdAt.toLocaleString()}, ${post.author}`;
     fragment.querySelector('.post-container__hashtag').textContent = post.hashtags.join(', ');
@@ -182,8 +182,7 @@ class View {
   }
 
   static showElementsIfAuthorized(isAuthorized) {
-    const delEditTemplate = document.querySelector('.del-edit-template');
-    const targets = document.querySelectorAll('.post-container__links');
+    const links = document.querySelectorAll('.post-container__links');
     if (isAuthorized === true) {
       /* Header buttons and name. */
       document.querySelector('.header__logInfo').innerHTML = 'You signed in as dronchenko.';
@@ -197,10 +196,7 @@ class View {
       button2.innerHTML = 'Sign out';
       button2.onclick = '';
       /* Delete and edit links. */
-      targets.forEach((target) => {
-        const links = document.importNode(delEditTemplate.content, true);
-        target.appendChild(links);
-      });
+      links.forEach(link => link.classList.toggle('post-container__links_hidden'));
     } else {
       /* Header buttons and name. */
       document.querySelector('.header__logInfo').innerHTML = 'You not signed in.';
@@ -210,12 +206,7 @@ class View {
         buttons.querySelector('.header__button').innerHTML = 'Sign in';
       }
       /* Delete and edit links. */
-      targets.forEach((target) => {
-        while (target.hasChildNodes() === true) {
-          target.removeChild(target.firstChild);
-        }
-        target.appendChild(delEditTemplate);
-      });
+      links.forEach(link => link.classList.toggle('post-container__links_hidden'));
     }
   }
 }
@@ -453,13 +444,12 @@ const postsAPI = (function postsAPI() {
   const view = new View();
   module.addPhotoPost = function addPhotoPost(post) {
     if (model.addPhotoPost(post) === true) {
-      view.addPost(post, model.getPhotoPost(post.id).index);
+      view.addPost(post, model.getPostIndex(post.id));
     }
   };
   module.removePhotoPost = function removePhotoPost(id) {
-    const index = model.removePhotoPost(id);
-    if (index !== -1) {
-      view.removePost(index);
+    if (model.removePhotoPost(id) === true) {
+      view.removePost(id);
     }
   };
   module.editPhotoPost = function editPhotoPost(id, edits) {

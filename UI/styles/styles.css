@@ -331,6 +331,9 @@ main .button {
   grid-column: 1/4;
   justify-self: end;
 }
+.post-container__links_hidden {
+  display: none;
+}
 .post-container__link {
   font-size: 14px;
   display: none;
