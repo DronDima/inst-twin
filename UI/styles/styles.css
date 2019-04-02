@@ -361,6 +361,7 @@ main .button {
   font-size: 14px;
   display: none;
   margin-left: 20px;
+  cursor: pointer;
 }
 .post-container__link:hover {
   text-decoration: underline;
@@ -400,34 +401,16 @@ main .button {
     display: inline-grid;
   }
 }
-.modal-window {
+#delete-dialog {
   position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 99;
-  -webkit-transition: opacity 400ms ease-in;
-  -moz-transition: opacity 400ms ease-in;
-  transition: opacity 400ms ease-in;
-  display: none;
-  pointer-events: none;
-}
-.modal-window:target {
-  display: block;
-  pointer-events: auto;
-}
-.modal-dialog {
-  z-index: 100;
-  box-shadow: 0 0 50px #240D39CC, inset 0 0 34px #240D394D;
-  position: relative;
-  margin: 10% auto;
-  background: #E4DDE4;
-}
-.delete-dialog {
   padding: 25px 15px 15px 25px;
   max-width: 370px;
   width: 80%;
+  box-shadow: 0 0 50px #240D39CC, inset 0 0 34px #240D394D;
+  margin: 10% auto;
+  background: #E4DDE4;
+}
+#delete-dialog > form {
   height: 120px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -447,30 +430,31 @@ main .button {
   grid-row: 1/2;
   font-size: 18px;
 }
-.signin-dialog {
+#signin-dialog {
   padding: 20px 0 100px 0;
-  display: grid;
-  grid-template-rows: repeat(2, auto);
-  grid-row-gap: 15px;
-  justify-items: center;
+  position: fixed;
   width: 70%;
   max-width: 600px;
   height: 70vh;
   max-height: 300px;
+  box-shadow: 0 0 50px #240D39CC, inset 0 0 34px #240D394D;
+  margin: 10% auto;
+  background: #E4DDE4;
 }
-.signin-dialog * {
+#signin-dialog * {
   width: 100%;
+}
+#signin-dialog > form {
+  margin: auto;
+  width: 60%;
+  display: grid;
+  grid-auto-rows: auto;
+  grid-row-gap: 15px;
 }
 .signin-dialog__title {
   text-align: center;
   font-size: 32px;
   padding-bottom: 30px;
-}
-.signin-dialog__form {
-  width: 60%;
-  display: grid;
-  grid-auto-rows: auto;
-  grid-row-gap: 15px;
 }
 .signin-dialog__text {
   font-size: 20px;

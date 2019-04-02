@@ -298,10 +298,11 @@ function createFilter() {
   return config;
 }
 
-function applyFilter() {
+function applyFilter(event) {
   // TODO: Автообновление постов после ввода полей.
   postsAPI.clearPosts();
   postsAPI.showPhotoPosts(0, 10, createFilter());
+  event.preventDefault();
 }
 
 function signIn() {
@@ -311,8 +312,13 @@ function signIn() {
 }
 
 function signInButton() {
-  window.location.href = '#signin-modal';
-  toggleBlur();
+  const signinDialog = document.getElementById('signin-dialog');
+  if (typeof signinDialog.showModal === 'function') {
+    signinDialog.showModal();
+    toggleBlur();
+  } else {
+    alert('The dialog API is not supported by this browser');
+  }
 }
 
 function signOutButton() {
@@ -331,19 +337,49 @@ function loadMore() {
   postsAPI.showElementsIfAuthorized();
 }
 
-function cancelButton() {
+function cancelButton(event) {
+  event.preventDefault();
   window.location.href = '';
   toggleBlur();
 }
 
-function deletePost() {
-  const id = document.querySelector('.delete-dialog').getAttribute('data-id');
-  postsAPI.removePhotoPost(id);
-  window.location.href = '';
+function getPostId(target) {
+  let post = target.parentNode;
+  while (post !== this) {
+    if (post.classList.contains('post-container')) {
+      break;
+    }
+    post = post.parentNode;
+  }
+  return post.getAttribute('data-id');
 }
 
+function deleteButton(target) {
+  postsAPI.removePhotoPost(getPostId(target));
+}
+
+function openDeleteDialog(event) {
+  let { target } = event;
+  while (target !== this) {
+    if (target.classList.contains('post-container__delete')) {
+      const deleteDialog = document.getElementById('delete-dialog');
+      if (typeof deleteDialog.showModal === 'function') {
+        const dialogDelButton = document.querySelector('.delete-dialog__delete-button');
+        dialogDelButton.addEventListener('click', deleteButton.bind(null, target));
+        deleteDialog.showModal();
+        toggleBlur();
+      } else {
+        alert('The dialog API is not supported by this browser');
+      }
+      return;
+    }
+    target = target.parentNode;
+  }
+}
+
+
+// TODO: dialog для модальных
 const headerButtons = document.querySelectorAll('.header__button');
-// TODO: Мэйби тут не нужно определять отдельные функции?
 headerButtons[0].addEventListener('click', addPostButton);
 headerButtons[1].addEventListener('click', signInButton);
 headerButtons[2].addEventListener('click', signOutButton);
@@ -354,16 +390,12 @@ filterForm.addEventListener('submit', applyFilter);
 const loadMoreButton = document.querySelector('.main__button');
 loadMoreButton.addEventListener('click', loadMore);
 
+const signInForm = document.querySelector('.signin-dialog__form');
+signInForm.addEventListener('submit', signIn);
 const signInButtons = document.querySelectorAll('.signin-dialog__button');
 signInButtons[1].addEventListener('click', cancelButton);
 
-const signInForm = document.querySelector('.signin-dialog__form');
-signInForm.addEventListener('submit', signIn);
-
-const deleteButtons = document.querySelector('.delete-dialog__buttons');
-deleteButtons.lastElementChild.addEventListener('click', cancelButton);
-deleteButtons.firstElementChild.addEventListener('click', deletePost);
-
+main.addEventListener('click', openDeleteDialog);
 
 postsAPI.showPhotoPosts();
 postsAPI.showElementsIfAuthorized();

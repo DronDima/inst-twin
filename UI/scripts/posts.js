@@ -1,4 +1,8 @@
 class PostModel {
+  static get SYSTEM_FIELDS() {
+    return ['id', 'author', 'createdAt', 'likes'];
+  }
+
   constructor(posts) {
     this.restoreFromLocalStorage();
     if (this._photoPosts == null) {
@@ -12,13 +16,7 @@ class PostModel {
   }
 
   static _isIntersect(postTags, configTags) {
-    let result = false;
-    postTags.forEach(tag1 => configTags.forEach((tag2) => {
-      if (tag1 === tag2) {
-        result = true;
-      }
-    }));
-    return result;
+    return postTags.some(postTag => configTags.some(configTag => configTag === postTag));
   }
 
   addAll(posts) {
@@ -36,7 +34,7 @@ class PostModel {
 
   getPhotoPosts(skip = 0, count = 10, config = PostModel._DEFAULT_FILTER_CONFIG) {
     // FIXME: Выводить время в удобном формате.
-    function filtrate(posts) {
+    function filtrate(posts) { // FIXME: Сделать красивее.
       return posts
         .filter(post => new Date(post.createdAt).getTime() >= new Date(config.dateFrom).getTime()
           && new Date(post.createdAt).getTime() <= new Date(config.dateTo).getTime()
@@ -49,21 +47,11 @@ class PostModel {
         .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     }
     const filtratedPosts = sort(filtrate(this._photoPosts));
-    const result = [];
-    let number = 0;
-    for (let i = skip; number < count && i < filtratedPosts.length; i += 1) {
-      result.push(filtratedPosts[i]);
-      number += 1;
-    }
-    return result;
+    return filtratedPosts.slice(skip, skip + count);
   }
 
   getPhotoPost(id) {
-    const result = this._photoPosts.find(post => post.id === id);
-    if (result !== undefined) {
-      return result;
-    }
-    return result;
+    return this._photoPosts.find(post => post.id === id);
   }
 
   getPostIndex(id) {
@@ -97,7 +85,7 @@ class PostModel {
   }
 
   addPhotoPost(post) {
-    if (this._validatePhotoPost(post) === true) {
+    if (this._validatePhotoPost(post)) {
       this._photoPosts.push(post);
       this._savePosts();
       return true;
@@ -121,7 +109,7 @@ class PostModel {
       const postCopy = Object.assign(post);
       const fields = Object.keys(edits);
       fields.forEach((field) => {
-        if (field !== 'id' && field !== 'author' && field !== 'createdAt' && field !== 'likes') {
+        if (PostModel.SYSTEM_FIELDS.indexOf(field) !== -1) {
           postCopy[field] = edits[field];
         }
       });
@@ -161,10 +149,18 @@ class PostModel {
   }
 
   restoreFromLocalStorage() {
-    const jsonPosts = localStorage.getItem('posts');
-    this._photoPosts = JSON.parse(jsonPosts);
-    const jsonAuthStatus = localStorage.getItem('authStatus');
-    this._authStatus = JSON.parse(jsonAuthStatus);
+    try {
+      const jsonPosts = localStorage.getItem('posts');
+      this._photoPosts = JSON.parse(jsonPosts);
+    } catch (e) {
+      this._photoPosts = null;
+    }
+    try {
+      const jsonAuthStatus = localStorage.getItem('authStatus');
+      this._authStatus = JSON.parse(jsonAuthStatus);
+    } catch (e) {
+      this._authStatus = null;
+    }
   }
 }
 PostModel._DEFAULT_FILTER_CONFIG = {
@@ -175,10 +171,11 @@ PostModel._DEFAULT_FILTER_CONFIG = {
 };
 
 class View {
+  // TODO: AddEdit как SPA.
   constructor() {
     this._hashtagTemplate = document.querySelector('.hashtag-template');
     this._postTemplate = document.querySelector('.post-template');
-    this._main = document.querySelector('.main');
+    this._main = document.querySelector('.main');// FIXME: main через констр
   }
 
   showHashtags(hashtags) {
@@ -249,6 +246,7 @@ class View {
     const links = document.querySelectorAll('.post-container__links');
     if (isAuthorized === true) {
       /* Header buttons and name. */
+      // FIXME: toggle hidden.
       document.querySelector('.header__logInfo').innerHTML = 'You signed in as username.';
       const buttons = document.querySelectorAll('.header__button');
       buttons[0].removeAttribute('hidden');

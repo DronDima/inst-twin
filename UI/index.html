@@ -30,7 +30,6 @@
 					<span class="filter__text text-type-2">Filter</span>
 					<span class="filter__symbol"><i class="fas fa-angle-down"></i></span>
 				</button>
-				<!--FIXME: Не работает фильтр в хроме.-->
 				<form class="filter__form filter__form_hidden" action="#">
 					<p class="filter__text">Filtrate by:</p>
 					<div class="filter__inputs">
@@ -67,8 +66,8 @@
 						<p class="post-container__hashtag text-type-1"></p>
 						<p class="post-container__desc text-type-4"></p>
 						<div class="post-container__links">
-							<a href="#delete-modal" class="post-container__link text-type-1">delete</a>
-							<a href="#" class="post-container__link text-type-1">edit</a>
+							<span class="post-container__link post-container__delete text-type-1">delete</span>
+							<span class="post-container__link post-container__edit text-type-1">edit</span>
 						</div>
 					</article>
 				</template>
@@ -84,28 +83,27 @@
 			</div>
 		</footer>
 	</div>
-	<div id="delete-modal" class="modal-window">
-		<div class="modal-dialog delete-dialog" data-id="id">
+	<!--TODO: Но в firefox по умолчанию не поддерживается <dialog>. Это ок использовать такой тег?-->
+	<dialog id="delete-dialog">
+		<form class="delete-dialog__form" method="dialog">
 			<p class="delete-dialog__text text-type-2">Are you sure you want to delete post?</p>
-			<div class="delete-dialog__buttons">
-				<button class="delete-dialog__button button" type="submit">Delete</button>
-				<button class="delete-dialog__button button" type="submit">Cancel</button>
-			</div>
-		</div>
-	</div>
-	<div id="signin-modal" class="modal-window">
-		<div class="modal-dialog signin-dialog">
-			<p class="signin-dialog__title text-type-2">Sign in</p>
-			<form action="#" class="signin-dialog__form text-type-2">
-				<p class="signin-dialog__text">Login:</p>
-				<input class="signin-dialog__input input" type="text" placeholder="ivanov_ivan" required="" />
-				<p class="signin-dialog__text">Password:</p>
-				<input class="signin-dialog__input input" type="password" placeholder="Password" required="" />
-				<button class="signin-dialog__button button" type="submit">Sign In</button>
-				<button class="signin-dialog__button button" type="button">Cancel</button>
-			</form>
-		</div>
-	</div>
+			<menu class="delete-dialog__buttons">
+				<button class="delete-dialog__button delete-dialog__delete-button button" value="default">Delete</button>
+				<button class="delete-dialog__button button" value="cancel">Cancel</button>
+			</menu>
+		</form>
+	</dialog>
+	<dialog id="signin-dialog">
+		<p class="signin-dialog__title text-type-2">Sign in</p>
+		<form class="signin-dialog__form text-type-2" method="dialog">
+			<p class="signin-dialog__text">Login:</p>
+			<input class="signin-dialog__input input" type="text" placeholder="ivanov_ivan" required="" />
+			<p class="signin-dialog__text">Password:</p>
+			<input class="signin-dialog__input input" type="password" placeholder="Password" required="" />
+			<button class="signin-dialog__button button" type="submit" value="default">Sign In</button>
+			<button class="signin-dialog__button button" type="button" value="cancel">Cancel</button>
+		</form>
+	</dialog>
 	<script src="scripts/posts.js"></script>
 	<script src="scripts/script.js"></script>
 	<script src="scripts/controller.js"></script>

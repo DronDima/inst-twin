@@ -20,8 +20,6 @@ function keyDown(event) {
   if (event.code === 'Enter' && this.value !== '') {
     this.parentNode.insertBefore(createTag(this.value), this);
     this.value = '';
-    // TODO: Это норм?
-    event.preventDefault();
   } else if (event.code === 'Backspace' && this.value === '') {
     this.previousSibling.remove();
   }

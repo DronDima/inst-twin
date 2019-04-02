@@ -48,20 +48,6 @@ function resizePost(event) {
   }
 }
 
-function openDeleteModal(event) {
-  let { target } = event;
-  while (target !== this) {
-    if (target.classList.contains('post-container__link')) {
-      toggleBlur();
-    } else if (target.tagName === 'ARTICLE') {
-      document.querySelector('.delete-dialog')
-        .setAttribute('data-id', target.getAttribute('data-id'));
-      return;
-    }
-    target = target.parentNode;
-  }
-}
-
 function focusFilterInput() {
   this.firstElementChild.focus();
 }
@@ -69,7 +55,7 @@ function focusFilterInput() {
 function editPost(event) {
   let { target } = event;
   while (target !== this) {
-    // TODO: ЧТо за костыли?
+    // TODO: Переделать под SPA и добавить класс.
     if (target.textContent === 'edit') {
       let post = target;
       while (post !== this) {
@@ -94,8 +80,8 @@ function editPost(event) {
 
 const main = document.querySelector('.main');
 main.addEventListener('click', resizePost);
-main.addEventListener('click', openDeleteModal);
 main.addEventListener('click', editPost);
+
 
 const filterTitle = document.querySelector('.filter__title');
 filterTitle.addEventListener('click', showFilter);
@@ -107,12 +93,3 @@ const filterInput = document.querySelector('.filter__tags-input');
 filterInput.addEventListener('keydown', keyDown);
 filterInput.addEventListener('blur', toggleVariants);
 filterInput.addEventListener('focus', toggleVariants);
-
-
-/*
-* TODO: Проверить всю структуру.
-* TODO: Вопрос по поводу контроллера и его оформления.
- * Как быть с лисенерами не относящимися к контроллеру.
-* TODO: Может лучше сохранять фильтр в локал сторэйдж.
- * Тогда нужно обрабатывать перезагрузку страницы.
-* */
