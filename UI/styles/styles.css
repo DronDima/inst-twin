@@ -102,6 +102,9 @@ header {
 .header__button {
   margin-left: 20px;
 }
+.header__button_hidden {
+  display: none;
+}
 @media (max-width: 610px) {
   .header {
     grid-template-rows: repeat(4, auto);
@@ -136,6 +139,9 @@ header {
 .filter-container {
   padding-top: 10px;
   background: #E4DDE4;
+}
+.filter-container_hidden {
+  display: none;
 }
 .filter {
   display: grid;
@@ -287,6 +293,9 @@ main {
 }
 main .button {
   justify-self: center;
+}
+main.hidden {
+  display: none;
 }
 .main {
   max-width: 700px;
@@ -474,10 +483,17 @@ footer {
 .footer__text {
   font-size: 16px;
 }
+.add-post-container {
+  background: #E4DDE4;
+}
+.add-post-container_hidden {
+  display: none;
+}
 .add-post {
   max-width: 700px;
   margin: auto;
   padding: 100px 40px 100px 40px;
+  background: #E4DDE4;
 }
 .add-post__form {
   display: grid;

@@ -227,8 +227,13 @@ const postsAPI = (function postsAPI() {
     },
   ];
   const module = [];
+  const mainDOM = document.querySelector('.main');
   const model = new PostModel(posts);
-  const view = new View();
+  const view = new View(mainDOM);
+  module.addPhotoPost = function addPhotoPost(post) {
+    // TODO: Оповещение о том, что пост добавлен или нет.
+    model.addPhotoPost(post);
+  };
   module.getPostsCount = function getPostsCount() {
     return model.getPostsCount();
   };
@@ -324,11 +329,11 @@ function signInButton() {
 function signOutButton() {
   postsAPI.toggleAuthStatus();
   postsAPI.showElementsIfAuthorized();
+  toggleAddEditForm();
 }
 
 function addPostButton() {
-  window.location.href = 'addEditPost.html';
-  postsAPI.showElementsIfAuthorized();
+  toggleAddEditForm();
 }
 
 function loadMore() {
@@ -377,8 +382,6 @@ function openDeleteDialog(event) {
   }
 }
 
-
-// TODO: dialog для модальных
 const headerButtons = document.querySelectorAll('.header__button');
 headerButtons[0].addEventListener('click', addPostButton);
 headerButtons[1].addEventListener('click', signInButton);
@@ -399,3 +402,4 @@ main.addEventListener('click', openDeleteDialog);
 
 postsAPI.showPhotoPosts();
 postsAPI.showElementsIfAuthorized();
+// TODO: Сделать норм структуру и убрать ошибки.

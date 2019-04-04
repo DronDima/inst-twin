@@ -52,11 +52,51 @@ function focusFilterInput() {
   this.firstElementChild.focus();
 }
 
+
+function toggleAddEditForm() {
+  document.querySelector('main').classList.toggle('hidden');
+  document.querySelector('.filter-container').classList.toggle('filter-container_hidden');
+  document.querySelector('.add-post-container').classList.toggle('add-post-container_hidden');
+}
+
+
+function editPostInModel(id) {
+  const edits = {};
+  const nodeTags = document.querySelectorAll('.add-post__tag');
+  edits.hashtags = [].map.call(nodeTags, item => item.innerHTML);
+  edits.description = document.querySelector('#desc').value;
+  const link = document.querySelector('#uploadBtn');
+  if (link.value !== '') {
+    edits.photoLink = link.value;
+  } else {
+    edits.photoLink = link.defaultValue;
+  }
+  postsAPI.editPhotoPost(id, edits);
+  toggleAddEditForm();
+}
+
+function fillFieldsInAddEditForm() {
+  const edits = JSON.parse(localStorage.getItem('edits'));
+  localStorage.removeItem('edits');
+  if (edits != null) {
+    document.querySelector('.add-post__title').textContent = 'Edit Post';
+    const tagsField = document.querySelector('.add-post__tags');
+    const tagsInput = document.querySelector('.add-post__tags-input');
+    edits.hashtags.forEach(tag => tagsField.insertBefore(createTag(tag), tagsInput));
+    document.querySelector('#uploadBtn').setAttribute('value', edits.photoLink);
+    document.querySelector('.add-post__desc-input').value = edits.description;
+    document.querySelector('.add-post__add-button').textContent = 'Confirm';
+    const form = document.querySelector('.add-post__form');
+    form.removeEventListener('submit', addPostToModel);
+    form.addEventListener('submit', editPostInModel.bind(null, edits.id));
+  }
+}
+
 function editPost(event) {
   let { target } = event;
   while (target !== this) {
     // TODO: Переделать под SPA и добавить класс.
-    if (target.textContent === 'edit') {
+    if (target.classList.contains('post-container__edit')) {
       let post = target;
       while (post !== this) {
         if (post.classList.contains('post-container')) {
@@ -70,8 +110,10 @@ function editPost(event) {
       postInfo.photoLink = post.querySelector('.post-container__photo').getAttribute('src');
       const hashtagsString = post.querySelector('.post-container__hashtag').textContent;
       postInfo.hashtags = hashtagsString.split(', ');
+      // FIXME: Убрать запись в локалсторэйдж.
       localStorage.setItem('edits', JSON.stringify(postInfo));
-      window.location.href = 'addEditPost.html';
+      toggleAddEditForm();
+      fillFieldsInAddEditForm();
       return;
     }
     target = target.parentNode;
@@ -93,3 +135,5 @@ const filterInput = document.querySelector('.filter__tags-input');
 filterInput.addEventListener('keydown', keyDown);
 filterInput.addEventListener('blur', toggleVariants);
 filterInput.addEventListener('focus', toggleVariants);
+
+//FIXME: Переход в addpost из editpost.

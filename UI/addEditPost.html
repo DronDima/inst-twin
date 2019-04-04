@@ -17,9 +17,9 @@
         <p>You not signed in</p>
       </div>
       <div class="header__buttons">
-        <button class="header__button button" type="button">Add post</button>
+        <button class="header__button header__button_hidden button" type="button">Add post</button>
         <button class="header__button button" type="button">Sign in</button>
-        <button class="header__button button" type="button">Sign out</button>
+        <button class="header__button header__button_hidden button" type="button">Sign out</button>
       </div>
     </div>
   </header>
@@ -30,8 +30,7 @@
         <label class="add-post__author-label" for="author">Author name:</label>
         <input class="add-post__author-input text-type-2" id="author" value="username" type="text" disabled />
         <label class="add-post__date-label" for="dateAndTime">Date and time:</label>
-        <!--TODO: Сделать динамисеское время.-->
-        <input class="add-post__date-input text-type-2" id="dateAndTime"  value="2019-02-02T20:00:00.000Z" type="text" disabled />
+        <input class="add-post__date-input text-type-2" id="dateAndTime" type="text" disabled />
         <label for="tags" class="add-post__hashtags-label">Hashtags:</label>
         <div class="add-post__tags input">
           <input class="add-post__tags-input text-type-2" type="text" placeholder="Choose hashtags" id="tags" />

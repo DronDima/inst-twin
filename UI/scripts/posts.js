@@ -32,30 +32,32 @@ class PostModel {
     return notValid;
   }
 
+  static _filtrate(post, config) {
+    const postCreatedAt = new Date(post.createdAt);
+    const configDateFrom = new Date(config.dateFrom);
+    const configDateTo = new Date(config.dateTo);
+    return !!(postCreatedAt.getTime() >= configDateFrom.getTime()
+      && postCreatedAt.getTime() <= configDateTo.getTime()
+      && (post.author === config.authorName || config.authorName === '')
+      && (PostModel._isIntersect(post.hashtags, config.hashtags)
+        || config.hashtags.length === 0));
+  }
+
+  static _sortByTime(a, b) {
+    const aTime = new Date(b.createdAt).getTime();
+    const bTime = new Date(a.createdAt).getTime();
+    return aTime - bTime;
+  }
+
   getPhotoPosts(skip = 0, count = 10, config = PostModel._DEFAULT_FILTER_CONFIG) {
-    // FIXME: Выводить время в удобном формате.
-    function filtrate(posts) { // FIXME: Сделать красивее.
-      return posts
-        .filter(post => new Date(post.createdAt).getTime() >= new Date(config.dateFrom).getTime()
-          && new Date(post.createdAt).getTime() <= new Date(config.dateTo).getTime()
-          && (post.author === config.authorName || config.authorName === '')
-          && (PostModel._isIntersect(post.hashtags, config.hashtags)
-            || config.hashtags.length === 0));
-    }
-    function sort(posts) {
-      return posts
-        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-    }
-    const filtratedPosts = sort(filtrate(this._photoPosts));
+    const filtratedPosts = this._photoPosts
+      .filter(post => PostModel._filtrate(post, config))
+      .sort((a, b) => PostModel._sortByTime(a, b));
     return filtratedPosts.slice(skip, skip + count);
   }
 
   getPhotoPost(id) {
     return this._photoPosts.find(post => post.id === id);
-  }
-
-  getPostIndex(id) {
-    return this.getPhotoPosts().findIndex(post => post.id === id);
   }
 
   static _validateChangeableFields(post) {
@@ -109,7 +111,7 @@ class PostModel {
       const postCopy = Object.assign(post);
       const fields = Object.keys(edits);
       fields.forEach((field) => {
-        if (PostModel.SYSTEM_FIELDS.indexOf(field) !== -1) {
+        if (PostModel.SYSTEM_FIELDS.indexOf(field) === -1) {
           postCopy[field] = edits[field];
         }
       });
@@ -172,10 +174,10 @@ PostModel._DEFAULT_FILTER_CONFIG = {
 
 class View {
   // TODO: AddEdit как SPA.
-  constructor() {
+  constructor(main) {
     this._hashtagTemplate = document.querySelector('.hashtag-template');
     this._postTemplate = document.querySelector('.post-template');
-    this._main = document.querySelector('.main');// FIXME: main через констр
+    this._main = main;
   }
 
   showHashtags(hashtags) {
@@ -230,7 +232,8 @@ class View {
     const key = fragment.querySelector('.post-container').getAttribute('data-id');
     fragment.querySelector('.post-container').setAttribute('data-id', post[key]);
     fragment.querySelector('.post-container__photo').setAttribute('src', post.photoLink);
-    fragment.querySelector('.post-container__name').textContent = `${post.createdAt.toLocaleString()}, ${post.author}`;
+    const dateTime = new Date(post.createdAt);
+    fragment.querySelector('.post-container__name').textContent = `${dateTime.toLocaleString()}, ${post.author}`;
     fragment.querySelector('.post-container__hashtag').textContent = post.hashtags.join(', ');
     fragment.querySelector('.post-container__desc').textContent = post.description;
     return fragment;
@@ -244,24 +247,23 @@ class View {
 
   static showElementsIfAuthorized(isAuthorized) {
     const links = document.querySelectorAll('.post-container__links');
+    const buttons = document.querySelectorAll('.header__button');
+    const logInfo = document.querySelector('.header__logInfo');
     if (isAuthorized === true) {
       /* Header buttons and name. */
-      // FIXME: toggle hidden.
-      document.querySelector('.header__logInfo').innerHTML = 'You signed in as username.';
-      const buttons = document.querySelectorAll('.header__button');
-      buttons[0].removeAttribute('hidden');
-      buttons[1].setAttribute('hidden', 'true');
-      buttons[2].removeAttribute('hidden');
-      /* Delete and edit links. */
+      logInfo.innerHTML = 'You signed in as username.';
+      buttons[0].classList.remove('header__button_hidden');
+      buttons[1].classList.add('header__button_hidden');
+      buttons[2].classList.remove('header__button_hidden');
+      /* Links for deleting and editing posts. */
       links.forEach(link => link.classList.remove('post-container__links_hidden'));
     } else {
       /* Header buttons and name. */
-      document.querySelector('.header__logInfo').innerHTML = 'You not signed in.';
-      const buttons = document.querySelectorAll('.header__button');
-      buttons[0].setAttribute('hidden', 'true');
-      buttons[1].removeAttribute('hidden');
-      buttons[2].setAttribute('hidden', 'true');
-      /* Delete and edit links. */
+      logInfo.innerHTML = 'You not signed in.';
+      buttons[0].classList.add('header__button_hidden');
+      buttons[1].classList.remove('header__button_hidden');
+      buttons[2].classList.add('header__button_hidden');
+      /* Links for deleting and editing posts. */
       links.forEach(link => link.classList.add('post-container__links_hidden'));
     }
   }

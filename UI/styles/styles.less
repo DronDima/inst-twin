@@ -69,9 +69,12 @@
 	font-size: 36px;
 }
 
-.wrapper_blured {
-	filter: blur(2px);
+.wrapper {
+	&_blured {
+		filter: blur(2px);
+	}
 }
+
 
 header {
 	background: @gray;
@@ -108,6 +111,9 @@ header {
 	}
 	&__button {
 		margin-left: 20px;
+		&_hidden {
+			display: none;
+		}
 	}
 	@media (max-width: 610px) {
 		grid-template-rows: repeat(4, auto);
@@ -143,6 +149,9 @@ header {
 .filter-container {
 	padding-top: 10px;
 	background: @lightgray;
+	&_hidden {
+		display: none;
+	}
 }
 
 .filter {
@@ -291,6 +300,9 @@ main {
 	background: @lightgray;
 	.button {
 		justify-self: center;
+	}
+	&.hidden {
+		display: none;
 	}
 }
 .main {
@@ -490,11 +502,17 @@ footer {
 	}
 }
 
+.add-post-container {
+	background: @lightgray;
+	&_hidden {
+		display: none;
+	}
+}
 .add-post {
-	//FIXME: Увеличение контейнера при добавлении большого количества тэгов.
 	max-width: 700px;
 	margin: auto;
 	padding: 100px 40px 100px 40px;
+	background: #E4DDE4;
 	&__form {
 		display: grid;
 		grid-row-gap: 15px;
