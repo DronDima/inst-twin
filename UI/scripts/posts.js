@@ -173,7 +173,6 @@ PostModel._DEFAULT_FILTER_CONFIG = {
 };
 
 class View {
-  // TODO: AddEdit как SPA.
   constructor(main) {
     this._hashtagTemplate = document.querySelector('.hashtag-template');
     this._postTemplate = document.querySelector('.post-template');
@@ -217,14 +216,15 @@ class View {
     }
   }
 
-  removePost(id) {
-    const post = this._main.querySelector(`.post-container[data-id="${id}"]`);
-    this._main.removeChild(post);
+  static closeDialogWindow() {
+    const deleteDialog = document.getElementById('delete-dialog');
+    deleteDialog.close();
   }
 
-  editPost(editedPost) {
-    const lastPost = this._main.querySelector(`.post-container[data-id="${editedPost.id}"]`);
-    this._main.replaceChild(this._buildPost(editedPost), lastPost);
+  static toggleAddEditForm() {
+    document.querySelector('main').classList.toggle('hidden');
+    document.querySelector('.filter-container').classList.toggle('filter-container_hidden');
+    document.querySelector('.add-post-container').classList.toggle('add-post-container_hidden');
   }
 
   _buildPost(post) {
@@ -242,6 +242,57 @@ class View {
   clearPosts() {
     while (this._main.lastElementChild.classList.contains('post-container')) {
       this._main.removeChild(this._main.lastElementChild);
+    }
+  }
+
+  static toggleBlur() {
+    document.querySelector('.wrapper').classList.toggle('wrapper_blured');
+  }
+
+  static showSignupDialog() {
+    const signinDialog = document.getElementById('signin-dialog');
+    if (typeof signinDialog.showModal === 'function') {
+      signinDialog.showModal();
+      View.toggleBlur();
+    } else {
+      alert('The dialog API is not supported by this browser');
+    }
+  }
+
+  static toggleVariants() {
+    setTimeout(() => {
+      document.querySelector('.filter__variants').classList.toggle('filter__variants_hidden');
+    }, 100);
+  }
+
+  static focusTagsInput() {
+    this.lastElementChild.focus();
+  }
+
+  static showFilter(event) {
+    event.currentTarget.parentNode.querySelector('.filter__form').classList.toggle('filter__form_hidden');
+    const symbol = event.currentTarget.querySelector('.filter__symbol').firstElementChild;
+    if (!symbol.classList.replace('fa-angle-down', 'fa-angle-up')) {
+      symbol.classList.replace('fa-angle-up', 'fa-angle-down');
+    }
+  }
+
+  static resizePost(event) {
+    if (document.documentElement.clientWidth > 610) {
+      let { target } = event;
+      while (target !== event.currentTarget) {
+        if (target.classList.contains('post-container')) {
+          target.classList.toggle('post-container_big');
+          target.querySelector('.post-container__desc').classList.toggle('post-container__desc_big');
+          target.querySelectorAll('.post-container__link')
+            .forEach(link => link.classList.toggle('post-container__link_big'));
+          target.querySelector('.post-container__hashtag').classList.toggle('post-container__hashtag_big');
+          const coordY = target.getBoundingClientRect().top + window.pageYOffset;
+          window.scrollTo(0, coordY);
+          return;
+        }
+        target = target.parentNode;
+      }
     }
   }
 
