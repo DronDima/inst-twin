@@ -216,9 +216,10 @@ class View {
     }
   }
 
-  static closeDialogWindow() {
-    const deleteDialog = document.getElementById('delete-dialog');
-    deleteDialog.close();
+  static closeDialogWindow(target) {
+    const dialog = document.getElementById(target);
+    View.toggleBlur();
+    dialog.close();
   }
 
   static toggleAddEditForm() {
@@ -294,6 +295,17 @@ class View {
         target = target.parentNode;
       }
     }
+  }
+
+  clearPost(id) {
+    let postForDeleting;
+    this._main.querySelectorAll('.post-container')
+      .forEach((post) => {
+        if (post.getAttribute('data-id') === id) {
+          postForDeleting = post;
+        }
+      });
+    this._main.removeChild(postForDeleting);
   }
 
   static showElementsIfAuthorized(isAuthorized) {

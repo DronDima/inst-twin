@@ -247,7 +247,8 @@ class MainController {
 
   removePhotoPost(id) {
     this._model.removePhotoPost(id);
-    View.closeDialogWindow();
+    this._view.clearPost(id);
+    View.closeDialogWindow('delete-dialog');
   }
 
   editPhotoPost(id, edits) {
@@ -288,9 +289,14 @@ class MainController {
   }
 
   static closeDialogWindow(event) {
-    event.preventDefault();
-    window.location.href = '';
-    View.toggleBlur();
+    const targetClasses = event.target.classList;
+    if (targetClasses.contains('button_cancel')) {
+      if (targetClasses.contains('signin-dialog__button')) {
+        View.closeDialogWindow('signin-dialog');
+      } else if (targetClasses.contains('delete-dialog__button')) {
+        View.closeDialogWindow('delete-dialog');
+      }
+    }
   }
 
   static pressAddPostButton() {
@@ -345,6 +351,7 @@ class MainController {
     // TODO: Автообновление постов после ввода полей.
     this.clearPosts();
     this.showPhotoPosts(0, 10, MainController.createFilter());
+    this.showElementsIfAuthorized();
     event.preventDefault();
   }
 
@@ -450,6 +457,10 @@ class MainController {
       }
       target = target.parentNode;
     }
+  }
+
+  static toggleLike() {
+    
   }
 }
 

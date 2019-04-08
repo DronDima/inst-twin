@@ -31,4 +31,4 @@ class AddEditController {
   }
 }
 
-// TODO: Пройтись по ТЗ и чекнуть error.html.
+// TODO: Пройтись по ТЗ и чекнуть error.html и в хроме.

@@ -7,8 +7,6 @@ class MainScript {
 
     const signInForm = document.querySelector('.signin-dialog__form');
     signInForm.addEventListener('submit', MainController.signIn.bind(null, mainController));
-    const signInButtons = document.querySelectorAll('.signin-dialog__button');
-    signInButtons[1].addEventListener('click', MainController.closeDialogWindow);
 
     const filterForm = document.querySelector('.filter__form');
     filterForm.addEventListener('submit', MainScript.applyFilter);
@@ -20,6 +18,10 @@ class MainScript {
     main.addEventListener('click', MainController.openDeleteDialog);
     main.addEventListener('click', View.resizePost);
     main.addEventListener('click', MainController.editPost);
+    main.addEventListener('click', MainController.toggleLike);
+
+    const body = document.querySelector('body');
+    body.addEventListener('click', MainController.closeDialogWindow);
 
     const filterInput = document.querySelector('.filter__tags-input');
     // TODO: Сделать возможность удалять по нажатию на крестик.
