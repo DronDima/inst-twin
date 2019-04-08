@@ -459,8 +459,16 @@ class MainController {
     }
   }
 
-  static toggleLike() {
-    
+  toggleLike(event) {
+    let { target } = event;
+    while (target !== event.currentTarget) {
+      if (target.classList.contains('post-container__like')) {
+        View.toggleLike(event, target);
+        this._model.toggleLike(MainController.getPostId(target), 'username');
+        return;
+      }
+      target = target.parentNode;
+    }
   }
 }
 

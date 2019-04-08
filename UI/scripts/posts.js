@@ -32,6 +32,20 @@ class PostModel {
     return notValid;
   }
 
+  toggleLike(id, username) {
+    this._photoPosts.forEach((post) => {
+      if (post.id === id) {
+        const index = post.likes.indexOf(username);
+        if (index !== -1) {
+          post.likes.splice(index, 1);
+        } else {
+          post.likes.push(username);
+        }
+        this._savePosts();
+      }
+    });
+  }
+
   static _filtrate(post, config) {
     const postCreatedAt = new Date(post.createdAt);
     const configDateFrom = new Date(config.dateFrom);
@@ -237,6 +251,10 @@ class View {
     fragment.querySelector('.post-container__name').textContent = `${dateTime.toLocaleString()}, ${post.author}`;
     fragment.querySelector('.post-container__hashtag').textContent = post.hashtags.join(', ');
     fragment.querySelector('.post-container__desc').textContent = post.description;
+    if (post.likes.includes('username')) {
+      fragment.querySelector('.post-container__like').classList.add('post-container__like_active');
+      fragment.querySelector('.post-container__like').classList.replace('far', 'fas');
+    }
     return fragment;
   }
 
@@ -306,6 +324,16 @@ class View {
         }
       });
     this._main.removeChild(postForDeleting);
+  }
+
+  static toggleLike(event, target) {
+    if (target.getAttribute('data-prefix') === 'far') {
+      target.setAttribute('data-prefix', 'fas');
+    } else {
+      target.setAttribute('data-prefix', 'far');
+    }
+    target.classList.toggle('post-container__like_active');
+    event.stopImmediatePropagation();
   }
 
   static showElementsIfAuthorized(isAuthorized) {

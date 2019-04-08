@@ -15,10 +15,10 @@ class MainScript {
     loadMoreButton.addEventListener('click', MainController.loadMore.bind(null, mainController));
 
     const main = document.querySelector('.main');
+    main.addEventListener('click', MainScript.toggleLike);
     main.addEventListener('click', MainController.openDeleteDialog);
     main.addEventListener('click', View.resizePost);
     main.addEventListener('click', MainController.editPost);
-    main.addEventListener('click', MainController.toggleLike);
 
     const body = document.querySelector('body');
     body.addEventListener('click', MainController.closeDialogWindow);
@@ -39,6 +39,10 @@ class MainScript {
   static applyFilter(event) {
     mainController.applyFilter(event);
     // TODO: Автообновление постов после ввода полей.
+  }
+
+  static toggleLike(event) {
+    mainController.toggleLike(event);
   }
 }
 

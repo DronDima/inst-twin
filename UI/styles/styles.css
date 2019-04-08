@@ -329,6 +329,9 @@ main.hidden {
 .post-container__like:hover {
   color: #A83859;
 }
+.post-container__like_active {
+  color: #A83859;
+}
 .post-container__name {
   grid-row: 2 / 3;
   grid-column: 1 / 3;
