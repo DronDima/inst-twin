@@ -475,4 +475,3 @@ class MainController {
 const mainController = new MainController();
 mainController.showPhotoPosts();
 mainController.showElementsIfAuthorized();
-// TODO: Убрать ошибки.

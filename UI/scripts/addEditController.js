@@ -30,5 +30,3 @@ class AddEditController {
     mainController.editPhotoPost(id, edits);
   }
 }
-
-// TODO: Пройтись по ТЗ и чекнуть error.html и в хроме.
