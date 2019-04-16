@@ -19,11 +19,14 @@ public class Filterm implements Filter {
     }
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) request;
-        String requestURI = req.getRequestURI();
-        String method = req.getMethod();
-
+        long start = System.currentTimeMillis();
         chain.doFilter(request, response);
+        long end = System.currentTimeMillis();
+        HttpServletRequest req = (HttpServletRequest) request;
+        String requestURI = req.getRequestURL().toString();
+        String method = req.getMethod();
+        long time = end - start;
+        response.getOutputStream().println(method + " - " + requestURI + " - " + time + "ms");
     }
     public void destroy() {
 
