@@ -1,14 +1,10 @@
-class PostModel {
+class PostService {
   static get SYSTEM_FIELDS() {
     return ['id', 'author', 'createdAt', 'likes'];
   }
 
-  constructor(posts) {
+  constructor() {
     this.restoreFromLocalStorage();
-    if (this._photoPosts == null) {
-      this._photoPosts = posts;
-      this._savePosts();
-    }
     if (this._authStatus == null) {
       this._authStatus = false;
       this._saveAuthStatus();
@@ -53,7 +49,7 @@ class PostModel {
     return !!(postCreatedAt.getTime() >= configDateFrom.getTime()
       && postCreatedAt.getTime() <= configDateTo.getTime()
       && (post.author === config.authorName || config.authorName === '')
-      && (PostModel._isIntersect(post.hashtags, config.hashtags)
+      && (PostService._isIntersect(post.hashtags, config.hashtags)
         || config.hashtags.length === 0));
   }
 
@@ -63,11 +59,12 @@ class PostModel {
     return aTime - bTime;
   }
 
-  getPhotoPosts(skip = 0, count = 10, config = PostModel._DEFAULT_FILTER_CONFIG) {
-    const filtratedPosts = this._photoPosts
-      .filter(post => PostModel._filtrate(post, config))
-      .sort((a, b) => PostModel._sortByTime(a, b));
-    return filtratedPosts.slice(skip, skip + count);
+  async getPhotoPosts(skip = 0, count = 10, config = PostService._DEFAULT_FILTER_CONFIG) {
+    const response = await fetch('http://localhost:8080/posts', {
+      method: 'GET',
+    });
+    const result = await response.json();
+    return result;
   }
 
   getPhotoPost(id) {
@@ -97,50 +94,49 @@ class PostModel {
 
   _validatePhotoPost(post) {
     return !(this._validateUnChangeableFields(post) === false
-      || PostModel._validateChangeableFields(post) === false);
+      || PostService._validateChangeableFields(post) === false);
   }
 
-  addPhotoPost(post) {
+  async addPhotoPost(post) {
     if (this._validatePhotoPost(post)) {
-      this._photoPosts.push(post);
-      this._savePosts();
-      return true;
-    }
-    return false;
-  }
-
-  removePhotoPost(id) {
-    const index = this._photoPosts.findIndex(post => post.id === id);
-    if (index !== -1) {
-      this._photoPosts.splice(index, 1);
-      this._savePosts();
-      return true;
-    }
-    return false;
-  }
-
-  editPhotoPost(id, edits) {
-    const post = this.getPhotoPost(id);
-    if (post !== undefined) {
-      const postCopy = Object.assign(post);
-      const fields = Object.keys(edits);
-      fields.forEach((field) => {
-        if (PostModel.SYSTEM_FIELDS.indexOf(field) === -1) {
-          postCopy[field] = edits[field];
-        }
+      const response = await fetch('http://localhost:8080/posts', {
+        method: 'POST',
+        body: JSON.stringify(post),
       });
-      if (PostModel._validateChangeableFields(postCopy) === true) {
-        this.removePhotoPost(id);
-        this.addPhotoPost(postCopy);
-        this._savePosts();
-        return true;
-      }
-      return false;
     }
-    return false;
   }
 
-  getPostsCount(config = PostModel._DEFAULT_FILTER_CONFIG) {
+  async removePhotoPost(id) {
+    const response = await fetch(`http://localhost:8080/posts?id=${id}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    const result = await response.json();
+    return result;
+  }
+
+  async editPhotoPost(id, edits) {
+    edits.id = id;
+    const response = await fetch('http://localhost:8080/posts', {
+      method: 'PUT',
+      body: JSON.stringify(edits),
+    });
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+  }
+
+  async getMaxId() {
+    const response = await fetch('http://localhost:8080/posts?aim=maxId', {
+      method: 'GET',
+    });
+    const result = await response.json();
+    return result;
+  }
+
+  getPostsCount(config = PostService._DEFAULT_FILTER_CONFIG) {
     return this.getPhotoPosts(0, this._photoPosts.length, config).length;
   }
 
@@ -166,12 +162,6 @@ class PostModel {
 
   restoreFromLocalStorage() {
     try {
-      const jsonPosts = localStorage.getItem('posts');
-      this._photoPosts = JSON.parse(jsonPosts);
-    } catch (e) {
-      this._photoPosts = null;
-    }
-    try {
       const jsonAuthStatus = localStorage.getItem('authStatus');
       this._authStatus = JSON.parse(jsonAuthStatus);
     } catch (e) {
@@ -179,7 +169,7 @@ class PostModel {
     }
   }
 }
-PostModel._DEFAULT_FILTER_CONFIG = {
+PostService._DEFAULT_FILTER_CONFIG = {
   dateFrom: '-271821-04-20T00:00:00.000Z',
   dateTo: '+275760-09-13T00:00:00.000Z',
   authorName: '',

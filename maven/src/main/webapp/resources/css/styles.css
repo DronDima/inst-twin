@@ -255,7 +255,6 @@ header {
 }
 .filter__tags-input {
   font-size: 16px;
-  height: 20px;
   display: inline-grid;
   padding: 5px 0;
   background: #E4DDE4;
@@ -549,7 +548,6 @@ footer {
 }
 .add-post__tags-input {
   font-size: 16px;
-  height: 20px;
   display: inline-grid;
   padding: 5px 0;
   background: #E4DDE4;

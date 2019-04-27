@@ -1,6 +1,6 @@
 class AddEditController {
 
-  static addPostToModel() {
+  static async addPostToModel() {
     const post = {};
     post.author = document.querySelector('#addEdit-author').value;
     const dateTimeStr = document.querySelector('#dateAndTime').value;
@@ -8,13 +8,12 @@ class AddEditController {
     const nodeTags = document.querySelectorAll('.add-post__tag');
     post.hashtags = [].map.call(nodeTags, item => item.innerHTML);
     post.description = document.querySelector('#desc').value;
-    let parts = document.querySelector('#uploadBtn').value.split("\\");
-    post.photoLink = 'resources/img/' + parts[parts.length-1];
+    const parts = document.querySelector('#uploadBtn').value.split('\\');
+    post.photoLink = 'resources/img/' + parts[parts.length - 1];
     post.likes = [];
     // FIXME: ID нужно не так генерировать.
-    post.id = (mainController.getPostsCount() + 1).toString();
 
-    mainController.addPhotoPost(post);
+    await mainController.addPhotoPost(post);
   }
 
   static editPostInModel(id) {

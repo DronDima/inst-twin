@@ -3,15 +3,15 @@ package by.inst;
 import java.util.ArrayList;
 
 public class Post {
-    private String id;
+    private Integer id;
     private String description;
     private String createdAt;
     private String author;
     private String photoLink;
     private ArrayList<String> likes;
-    private ArrayList<String> tags;
+    private ArrayList<String> hashtags;
 
-    public Post(String id, String description, String createdAt, String author,
+    public Post(Integer id, String description, String createdAt, String author,
                 String photoLink, ArrayList<String> likes, ArrayList<String> tags) {
         this.id = id;
         this.description = description;
@@ -19,11 +19,15 @@ public class Post {
         this.author = author;
         this.photoLink = photoLink;
         this.likes = likes;
-        this.tags = tags;
+        this.hashtags = tags;
     }
 
-    public String getId() {
-        return id;
+    public Integer getId() {
+        return new Integer(id);
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getCreatedAt() {
@@ -38,15 +42,27 @@ public class Post {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getPhotoLink() {
         return photoLink;
+    }
+
+    public void setPhotoLink(String photoLink) {
+        this.photoLink = photoLink;
     }
 
     public ArrayList<String> getLikes() {
         return likes;
     }
 
-    public ArrayList<String> getTags() {
-        return tags;
+    public ArrayList<String> getHashtags() {
+        return hashtags;
+    }
+
+    public void setHashtags(ArrayList<String> hashtags) {
+        this.hashtags = hashtags;
     }
 }

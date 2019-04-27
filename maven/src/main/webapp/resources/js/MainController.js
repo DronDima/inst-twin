@@ -1,269 +1,42 @@
 class MainController {
   constructor() {
-    const posts = [
-      {
-        id: '1',
-        description: 'Lorem1 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-        createdAt: new Date('2018-02-01T23:00:00'),
-        author: 'dronchenko',
-        photoLink: 'resources/img/cat1.jpg',
-        likes: ['dronchenko', 'katya'],
-        hashtags: ['cat', 'newyear'],
-      },
-      {
-        id: '2',
-        description: 'Lorem2 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-        createdAt: new Date('2019-02-02T23:00:00'),
-        author: 'Иванов Иван',
-        photoLink: 'resources/img/cat2.jpg',
-        likes: ['dronchenko', 'katya'],
-        hashtags: ['cat', 'newyear'],
-      },
-      {
-        id: '3',
-        description: 'Lorem3 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-        createdAt: new Date('2018-02-03T23:00:00'),
-        author: 'Иванов Иван',
-        photoLink: 'resources/img/cat3.jpg',
-        likes: ['dronchenko', 'katya'],
-        hashtags: ['cat', 'newyear'],
-      },
-      {
-        id: '4',
-        description: 'Lorem4 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-        createdAt: new Date('2018-02-04T23:00:00'),
-        author: 'dronchenko',
-        photoLink: 'resources/img/cat4.jpg',
-        likes: ['dronchenko', 'katya'],
-        hashtags: ['cat', 'newyear', 'test'],
-      },
-      {
-        id: '5',
-        description: 'Lorem5 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-        createdAt: new Date('2018-02-05T23:00:00'),
-        author: 'dronchenko',
-        photoLink: 'resources/img/cat5.jpg',
-        likes: ['dronchenko', 'katya'],
-        hashtags: ['cat', 'newyear'],
-      },
-      {
-        id: '6',
-        description: 'Lorem6 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-        createdAt: new Date('2018-02-06T23:00:00'),
-        author: 'Иванов Иван',
-        photoLink: 'resources/img/cat6.jpg',
-        likes: ['dronchenko', 'katya'],
-        hashtags: ['cat', 'newyear'],
-      },
-      {
-        id: '7',
-        description: 'Lorem7 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-        createdAt: new Date('2018-02-07T23:00:00'),
-        author: 'Иванов Иван',
-        photoLink: 'resources/img/cat7.jpg',
-        likes: ['dronchenko', 'katya'],
-        hashtags: ['cat', 'newyear'],
-      },
-      {
-        id: '8',
-        description: 'Lorem8 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-        createdAt: new Date('2018-02-08T23:00:00'),
-        author: 'dronchenko',
-        photoLink: 'resources/img/cat8.jpg',
-        likes: ['dronchenko', 'katya'],
-        hashtags: ['cat', 'newyear', 'test'],
-      },
-      {
-        id: '9',
-        description: 'Lorem9 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-        createdAt: new Date('2018-02-09T23:00:00'),
-        author: 'Иванов Иван',
-        photoLink: 'resources/img/cat9.jpg',
-        likes: ['dronchenko', 'katya'],
-        hashtags: ['cat', 'newyear'],
-      },
-      {
-        id: '10',
-        description: 'Lorem10 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-        createdAt: new Date('2018-02-15T23:00:00'),
-        author: 'Иванов Иван',
-        photoLink: 'resources/img/cat10.jpg',
-        likes: ['dronchenko', 'katya'],
-        hashtags: ['cat', 'newyear'],
-      },
-      {
-        id: '11',
-        description: 'Lorem11 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-        createdAt: new Date('2018-02-16T23:00:00'),
-        author: 'Иванов Иван',
-        photoLink: 'resources/img/swan11.jpg',
-        likes: ['dronchenko', 'katya'],
-        hashtags: ['swan', 'newyear'],
-      },
-      {
-        id: '12',
-        description: 'Lorem12 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-        createdAt: new Date('2018-02-17T23:00:00'),
-        author: 'Иванов Иван',
-        photoLink: 'resources/img/snowdrop12.jpg',
-        likes: ['dronchenko', 'katya'],
-        hashtags: ['snow', 'newyear'],
-      },
-      {
-        id: '13',
-        description: 'Lorem13 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-        createdAt: new Date('2018-02-18T23:00:00'),
-        author: 'Иванов Иван',
-        photoLink: 'resources/img/cat13.jpg',
-        likes: ['dronchenko', 'katya'],
-        hashtags: ['cat', 'newyear'],
-      },
-      {
-        id: '14',
-        description: 'Lorem14 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-        createdAt: new Date('2018-02-19T23:00:00'),
-        author: 'Иванов Иван',
-        photoLink: 'resources/img/seagull14.jpg',
-        likes: ['dronchenko', 'katya'],
-        hashtags: ['annimal', 'newyear'],
-      },
-      {
-        id: '15',
-        description: 'Lorem15 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-        createdAt: new Date('2018-02-20T23:00:00'),
-        author: 'Иванов Иван',
-        photoLink: 'resources/img/highlander15.jpg',
-        likes: ['dronchenko', 'katya'],
-        hashtags: ['annimal', 'newyear'],
-      },
-      {
-        id: '16',
-        description: 'Lorem16 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-        createdAt: new Date('2018-02-21T23:00:00'),
-        author: 'Иванов Иван',
-        photoLink: 'resources/img/butterfly16.jpg',
-        likes: ['dronchenko', 'katya'],
-        hashtags: ['annimal', 'newyear'],
-      },
-      {
-        id: '17',
-        description: 'Lorem17 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-        createdAt: new Date('2018-02-22T23:00:00'),
-        author: 'Иванов Иван',
-        photoLink: 'resources/img/duck17.jpg',
-        likes: ['dronchenko', 'katya'],
-        hashtags: ['annimal', 'newyear'],
-      },
-      {
-        id: '18',
-        description: 'Lorem18 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-        createdAt: new Date('2018-02-23T23:00:00'),
-        author: 'Иванов Иван',
-        photoLink: 'resources/img/puffin18.jpg',
-        likes: ['dronchenko', 'katya'],
-        hashtags: ['annimal', 'newyear'],
-      },
-      {
-        id: '19',
-        description: 'Lorem19 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-        createdAt: new Date('2018-02-24T23:00:00'),
-        author: 'Иванов Иван',
-        photoLink: 'resources/img/bird19.jpg',
-        likes: ['dronchenko', 'katya'],
-        hashtags: ['annimal', 'newyear'],
-      },
-      {
-        id: '20',
-        description: 'Lorem20 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-        createdAt: new Date('2018-02-25T23:00:00'),
-        author: 'Иванов Иван',
-        photoLink: 'resources/img/dog20.jpg',
-        likes: ['dronchenko', 'katya'],
-        hashtags: ['annimal', 'newyear'],
-      },
-      {
-        id: '21',
-        description: 'Lorem21 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-        createdAt: new Date('2018-02-10T23:00:00'),
-        author: 'Иванов Иван',
-        photoLink: 'resources/img/chicken21.jpg',
-        likes: ['dronchenko', 'katya'],
-        hashtags: ['annimal', 'newyear'],
-      },
-      {
-        id: '22',
-        description: 'Lorem22 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-        createdAt: new Date('2018-02-11T23:00:00'),
-        author: 'Иванов Иван',
-        photoLink: 'resources/img/goat22.jpg',
-        likes: ['dronchenko', 'katya'],
-        hashtags: ['annimal', 'newyear'],
-      },
-      {
-        id: '23',
-        description: 'Lorem23 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-        createdAt: new Date('2018-02-12T23:00:00'),
-        author: 'Иванов Иван',
-        photoLink: 'resources/img/dog23.jpg',
-        likes: ['dronchenko', 'katya'],
-        hashtags: ['annimal', 'newyear'],
-      },
-      {
-        id: '24',
-        description: 'Lorem24 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-        createdAt: new Date('2018-02-13T23:00:00'),
-        author: 'Иванов Иван',
-        photoLink: 'resources/img/butterfly24.jpg',
-        likes: ['dronchenko', 'katya'],
-        hashtags: ['annimal', 'newyear'],
-      },
-      {
-        id: '25',
-        description: 'Lorem25 ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat.',
-        createdAt: new Date('2018-02-14T23:00:00'),
-        author: 'Иванов Иван',
-        photoLink: 'resources/img/swan25.jpg',
-        likes: ['dronchenko', 'katya'],
-        hashtags: ['annimal', 'newyear'],
-      },
-    ];
     const mainDOM = document.querySelector('.main');
-    this._model = new PostModel(posts);
+    this._model = new PostService();
     this._view = new View(mainDOM);
   }
 
-  addPhotoPost(post) {
+  async addPhotoPost(post) {
     // TODO: Оповещение о том, что пост добавлен или нет.
-    this._model.addPhotoPost(post);
-  }
-
-  getPostsCount() {
-    return this._model.getPostsCount();
+    await this._model.addPhotoPost(post);
   }
 
   clearPosts() {
     this._view.clearPosts();
   }
 
-  removePhotoPost(id) {
-    this._model.removePhotoPost(id);
-    this._view.clearPost(id);
-    View.closeDialogWindow('delete-dialog');
+  async removePhotoPost(id) {
+    await this._model.removePhotoPost(id).then((result) => {
+      if (JSON.parse(result) === true) {
+        this._view.clearPost(id);
+      }
+    });
   }
 
-  editPhotoPost(id, edits) {
-    if (this._model.editPhotoPost(id, edits) === true) {
-      View.toggleAddEditForm();
-    }
+  async editPhotoPost(id, edits) {
+    await this._model.editPhotoPost(id, edits);
+    View.toggleAddEditForm();
   }
 
   showHashtags(hashtags) {
     this._view.showHashtags(hashtags);
   }
 
-  showPhotoPosts(skip = 0, count = 10, config) {
+  async showPhotoPosts(skip = 0, count = 10, config) {
+    let posts;
+    await this._model.getPhotoPosts(skip, count, config).then(data => posts = data);
     this._view
-      .showPosts(this._model.getPhotoPosts(skip, count, config), this._model.getPostsCount(config));
+      .showPosts(posts, posts.length);
+    this.showElementsIfAuthorized();
   }
 
   showElementsIfAuthorized() {
@@ -474,4 +247,3 @@ class MainController {
 
 const mainController = new MainController();
 mainController.showPhotoPosts();
-mainController.showElementsIfAuthorized();

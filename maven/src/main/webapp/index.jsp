@@ -77,18 +77,18 @@
     </main>
     <div class="add-post-container add-post-container_hidden">
         <div class="add-post">
-            <form class="add-post__form" action="/upload" method="post" enctype="multipart/form-data">
+            <form class="add-post__form" action="/" method="post" enctype="multipart/form-data">
                 <p class="add-post__title text-type-2">New Post</p>
                 <label class="add-post__author-label" for="author">Author name:</label>
-                <input class="add-post__author-input text-type-2" id="addEdit-author" value="username" type="text" disabled />
+                <input class="add-post__author-input text-type-2" name="author" id="addEdit-author" value="username" type="text" disabled />
                 <label class="add-post__date-label" for="dateAndTime">Date and time:</label>
-                <input class="add-post__date-input text-type-2" id="dateAndTime" type="text" disabled />
+                <input class="add-post__date-input text-type-2" name="time" id="dateAndTime" type="text" disabled />
                 <label for="tags" class="add-post__hashtags-label">Hashtags:</label>
                 <div class="add-post__tags input">
-                    <input class="add-post__tags-input text-type-2" type="text" placeholder="Choose hashtags" id="addEdit-tags" />
+                    <input class="add-post__tags-input text-type-2" name="tags" type="text" placeholder="Choose hashtags" id="addEdit-tags" />
                 </div>
                 <label for="desc" class="add-post__desc-label">Short description:</label>
-                <textarea class="add-post__desc-input input" id="desc" placeholder="Describe your photopost here"
+                <textarea class="add-post__desc-input input" name="desc" id="desc" placeholder="Describe your photopost here"
                           maxlength="200" required></textarea>
                 <label for="uploadBtn" class="add-post__upload-button">Upload file</label>
                 <input style="opacity: 0; z-index: -1; height: 0" type="file" name="upload" id="uploadBtn" />
