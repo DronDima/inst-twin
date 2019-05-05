@@ -1,0 +1,2 @@
+SELECT USERS.NAME FROM `PhotoPortalDB`.USERS
+	
