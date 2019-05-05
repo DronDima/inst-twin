@@ -8,6 +8,9 @@ class MainController {
   async addPhotoPost(post) {
     // TODO: Оповещение о том, что пост добавлен или нет.
     await this._model.addPhotoPost(post);
+    this._view.clearPosts();
+    this.showPhotoPosts();
+    View.toggleAddEditForm();
   }
 
   clearPosts() {
@@ -24,6 +27,8 @@ class MainController {
 
   async editPhotoPost(id, edits) {
     await this._model.editPhotoPost(id, edits);
+    this._view.clearPosts();
+    this.showPhotoPosts();
     View.toggleAddEditForm();
   }
 
@@ -90,8 +95,8 @@ class MainController {
     const timeTo = inputs.querySelector('#time-to').value;
 
     let time;
-    let from = new Date(-8640000000000000);
-    let to = new Date(8640000000000000);
+    let from = null;
+    let to = null;
     if (dateFrom !== '') {
       from = new Date(dateFrom);
       if (timeTo !== '') {
@@ -113,8 +118,16 @@ class MainController {
     const nodeTags = inputs.querySelectorAll('.filter__tag');
     const tags = [].map.call(nodeTags, item => item.innerHTML);
 
-    config.dateFrom = from;
-    config.dateTo = to;
+    if (!from) {
+      config.dateFrom = from;
+    } else {
+      config.dateFrom = from.getTime();
+    }
+    if (!to) {
+      config.dateTo = to;
+    } else {
+      config.dateTo = to.getTime();
+    }
     config.authorName = inputs.querySelector('#author').value;
     config.hashtags = tags;
     return config;

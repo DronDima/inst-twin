@@ -22,6 +22,7 @@
 	padding: 6px 10px 6px 10px;
 	font-family: 'Montserrat', sans-serif;
 	font-size: 14px;
+	text-align: center;
 	&:hover {
 		background: @darkblue;
 	}
@@ -527,9 +528,7 @@ footer {
 				'tags-i tags-i'
 				'vars vars'
 				'desc-l desc-l'
-				'desc-i desc-i'
-				'upload upload'
-				'addBtn addBtn';
+				'desc-i desc-i';
 		font-size: 20px;
 		@media (max-width: 465px) {
 			grid-template-areas:
@@ -542,10 +541,13 @@ footer {
 					'tags-i tags-i'
 					'vars vars'
 					'desc-l desc-l'
-					'desc-i desc-i'
-					'upload upload'
-					'addBtn addBtn';
+					'desc-i desc-i';
 		}
+	}
+	&__buttons {
+		display: grid;
+		grid-template-rows: repeat(2, 1fr);
+		margin-top: 30px;
 	}
 	&__title {
 		grid-area: title;
@@ -606,7 +608,6 @@ footer {
 		height: 120px;
 	}
 	&__upload-button {
-		grid-area: upload;
 		font-family: 'Montserrat', sans-serif;
 		font-size: 14px;
 		padding: 5px 0 5px 0;
@@ -617,8 +618,8 @@ footer {
 		border-radius: 3px;
 	}
 	&__add-button {
-		grid-area: addBtn;
-		width: 100%;
+		width: auto;
+		height: auto;
 	}
 	&__variants {
 		grid-area: vars;
@@ -647,6 +648,13 @@ body {
 	grid-template-rows: minmax(auto, max-content) auto minmax(auto, max-content);
 	min-height: 100vh;
 }
+.error-container {
+	display: grid;
+	background: @lightgray;
+	&_hidden {
+		display: none;
+	}
+}
 .error {
 	max-width: 700px;
 	margin: auto;
@@ -660,4 +668,9 @@ body {
 			text-decoration: underline;
 		}
 	}
+}
+
+.hidden {
+	visibility: hidden;
+	height: 0;
 }

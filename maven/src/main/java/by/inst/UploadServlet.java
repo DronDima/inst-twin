@@ -23,7 +23,7 @@ public class UploadServlet extends HttpServlet {
         File uploads = new File(getServletContext().getInitParameter("uploadDirectory"));
         File file = new File(uploads, part.getSubmittedFileName());
         Files.copy(stream, file.toPath());
-        response.getOutputStream().println(part.getSubmittedFileName());
+        response.getOutputStream().println("resources/img/" + part.getSubmittedFileName());
     }
 
 

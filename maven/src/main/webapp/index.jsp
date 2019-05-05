@@ -77,7 +77,7 @@
     </main>
     <div class="add-post-container add-post-container_hidden">
         <div class="add-post">
-            <form class="add-post__form" action="/" method="post" enctype="multipart/form-data">
+            <form class="add-post__form" action="">
                 <p class="add-post__title text-type-2">New Post</p>
                 <label class="add-post__author-label" for="author">Author name:</label>
                 <input class="add-post__author-input text-type-2" name="author" id="addEdit-author" value="username" type="text" disabled />
@@ -90,10 +90,18 @@
                 <label for="desc" class="add-post__desc-label">Short description:</label>
                 <textarea class="add-post__desc-input input" name="desc" id="desc" placeholder="Describe your photopost here"
                           maxlength="200" required></textarea>
-                <label for="uploadBtn" class="add-post__upload-button">Upload file</label>
-                <input style="opacity: 0; z-index: -1; height: 0" type="file" name="upload" id="uploadBtn" />
-                <button type="submit" class="add-post__add-button button">Add post</button>
+                <input type="submit" class="hidden" id="submit-edit-form"/>
             </form>
+            <form class="add-post__buttons" enctype="multipart/form-data">
+                <label for="uploadBtn" class="add-post__upload-button">Upload file</label>
+                <input class="hidden" type="file" name="upload" id="uploadBtn" />
+                <label for="submit-edit-form" class="add-post__add-button button">Add post</label>
+            </form>
+        </div>
+    </div>
+    <div class="error-container error-container_hidden">
+        <div class="error">
+            <p class="error__title text-type-4">You tried to fetch some info from <span class="error__link">PhotoPortal.by</span>, but something went wrong.</p>
         </div>
     </div>
     <footer>
@@ -105,7 +113,6 @@
         </div>
     </footer>
 </div>
-<!--TODO: Но в firefox по умолчанию не поддерживается <dialog>. Это ок использовать такой тег?-->
 <dialog id="delete-dialog">
     <form class="delete-dialog__form" method="dialog">
         <p class="delete-dialog__text text-type-2">Are you sure you want to delete post?</p>

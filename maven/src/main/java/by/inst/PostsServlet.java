@@ -25,34 +25,33 @@ public class PostsServlet extends HttpServlet {
     private Posts posts = new Posts();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Part part = request.getPart("upload");
-        InputStream stream = part.getInputStream();
-        File uploads = new File(getServletContext().getInitParameter("uploadDirectory"));
-        File file = new File(uploads, part.getSubmittedFileName());
-        Files.copy(stream, file.toPath());
-        response.getOutputStream().println(part.getSubmittedFileName());
-
         String JSONPost = request.getReader().readLine();
         String result = Boolean.toString(posts.addPost(JSONPost));
         response.getWriter().write(result);
     }
 
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //String JSONEdits = request.getReader().readLine();
-        //posts.editPost(JSONEdits);
-        response.getWriter().write(Boolean.toString(true));
+        String JSONEdits = request.getReader().readLine();
+        posts.editPost(JSONEdits);
     }
 
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
-        response.getWriter().write(Boolean.toString(posts.deletePost(id)));
+        String result = posts.deletePost(id);
+        response.getWriter().write(result);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         String id = request.getParameter("id");
-        String result = id != null ? posts.getPost(id) : posts.getPosts();
+        Integer skip = new Integer(request.getParameter("skip"));
+        Integer count = new Integer(request.getParameter("count"));
+        String dateFrom = request.getParameter("from");
+        String dateTo = request.getParameter("to");
+        String author = request.getParameter("author");
+        String hashtags = request.getParameter("hashtags");
+        String result = id != null ? posts.getPost(id) : posts.getPosts(skip, count, dateFrom, dateTo, author, hashtags);
         response.getWriter().write(result);
     }
 }

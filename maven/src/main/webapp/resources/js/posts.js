@@ -59,10 +59,18 @@ class PostService {
     return aTime - bTime;
   }
 
-  async getPhotoPosts(skip = 0, count = 10, config = PostService._DEFAULT_FILTER_CONFIG) {
-    const response = await fetch('http://localhost:8080/posts', {
+  async getPhotoPosts(skip, count, config) {
+    let url = `/posts?skip=${skip}&count=${count}`;
+    if (typeof config !== 'undefined') {
+      url = `/posts?skip=${skip}&count=${count}&from=${config.dateFrom}  
+      &to=${config.dateTo}&author=${config.authorName}&hashtags=${config.hashtags}`;
+    }
+    const response = await fetch(url, {
       method: 'GET',
-    });
+    }).catch(err => View.showError(`Fetch Error: ${err}`));
+    if (!response.ok) {
+      View.showError(response.statusText);
+    }
     const result = await response.json();
     return result;
   }
@@ -82,10 +90,7 @@ class PostService {
   }
 
   _validateUnChangeableFields(post) {
-    return !(!Object.prototype.hasOwnProperty.call(post, 'id')
-      || typeof post.id !== 'string'
-      || this.getPhotoPost(post.id)
-      || !Object.prototype.hasOwnProperty.call(post, 'createdAt')
+    return !(!Object.prototype.hasOwnProperty.call(post, 'createdAt')
       || !Object.prototype.hasOwnProperty.call(post, 'author')
       || typeof post.author !== 'string'
       || post.author === ''
@@ -99,39 +104,47 @@ class PostService {
 
   async addPhotoPost(post) {
     if (this._validatePhotoPost(post)) {
-      const response = await fetch('http://localhost:8080/posts', {
+      const response = await fetch('/posts', {
         method: 'POST',
         body: JSON.stringify(post),
-      });
+      }).catch(err => View.showError(`Fetch Error: ${err}`));
+      if (!response.ok) {
+        View.showError(response.statusText);
+      }
+    }
+  }
+
+  async editPhotoPost(id, edits) {
+    edits.id = id;
+    if (PostService._validateChangeableFields(edits)) {
+      const response = await fetch('/posts', {
+        method: 'PUT',
+        body: JSON.stringify(edits),
+      }).catch(err => View.showError(`Fetch Error: ${err}`));
+      if (!response.ok) {
+        View.showError(response.statusText);
+      }
     }
   }
 
   async removePhotoPost(id) {
-    const response = await fetch(`http://localhost:8080/posts?id=${id}`, {
+    const response = await fetch(`/posts?id=${id}`, {
       method: 'DELETE',
-    });
+    }).catch(err => View.showError(`Fetch Error: ${err}`));
     if (!response.ok) {
-      throw new Error(response.statusText);
+      View.showError(response.statusText);
     }
     const result = await response.json();
     return result;
   }
 
-  async editPhotoPost(id, edits) {
-    edits.id = id;
-    const response = await fetch('http://localhost:8080/posts', {
-      method: 'PUT',
-      body: JSON.stringify(edits),
-    });
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-  }
-
   async getMaxId() {
     const response = await fetch('http://localhost:8080/posts?aim=maxId', {
       method: 'GET',
-    });
+    }).catch(err => View.showError(`Fetch Error: ${err}`));
+    if (!response.ok) {
+      View.showError(response.statusText);
+    }
     const result = await response.json();
     return result;
   }
@@ -324,6 +337,16 @@ class View {
     }
     target.classList.toggle('post-container__like_active');
     event.stopImmediatePropagation();
+  }
+
+  static showError(error) {
+    document.querySelector('main').classList.add('hidden');
+    document.querySelector('.filter-container').classList.add('filter-container_hidden');
+    document.querySelector('.add-post-container').classList.add('add-post-container_hidden');
+    document.querySelector('.error-container').classList.remove('error-container_hidden');
+    const errorText = document.createElement('p');
+    errorText.innerText = error;
+    document.querySelector('.error').appendChild(errorText);
   }
 
   static showElementsIfAuthorized(isAuthorized) {

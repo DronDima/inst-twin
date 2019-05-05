@@ -1,17 +1,18 @@
 package by.inst;
 
 import java.util.ArrayList;
+import java.util.Date;
 
-public class Post {
+public class Post implements Comparable<Post> {
     private Integer id;
     private String description;
-    private String createdAt;
+    private Date createdAt;
     private String author;
     private String photoLink;
     private ArrayList<String> likes;
     private ArrayList<String> hashtags;
 
-    public Post(Integer id, String description, String createdAt, String author,
+    public Post(Integer id, String description, Date createdAt, String author,
                 String photoLink, ArrayList<String> likes, ArrayList<String> tags) {
         this.id = id;
         this.description = description;
@@ -22,15 +23,19 @@ public class Post {
         this.hashtags = tags;
     }
 
+    public int compareTo(Post post) {
+        return createdAt.compareTo(post.createdAt);
+    }
+
     public Integer getId() {
-        return new Integer(id);
+        return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
@@ -63,6 +68,7 @@ public class Post {
     }
 
     public void setHashtags(ArrayList<String> hashtags) {
-        this.hashtags = hashtags;
+        this.hashtags.clear();
+        this.hashtags.addAll(hashtags);
     }
 }

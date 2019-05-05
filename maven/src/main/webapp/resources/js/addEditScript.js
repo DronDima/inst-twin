@@ -10,6 +10,9 @@ class AddEditScript {
     const form = document.querySelector('.add-post__form');
     form.addEventListener('submit', AddEditController.addPostToModel);
 
+    const fileBtn = document.querySelector('#uploadBtn');
+    fileBtn.addEventListener('change', AddEditController.loadImage)
+
     AddEditScript.setDateAndTime();
   }
 

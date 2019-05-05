@@ -14,6 +14,7 @@
   padding: 6px 10px 6px 10px;
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;
+  text-align: center;
 }
 .button:hover {
   background: #240D39;
@@ -501,13 +502,18 @@ footer {
   display: grid;
   grid-row-gap: 15px;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-areas: 'title title' 'author-l date-l' 'author-i date-i' 'tags-l tags-l' 'tags-i tags-i' 'vars vars' 'desc-l desc-l' 'desc-i desc-i' 'upload upload' 'addBtn addBtn';
+  grid-template-areas: 'title title' 'author-l date-l' 'author-i date-i' 'tags-l tags-l' 'tags-i tags-i' 'vars vars' 'desc-l desc-l' 'desc-i desc-i';
   font-size: 20px;
 }
 @media (max-width: 465px) {
   .add-post__form {
-    grid-template-areas: 'title title' 'author-l author-l' 'author-i author-i' 'date-l date-l' 'date-i date-i' 'tags-l tags-l' 'tags-i tags-i' 'vars vars' 'desc-l desc-l' 'desc-i desc-i' 'upload upload' 'addBtn addBtn';
+    grid-template-areas: 'title title' 'author-l author-l' 'author-i author-i' 'date-l date-l' 'date-i date-i' 'tags-l tags-l' 'tags-i tags-i' 'vars vars' 'desc-l desc-l' 'desc-i desc-i';
   }
+}
+.add-post__buttons {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  margin-top: 30px;
 }
 .add-post__title {
   grid-area: title;
@@ -568,7 +574,6 @@ footer {
   height: 120px;
 }
 .add-post__upload-button {
-  grid-area: upload;
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;
   padding: 5px 0 5px 0;
@@ -579,8 +584,8 @@ footer {
   border-radius: 3px;
 }
 .add-post__add-button {
-  grid-area: addBtn;
-  width: 100%;
+  width: auto;
+  height: auto;
 }
 .add-post__variants {
   grid-area: vars;
@@ -607,6 +612,13 @@ body {
   grid-template-rows: minmax(auto, max-content) auto minmax(auto, max-content);
   min-height: 100vh;
 }
+.error-container {
+  display: grid;
+  background: #E4DDE4;
+}
+.error-container_hidden {
+  display: none;
+}
 .error {
   max-width: 700px;
   margin: auto;
@@ -620,5 +632,9 @@ body {
 }
 .error__link:hover {
   text-decoration: underline;
+}
+.hidden {
+  visibility: hidden;
+  height: 0;
 }
 /*# sourceMappingURL=styles.css.map */
