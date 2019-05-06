@@ -1,0 +1,143 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="resources/css/styles.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:700|Lobster|Noto+Sans+TC|Frank+Ruhl+Libre|Roboto+Slab|Alegreya:400" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Document</title>
+</head>
+<body>
+<div class="wrapper">
+    <header>
+        <div class="header">
+            <div class="header__logo">
+                <a href=""><h1>PhotoPortal</h1></a>
+            </div>
+            <div class="header__logInfo text-type-1">
+                <p>You not signed in</p>
+            </div>
+            <div class="header__buttons">
+                <button class="header__button header__button_hidden button" type="button">Add post</button>
+                <button class="header__button button" type="button">Sign in</button>
+                <button class="header__button header__button_hidden button" type="button">Sign out</button>
+            </div>
+        </div>
+    </header>
+    <aside class="filter-container">
+        <div class="filter text-type-2">
+            <button class="filter__title">
+                <span class="filter__text text-type-2">Filter</span>
+                <span class="filter__symbol"><i class="fas fa-angle-down"></i></span>
+            </button>
+            <form class="filter__form filter__form_hidden" action="#">
+                <p class="filter__text">Filtrate by:</p>
+                <div class="filter__inputs">
+                    <label class="filter__text-date-from text" for="date-from">Date From</label>
+                    <input type="date" class="filter__input input" id="date-from" />
+                    <input type="time" class="filter__input input" id="time-from" />
+                    <label class="filter__text-date-to text" for="date-to">Date To</label>
+                    <input type="date" class="filter__input input" id="date-to" />
+                    <input type="time" class="filter__input input" id="time-to" />
+                    <label class="filter__text-author text" for="author">Author</label>
+                    <input type="search" class="filter__input input" placeholder="Enter author name" id="author" />
+                    <label class="filter__text-hashtag text" for="tags">Hashtags</label>
+                    <div class="filter__tags input">
+                        <input class="filter__tags-input text-type-2" type="text" placeholder="Choose hashtags" id="tags" />
+                    </div>
+                    <ul class="filter__variants filter__variants_hidden">
+                        <template class="hashtag-template">
+                            <li class="filter__variant hashtag"></li>
+                        </template>
+                    </ul>
+                    <!-- FIXME: Когда нажимаешь ресет, не отчищает хэштэги.-->
+                    <button class="filter__reset-button button" type="reset">Reset</button>
+                    <button class="filter__apply-button button" type="submit">Apply</button>
+                </div>
+            </form>
+        </div>
+    </aside>
+    <main>
+        <div class="main">
+            <template class="post-template">
+                <article class="post-container" data-id="id">
+                    <img class="post-container__photo" alt="animalImage" />
+                    <p class="post-container__name text-type-1"></p>
+                    <i class="post-container__like far fa-heart"></i>
+                    <p class="post-container__hashtag text-type-1"></p>
+                    <p class="post-container__desc text-type-4"></p>
+                    <div class="post-container__links">
+                        <span class="post-container__link post-container__delete text-type-1">delete</span>
+                        <span class="post-container__link post-container__edit text-type-1">edit</span>
+                    </div>
+                </article>
+            </template>
+        </div>
+        <button class="main__button button button_width_250px" type="button">Load more...</button>
+    </main>
+    <div class="add-post-container add-post-container_hidden">
+        <div class="add-post">
+            <form class="add-post__form" action="">
+                <p class="add-post__title text-type-2">New Post</p>
+                <label class="add-post__author-label" for="author">Author name:</label>
+                <input class="add-post__author-input text-type-2" name="author" id="addEdit-author" value="username" type="text" disabled />
+                <label class="add-post__date-label" for="dateAndTime">Date and time:</label>
+                <input class="add-post__date-input text-type-2" name="time" id="dateAndTime" type="text" disabled />
+                <label for="tags" class="add-post__hashtags-label">Hashtags:</label>
+                <div class="add-post__tags input">
+                    <input class="add-post__tags-input text-type-2" name="tags" type="text" placeholder="Choose hashtags" id="addEdit-tags" />
+                </div>
+                <label for="desc" class="add-post__desc-label">Short description:</label>
+                <textarea class="add-post__desc-input input" name="desc" id="desc" placeholder="Describe your photopost here"
+                          maxlength="200" required></textarea>
+                <input type="submit" class="hidden" id="submit-edit-form"/>
+            </form>
+            <form class="add-post__buttons" enctype="multipart/form-data">
+                <label for="uploadBtn" class="add-post__upload-button">Upload file</label>
+                <input class="hidden" type="file" name="upload" id="uploadBtn" />
+                <label for="submit-edit-form" class="add-post__add-button button">Add post</label>
+            </form>
+        </div>
+    </div>
+    <div class="error-container error-container_hidden">
+        <div class="error">
+            <p class="error__title text-type-4">You tried to fetch some info from <span class="error__link">PhotoPortal.by</span>, but something went wrong.</p>
+        </div>
+    </div>
+    <footer>
+        <div class="footer">
+            <a class="footer__link text-type-3" href="#">PhotoPortal.by</a>
+            <p class="footer__text text-type-1">by Dmitry Dronchenko, 7 group 2 course.</p>
+            <p class="footer__text text-type-1">dima.dronchenko@gmail.com</p>
+            <p class="footer__text text-type-1">last change:</p>
+        </div>
+    </footer>
+</div>
+<dialog id="delete-dialog">
+    <form class="delete-dialog__form" method="dialog">
+        <p class="delete-dialog__text text-type-2">Are you sure you want to delete post?</p>
+        <menu class="delete-dialog__buttons">
+            <button class="delete-dialog__button delete-dialog__delete-button button" value="default">Delete</button>
+            <button class="delete-dialog__button button_cancel button" value="cancel">Cancel</button>
+        </menu>
+    </form>
+</dialog>
+<dialog id="signin-dialog">
+    <p class="signin-dialog__title text-type-2">Sign in</p>
+    <form class="signin-dialog__form text-type-2" method="dialog">
+        <p class="signin-dialog__text">Login:</p>
+        <input class="signin-dialog__input input" type="text" placeholder="ivanov_ivan" required="" />
+        <p class="signin-dialog__text">Password:</p>
+        <input class="signin-dialog__input input" type="password" placeholder="Password" required="" />
+        <button class="signin-dialog__button button" type="submit" value="default">Sign In</button>
+        <button class="signin-dialog__button button_cancel button" type="button" value="cancel">Cancel</button>
+    </form>
+</dialog>
+<script src="resources/js/posts.js"></script>
+<script src="resources/js/MainController.js"></script>
+<script src="resources/js/script.js"></script>
+<script src="resources/js/addEditController.js"></script>
+<script src="resources/js/addEditScript.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+</body>
+</html>
