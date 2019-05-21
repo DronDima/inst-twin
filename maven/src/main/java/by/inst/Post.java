@@ -7,20 +7,20 @@ public class Post implements Comparable<Post> {
     private Integer id;
     private String description;
     private Date createdAt;
-    private String author;
+    private Integer author;
     private String photoLink;
     private ArrayList<String> likes;
     private ArrayList<String> hashtags;
 
-    public Post(Integer id, String description, Date createdAt, String author,
-                String photoLink, ArrayList<String> likes, ArrayList<String> tags) {
+    public Post(Integer id, String description, Date createdAt, Integer author,
+                String photoLink) {
         this.id = id;
         this.description = description;
         this.createdAt = createdAt;
         this.author = author;
         this.photoLink = photoLink;
-        this.likes = likes;
-        this.hashtags = tags;
+        this.hashtags = new ArrayList<>();
+        this.likes = new ArrayList<>();
     }
 
     public int compareTo(Post post) {
@@ -39,7 +39,7 @@ public class Post implements Comparable<Post> {
         return createdAt;
     }
 
-    public String getAuthor() {
+    public Integer getAuthor() {
         return author;
     }
 
@@ -61,6 +61,10 @@ public class Post implements Comparable<Post> {
 
     public ArrayList<String> getLikes() {
         return likes;
+    }
+
+    public void setLikes(ArrayList<String> likes) {
+        this.likes = likes;
     }
 
     public ArrayList<String> getHashtags() {
