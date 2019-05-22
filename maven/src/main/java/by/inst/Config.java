@@ -10,12 +10,26 @@ public class Config {
     private java.sql.Date dateTo;
     private String author;
     private ArrayList<String> hashtags;
+    private Integer skip;
+    private Integer count;
 
-    public Config(String dateFrom, String dateTo, String author, String hashtags) {
+
+    public Config(String dateFrom, String dateTo, String author, String hashtags, Integer skip, Integer count) {
         this.dateFrom = new java.sql.Date(0L);
         this.dateTo = new java.sql.Date(Long.MAX_VALUE);
-        this.author = "";
+        this.author = null;
         this.hashtags = new ArrayList<>();
+        this.skip = 0;
+        this.count = 10;
+        if (skip != null) {
+            this.skip = skip;
+        }
+        if (count != null) {
+            this.count = count;
+        }
+        if (author != null) {
+            this.author = author;
+        }
         if (dateFrom != null && !dateFrom.trim().equals("null")) {
             this.dateFrom = new java.sql.Date(new Long(dateFrom.trim()));
         }
@@ -41,5 +55,13 @@ public class Config {
 
     public ArrayList<String> getHashtags() {
         return hashtags;
+    }
+
+    public Integer getSkip() {
+        return skip;
+    }
+
+    public Integer getCount() {
+        return count;
     }
 }
