@@ -1,9 +1,10 @@
 package by.inst;
 
-import java.sql.Connection;
+import javax.naming.NamingException;
+import java.sql.SQLException;
 
 public interface DBService {
     String getPosts(Integer skip, Integer count, String dateFrom, String dateTo, String author, String hashtags);
-    String getPost(String id);
-    String deletePost(String id);
+    String getPost(String id) throws SQLException, NamingException;
+//    String deletePost(String id);
 }

@@ -2,6 +2,7 @@ package by.inst;
 
 import com.google.gson.annotations.JsonAdapter;
 
+import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -36,12 +37,12 @@ public class PostsServlet extends HttpServlet {
 //    }
 
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("id");
-        String result = posts.deletePost(id);
-        response.getWriter().write(result);
+//        String id = request.getParameter("id");
+//        String result = posts.deletePost(id);
+//        response.getWriter().write(result);
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         String id = request.getParameter("id");

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/">
+  <!-- Specify a JDBC datasource -->
+  <Resource name="jdbc/PhotoPortal"
+  auth="Container"
+  type="javax.sql.DataSource"
+  username="admin"
+  password="Admin.12345"
+  driverClassName="com.mysql.jdbc.Driver"
+  url="jdbc:mysql://localhost:3306?serverTimezone=UTC"
+  maxActive="10"
+  maxIdle="4">
+  </Resource>
+</Context>

@@ -9,6 +9,7 @@
   </context-param>
 
   <display-name>Archetype Created Web Application</display-name>
+
   <servlet>
     <servlet-name>PostsServlet</servlet-name>
     <servlet-class>by.inst.PostsServlet</servlet-class>
@@ -29,4 +30,9 @@
     <url-pattern>/upload</url-pattern>
   </servlet-mapping>
 
+  <resource-ref>
+    <res-ref-name>jdbc/PhotoPortal</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+    <res-auth>Container</res-auth>
+  </resource-ref>
 </web-app>
