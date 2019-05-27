@@ -27,19 +27,19 @@ public class PostsServlet extends HttpServlet {
 
 //    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        String JSONPost = request.getReader().readLine();
-//        String result = Boolean.toString(posts.addPost(JSONPost));
+//        String result = posts.addPost(JSONPost);
 //        response.getWriter().write(result);
 //    }
-//
+
 //    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        String JSONEdits = request.getReader().readLine();
 //        posts.editPost(JSONEdits);
 //    }
 
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        String id = request.getParameter("id");
-//        String result = posts.deletePost(id);
-//        response.getWriter().write(result);
+        String id = request.getParameter("id");
+        String result = posts.deletePost(id);
+        response.getWriter().write(result);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

@@ -46,10 +46,22 @@ public class Posts implements DBService {
         return null;
     }
 
-//    public boolean addPost(String JSONPost) {
+//    @Override
+//    public String addPost(String JSONPost) {
+//        try {
+//            Gson gson = new Gson();
+//            Type type = new TypeToken<Post>(){}.getType();
+//            Post post = gson.fromJson(JSONPost, type);
+//            boolean result = DBController.queryAdd(post);
+//            return gson.toJson(result);
+//        } catch (SQLException se) {
+//            se.printStackTrace();
+//        } catch (NamingException ne) {
+//            ne.printStackTrace();
+//        }
+//        return null;
+//
 //        Gson gson = new Gson();
-//        Type type = new TypeToken<Post>(){}.getType();
-//        Post post = gson.fromJson(JSONPost, type);
 //        post.setId(this.getMaxId()+1);
 //        System.out.println(post.getId());
 //        posts.add(post);
@@ -95,27 +107,17 @@ public class Posts implements DBService {
         return null;
     }
 
-//    @Override
-//    public String deletePost(String id) {
-//        Connection conn = this.getConnection();
-//        Gson gson = new Gson();
-//        boolean result = false;
-//        try {
-//            PreparedStatement ps = conn.prepareStatement(
-//                    "DELETE FROM `PhotoPortalDB`.PHOTO_POSTS\n" +
-//                            "\tWHERE POST_ID = ?");
-//            ps.setInt(1, new Integer(id));
-//            int isDeleted = ps.executeUpdate();
-//            result = isDeleted != 0;
-//            return gson.toJson(result);
-//        } catch (SQLException se) {
-//            se.printStackTrace();
-//            try {
-//                conn.close();
-//            } catch(SQLException se2) {
-//                se2.printStackTrace();
-//            }
-//        }
-//        return gson.toJson(result);
-//    }
+    @Override
+    public String deletePost(String id) {
+        try {
+            boolean result = DBController.queryDelete(new Integer(id));
+            Gson gson = new Gson();
+            return gson.toJson(result);
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (NamingException ne) {
+            ne.printStackTrace();
+        }
+        return null;
+    }
 }

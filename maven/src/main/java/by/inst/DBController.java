@@ -111,4 +111,35 @@ public class DBController {
         DBController.returnConnection(conn);
         return posts;
     }
+
+    public static boolean queryDelete(Integer id) throws SQLException, NamingException {
+        Connection conn = DBController.getConnection();
+        boolean result = false;
+
+        PreparedStatement ps = conn.prepareStatement(
+                "DELETE FROM `PhotoPortalDB`.PHOTO_POSTS\n" +
+                        "\tWHERE POST_ID = ?");
+        ps.setInt(1, id);
+        int isDeleted = ps.executeUpdate();
+        result = isDeleted != 0;
+
+        DBController.returnConnection(conn);
+        return result;
+    }
+
+//    public static boolean queryAdd(Post post) throws SQLException, NamingException {
+//        Connection conn = DBController.getConnection();
+//        boolean result = false;
+//
+//        PreparedStatement ps = conn.prepareStatement(
+//                "INSERT INTO PhotoPortalDB.PHOTO_POSTS (DESCRIPTION, CREATION_DATE, PHOTO_LINK, USER_ID)" +
+//                        "VALUES (?, NOW(), ?, 1);");
+//        ps.setString(1, post.getDescription());
+//        ps.setString(1, post.getPhotoLink());
+//        int isDeleted = ps.executeUpdate();
+//        result = isDeleted != 0;
+//
+//        DBController.returnConnection(conn);
+//        return result;
+//    }
 }

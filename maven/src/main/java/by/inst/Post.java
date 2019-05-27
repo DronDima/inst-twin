@@ -22,6 +22,16 @@ public class Post implements Comparable<Post> {
         this.hashtags = new ArrayList<>();
         this.likes = new ArrayList<>();
     }
+    public Post(Integer id, String description, Date createdAt, Integer author,
+                String photoLink, ArrayList<String> likes, ArrayList<String> tags) {
+        this.id = id;
+        this.description = description;
+        this.createdAt = createdAt;
+        this.author = author;
+        this.photoLink = photoLink;
+        this.hashtags = tags;
+        this.likes = likes;
+    }
 
     public int compareTo(Post post) {
         return createdAt.compareTo(post.createdAt);
